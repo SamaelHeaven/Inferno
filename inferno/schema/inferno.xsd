@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="inferno"
+           xmlns="inferno"
+           elementFormDefault="qualified">
+    <xs:element name="Scene">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Entity" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Entity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Entity" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="position" type="Vector2"/>
+            <xs:attribute name="x" type="xs:float"/>
+            <xs:attribute name="y" type="xs:float"/>
+            <xs:attribute name="size" type="Vector2"/>
+            <xs:attribute name="width" type="xs:float"/>
+            <xs:attribute name="height" type="xs:float"/>
+            <xs:attribute name="origin" type="Vector2"/>
+            <xs:attribute name="pivot-point" type="Vector2"/>
+            <xs:attribute name="rotation" type="xs:float"/>
+            <xs:attribute name="z-index" type="xs:int"/>
+            <xs:attribute name="tags" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="Vector2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\s*(\d+(\.\d+)?)\s*(\s+\d+(\.\d+)?)?\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inferno:Scene xmlns:inferno="inferno" xmlns:game="game">
+    <inferno:Entity position="400 300" size="100"/>
+</inferno:Scene>

@@ -1,0 +1,8 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:inferno="inferno"
+           targetNamespace="game"
+           xmlns="game"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="../../inferno/schema/inferno.xsd"/>
+
+</xs:schema>
