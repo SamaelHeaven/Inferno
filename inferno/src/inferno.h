@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <chrono>
 #include <pugixml.hpp>
+#include <box2d/box2d.h>
 
 #define MAGIC_ENUM_RANGE_MIN (-2048)
 #define MAGIC_ENUM_RANGE_MAX 2048

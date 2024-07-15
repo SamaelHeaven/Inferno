@@ -25,6 +25,25 @@ if (NOT raylib_FOUND)
     endif ()
 endif ()
 
+set(BOX2D_VERSION 2.4.1)
+find_package(box2d ${BOX2D_VERSION} QUIET)
+if (NOT box2d_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+            box2d
+            DOWNLOAD_EXTRACT_TIMESTAMP OFF
+            URL https://github.com/erincatto/box2d/archive/refs/tags/v${BOX2D_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(box2d)
+    if (NOT box2d_POPULATED)
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_Populate(box2d)
+        set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
+        set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "" FORCE)
+        add_subdirectory(${box2d_SOURCE_DIR} ${box2d_BINARY_DIR})
+    endif ()
+endif ()
+
 set(PUGIXML_VERSION 1.14)
 find_package(pugixml ${PUGIXML_VERSION} QUIET)
 if (NOT pugixml_FOUND)
@@ -94,7 +113,7 @@ add_executable(${PROJECT_NAME}
         inferno/src/drawing/Color.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib pugixml magic_enum)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
 target_include_directories(${PROJECT_NAME} PUBLIC SYSTEM ${PROJECT_SOURCE_DIR}/inferno/src/include)
 
 if (EMSCRIPTEN)
