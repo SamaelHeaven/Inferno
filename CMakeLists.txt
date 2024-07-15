@@ -7,6 +7,10 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -st
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if (${PLATFORM} STREQUAL "Desktop")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")
+endif()
+
 set(RAYLIB_VERSION 5.0)
 find_package(raylib ${RAYLIB_VERSION} QUIET)
 if (NOT raylib_FOUND)
