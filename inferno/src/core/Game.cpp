@@ -4,6 +4,7 @@
 #include "Time.h"
 #include "Renderer.h"
 #include "../input/Keyboard.h"
+#include "../input/Mouse.h"
 
 namespace inferno {
     void Game::launch(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
@@ -74,6 +75,7 @@ namespace inferno {
     Game::~Game() {
         Time::_destroy();
         Keyboard::_destroy();
+        Mouse::_destroy();
         Renderer::_destroy();
         internal::CloseWindow();
     }
@@ -126,6 +128,7 @@ namespace inferno {
         while (!internal::WindowShouldClose()) {
             Time::_update();
             Keyboard::_update();
+            Mouse::_update();
             if (scene.get() != game->_scene.get()) {
                 scene = game->_scene;
             }
