@@ -65,7 +65,11 @@ namespace inferno {
 
     bool Game::is_focused() {
         throw_if_uninitialized();
+#ifdef PLATFORM_DESKTOP
         return internal::IsWindowFocused();
+#else
+        return true;
+#endif
     }
 
     Game *Game::_instance = nullptr;
