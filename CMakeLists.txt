@@ -7,10 +7,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -st
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if (${PLATFORM} STREQUAL "Desktop")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")
-endif ()
-
 set(RAYLIB_VERSION 5.0)
 find_package(raylib ${RAYLIB_VERSION} QUIET)
 if (NOT raylib_FOUND)
@@ -119,6 +115,10 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
 target_include_directories(${PROJECT_NAME} PUBLIC SYSTEM ${PROJECT_SOURCE_DIR}/inferno/src/include)
+
+if (${PLATFORM} STREQUAL "Desktop")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")
+endif ()
 
 if (EMSCRIPTEN)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1")
