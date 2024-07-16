@@ -42,6 +42,8 @@ namespace inferno {
 
         [[nodiscard]] uint8_t get_alpha() const;
 
+        bool operator==(const Color &other) const;
+
     private:
         internal::Color _color{};
 

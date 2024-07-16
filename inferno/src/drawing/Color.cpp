@@ -62,4 +62,9 @@ namespace inferno {
     uint8_t Color::get_alpha() const {
         return _color.a;
     }
+
+    bool Color::operator==(const Color &other) const {
+        return get_red() == other.get_red() && get_green() == other.get_green() &&
+               get_blue() == other.get_blue() && get_alpha() == other.get_alpha();
+    }
 }
