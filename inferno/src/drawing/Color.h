@@ -5,30 +5,30 @@
 namespace inferno {
     class Color final {
     public:
-        static Color WHITE;
-        static Color BLACK;
-        static Color TRANSPARENT;
-        static Color LIGHT_GRAY;
-        static Color GRAY;
-        static Color DARK_GRAY;
-        static Color YELLOW;
-        static Color GOLD;
-        static Color ORANGE;
-        static Color PINK;
-        static Color RED;
-        static Color MAROON;
-        static Color GREEN;
-        static Color LIME;
-        static Color DARK_GREEN;
-        static Color SKY_BLUE;
-        static Color BLUE;
-        static Color DARK_BLUE;
-        static Color PURPLE;
-        static Color VIOLET;
-        static Color DARK_PURPLE;
-        static Color BEIGE;
-        static Color BROWN;
-        static Color DARK_BROWN;
+        const static Color WHITE;
+        const static Color BLACK;
+        const static Color TRANSPARENT;
+        const static Color LIGHT_GRAY;
+        const static Color GRAY;
+        const static Color DARK_GRAY;
+        const static Color YELLOW;
+        const static Color GOLD;
+        const static Color ORANGE;
+        const static Color PINK;
+        const static Color RED;
+        const static Color MAROON;
+        const static Color GREEN;
+        const static Color LIME;
+        const static Color DARK_GREEN;
+        const static Color SKY_BLUE;
+        const static Color BLUE;
+        const static Color DARK_BLUE;
+        const static Color PURPLE;
+        const static Color VIOLET;
+        const static Color DARK_PURPLE;
+        const static Color BEIGE;
+        const static Color BROWN;
+        const static Color DARK_BROWN;
 
         Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255);
 
