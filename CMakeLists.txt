@@ -89,6 +89,7 @@ add_executable(${PROJECT_NAME}
         inferno/src/include/core.h
         inferno/src/include/input.h
         inferno/src/include/drawing.h
+        inferno/src/include/math.h
         inferno/src/core/Platform.cpp
         inferno/src/core/Platform.h
         inferno/src/core/file.cpp
@@ -111,6 +112,8 @@ add_executable(${PROJECT_NAME}
         inferno/src/input/Mouse.h
         inferno/src/drawing/Color.cpp
         inferno/src/drawing/Color.h
+        inferno/src/math/Vector2.cpp
+        inferno/src/math/Vector2.h
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)

@@ -3,3 +3,4 @@
 #include "core.h"
 #include "input.h"
 #include "drawing.h"
+#include "math.h"
