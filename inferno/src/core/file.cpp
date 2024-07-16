@@ -56,7 +56,7 @@ namespace inferno::file {
         return internal::GetFileModTime(format_path(std::move(path)).c_str());
     }
 
-    std::string directory_from(std::string path) {
+    std::string get_directory(std::string path) {
         path = format_path(std::move(path));
         const auto start = path.find_last_of('/');
         if (start == std::string::npos) {
@@ -65,8 +65,8 @@ namespace inferno::file {
         return format_path(path.substr(0, start));
     }
 
-    std::string previous_directory_from(std::string path) {
-        return directory_from(directory_from(std::move(path)));
+    std::string get_previous_directory(std::string path) {
+        return get_directory(get_directory(std::move(path)));
     }
 
     std::string get_working_directory() {
@@ -105,7 +105,7 @@ namespace inferno::file {
         std::vector<std::string> result;
         const auto files = internal::LoadDirectoryFiles(path.c_str());
         for (auto i = 0; i < files.count; i++) {
-            result.emplace_back(format_path(files.paths[i]));
+            result.push_back(format_path(files.paths[i]));
         }
         UnloadDirectoryFiles(files);
         return result;
@@ -128,12 +128,10 @@ namespace inferno::file {
     void save_text(std::string path, const std::string &text) {
         path = format_path(std::move(path));
         const auto length = text.length();
-        const auto buffer = new char[length + 1];
-        strncpy(buffer, text.c_str(), length);
+        const auto buffer = std::make_unique<char[]>(length + 1);
+        strncpy(buffer.get(), text.c_str(), length);
         buffer[length] = '\0';
-        const auto result = internal::SaveFileText(path.c_str(), buffer);
-        delete[] buffer;
-        if (!result) {
+        if (!internal::SaveFileText(path.c_str(), buffer.get())) {
             throw std::runtime_error("Failed to save file: \"" + path + "\"");
         }
     }
@@ -153,11 +151,9 @@ namespace inferno::file {
     void save_bytes(std::string path, const std::vector<uint8_t> &bytes) {
         path = format_path(std::move(path));
         const auto size = static_cast<int32_t>(bytes.size());
-        const auto data = new uint8_t[size];
-        memcpy(data, bytes.data(), size);
-        const auto result = internal::SaveFileData(path.c_str(), data, size);
-        delete[] data;
-        if (!result) {
+        const auto data = std::make_unique<uint8_t[]>(size);
+        memcpy(data.get(), bytes.data(), size);
+        if (!internal::SaveFileData(path.c_str(), data.get(), size)) {
             throw std::runtime_error("Failed to save file: \"" + path + "\"");
         }
     }

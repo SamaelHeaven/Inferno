@@ -17,9 +17,9 @@ namespace inferno::file {
 
     std::time_t file_modification_time(std::string path);
 
-    std::string directory_from(std::string path);
+    std::string get_directory(std::string path);
 
-    std::string previous_directory_from(std::string path);
+    std::string get_previous_directory(std::string path);
 
     std::string get_working_directory();
 

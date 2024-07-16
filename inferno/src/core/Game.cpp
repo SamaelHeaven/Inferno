@@ -11,10 +11,9 @@ namespace inferno {
         if (_instance != nullptr) {
             throw std::runtime_error("Game as already been launched");
         }
-        const auto game = _get_instance();
+        const auto _ = std::unique_ptr<Game>(_get_instance());
         _init(GameConfig(config), scene);
         _run();
-        delete game;
     }
 
     void Game::throw_if_uninitialized() {
@@ -72,10 +71,6 @@ namespace inferno {
 #endif
     }
 
-    Game *Game::_instance = nullptr;
-
-    Game::Game() = default;
-
     Game::~Game() {
         Time::_destroy();
         Keyboard::_destroy();
@@ -83,6 +78,10 @@ namespace inferno {
         Renderer::_destroy();
         internal::CloseWindow();
     }
+
+    Game *Game::_instance = nullptr;
+
+    Game::Game() = default;
 
     Game *Game::_get_instance() {
         return _instance = _instance == nullptr ? new Game() : _instance;

@@ -10,6 +10,12 @@ namespace inferno {
     public:
         static void launch(const GameConfig &config, const std::shared_ptr<Scene> &scene);
 
+        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
+            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        static void launch(const GameConfig &config, Args... args) {
+            launch(config, std::make_shared<T>(args...));
+        }
+
         static void throw_if_uninitialized();
 
         static std::shared_ptr<Scene> get_scene();
@@ -30,6 +36,8 @@ namespace inferno {
 
         static bool is_focused();
 
+        ~Game();
+
     private:
         static Game *_instance;
 
@@ -38,8 +46,6 @@ namespace inferno {
         std::shared_ptr<Scene> _scene;
 
         Game();
-
-        ~Game();
 
         static Game *_get_instance();
 

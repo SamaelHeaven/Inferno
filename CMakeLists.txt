@@ -117,7 +117,6 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-target_include_directories(${PROJECT_NAME} PUBLIC SYSTEM ${PROJECT_SOURCE_DIR}/inferno/src/include)
 
 if (${PLATFORM} STREQUAL "Desktop")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")
