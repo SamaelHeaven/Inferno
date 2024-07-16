@@ -2,7 +2,7 @@
 
 #include "../inferno.h"
 
-#include "MouseButton.h"
+#include "./MouseButton.h"
 
 namespace inferno {
     class Mouse final {

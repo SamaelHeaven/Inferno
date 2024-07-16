@@ -1,8 +1,8 @@
-#include "Game.h"
+#include "./Game.h"
 
-#include "file.h"
-#include "Time.h"
-#include "Renderer.h"
+#include "./file.h"
+#include "./Time.h"
+#include "./Renderer.h"
 #include "../input/Keyboard.h"
 #include "../input/Mouse.h"
 

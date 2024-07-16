@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../../inferno/src/include/inferno.h"
+#include <inferno.h>
 
 using namespace inferno;

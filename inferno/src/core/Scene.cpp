@@ -1,6 +1,6 @@
-#include "Scene.h"
+#include "./Scene.h"
 
-#include "Time.h"
+#include "./Time.h"
 
 namespace inferno {
     Scene::~Scene() = default;

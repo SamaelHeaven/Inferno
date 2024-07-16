@@ -1,6 +1,6 @@
-#include "Time.h"
+#include "./Time.h"
 
-#include "Game.h"
+#include "./Game.h"
 
 namespace inferno {
     float Time::delta() {

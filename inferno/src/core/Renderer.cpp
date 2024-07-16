@@ -1,6 +1,6 @@
-#include "Renderer.h"
+#include "./Renderer.h"
 
-#include "Game.h"
+#include "./Game.h"
 #include "../drawing/Color.h"
 
 namespace inferno {

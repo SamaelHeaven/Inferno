@@ -86,10 +86,10 @@ add_executable(${PROJECT_NAME}
         inferno/src/inferno.cpp
         inferno/src/inferno.h
         inferno/src/include/inferno.h
-        inferno/src/include/core.h
-        inferno/src/include/input.h
-        inferno/src/include/drawing.h
-        inferno/src/include/math.h
+        inferno/src/include/inferno-core.h
+        inferno/src/include/inferno-input.h
+        inferno/src/include/inferno-drawing.h
+        inferno/src/include/inferno-math.h
         inferno/src/core/Platform.cpp
         inferno/src/core/Platform.h
         inferno/src/core/file.cpp
@@ -117,6 +117,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
+target_include_directories(${PROJECT_NAME} PUBLIC SYSTEM ${PROJECT_SOURCE_DIR}/inferno/src/include)
 
 if (${PLATFORM} STREQUAL "Desktop")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")

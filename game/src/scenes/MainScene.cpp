@@ -1,4 +1,4 @@
-#include "MainScene.h"
+#include "./MainScene.h"
 
 MainScene::MainScene() = default;
 

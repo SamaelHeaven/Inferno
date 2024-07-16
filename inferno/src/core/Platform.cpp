@@ -1,4 +1,4 @@
-#include "Platform.h"
+#include "./Platform.h"
 
 namespace inferno {
     Platform current_platform() {

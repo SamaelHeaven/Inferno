@@ -2,8 +2,8 @@
 
 #include "../inferno.h"
 
-#include "GameConfig.h"
-#include "Scene.h"
+#include "./GameConfig.h"
+#include "./Scene.h"
 
 namespace inferno {
     class Game final {

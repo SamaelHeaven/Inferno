@@ -1,4 +1,4 @@
-#include "scenes/MainScene.h"
+#include "./scenes/MainScene.h"
 
 void main() {
     GameConfig config;

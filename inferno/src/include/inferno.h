@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
-#include "input.h"
-#include "drawing.h"
-#include "math.h"
+#include "./inferno-core.h"
+#include "./inferno-input.h"
+#include "./inferno-drawing.h"
+#include "./inferno-math.h"

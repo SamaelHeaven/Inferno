@@ -1,4 +1,4 @@
-#include "GameConfig.h"
+#include "./GameConfig.h"
 
 namespace inferno {
     GameConfig::GameConfig() = default;

@@ -2,7 +2,7 @@
 
 #include "../inferno.h"
 
-#include "Key.h"
+#include "./Key.h"
 
 namespace inferno {
     class Keyboard final {

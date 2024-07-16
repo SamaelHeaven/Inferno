@@ -1,4 +1,4 @@
-#include "inferno.h"
+#include "./inferno.h"
 
 #undef main
 
