@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(game)
+project(inferno)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(RAYLIB_VERSION 5.0)
@@ -78,11 +76,7 @@ if (NOT magic_enum_FOUND)
     endif ()
 endif ()
 
-add_executable(${PROJECT_NAME}
-        game/src/game.cpp
-        game/src/game.h
-        game/src/scenes/MainScene.cpp
-        game/src/scenes/MainScene.h
+add_library(${PROJECT_NAME}
         inferno/src/inferno.cpp
         inferno/src/inferno.h
         inferno/src/include/inferno.h
@@ -117,25 +111,4 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-target_include_directories(${PROJECT_NAME} PUBLIC SYSTEM ${PROJECT_SOURCE_DIR}/inferno/src/include)
-
-if (${PLATFORM} STREQUAL "Desktop")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -s -mwindows")
-endif ()
-
-if (EMSCRIPTEN)
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file ${PROJECT_SOURCE_DIR}/game/assets@/assets")
-    set(CMAKE_EXECUTABLE_SUFFIX ".html")
-else ()
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${PROJECT_SOURCE_DIR}/game/assets $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
-    )
-endif ()
-
-if (APPLE)
-    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
-    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
-    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
-endif ()
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/inferno/src/include)
