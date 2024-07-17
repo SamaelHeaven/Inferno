@@ -7,9 +7,15 @@ namespace inferno {
     const Vector2 Vector2::LEFT = Vector2(-1, 0);
     const Vector2 Vector2::RIGHT = Vector2(1, 0);
 
-    Vector2::Vector2(const float xy) : x(xy), y(xy) {}
+    Vector2::Vector2(const float xy) {
+        x = xy;
+        y = xy;
+    }
 
-    Vector2::Vector2(const float x, const float y) : x(x), y(y) {}
+    Vector2::Vector2(const float x, const float y) {
+        this->x = x;
+        this->y = y;
+    }
 
     bool Vector2::operator==(const Vector2 &other) const {
         return x == other.x && y == other.y;
@@ -33,6 +39,26 @@ namespace inferno {
         return {x, y};
     }
 
+    Vector2 &Vector2::operator+=(const Vector2 &other) {
+        *this = *this + other;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator-=(const Vector2 &other) {
+        *this = *this - other;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator*=(const Vector2 &other) {
+        *this = *this * other;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator/=(const Vector2 &other) {
+        *this = *this / other;
+        return *this;
+    }
+
     bool Vector2::operator==(const float xy) const {
         return x == xy && y == xy;
     }
@@ -53,5 +79,25 @@ namespace inferno {
         const auto x = xy == 0 ? 0 : this->x / xy;
         const auto y = xy == 0 ? 0 : this->y / xy;
         return {x, y};
+    }
+
+    Vector2 &Vector2::operator+=(const float xy) {
+        *this = *this + xy;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator-=(const float xy) {
+        *this = *this - xy;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator*=(const float xy) {
+        *this = *this * xy;
+        return *this;
+    }
+
+    Vector2 &Vector2::operator/=(const float xy) {
+        *this = *this / xy;
+        return *this;
     }
 }

@@ -8,8 +8,8 @@ namespace inferno {
         const static Vector2 LEFT;
         const static Vector2 RIGHT;
 
-        const float x;
-        const float y;
+        float x;
+        float y;
 
         explicit Vector2(float xy);
 
@@ -25,6 +25,14 @@ namespace inferno {
 
         Vector2 operator/(const Vector2 &other) const;
 
+        Vector2 &Vector2::operator+=(const Vector2 &other);
+
+        Vector2 &Vector2::operator-=(const Vector2 &other);
+
+        Vector2 &Vector2::operator*=(const Vector2 &other);
+
+        Vector2 &Vector2::operator/=(const Vector2 &other);
+
         bool operator==(float xy) const;
 
         Vector2 operator+(float xy) const;
@@ -34,5 +42,13 @@ namespace inferno {
         Vector2 operator*(float xy) const;
 
         Vector2 operator/(float xy) const;
+
+        Vector2 &Vector2::operator+=(float xy);
+
+        Vector2 &Vector2::operator-=(float xy);
+
+        Vector2 &Vector2::operator*=(float xy);
+
+        Vector2 &Vector2::operator/=(float xy);
     };
 }
