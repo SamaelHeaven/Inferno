@@ -116,4 +116,4 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         $<INSTALL_INTERFACE:include>
 )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include DESTINATION include)
