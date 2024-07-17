@@ -1,5 +1,7 @@
 #include "./Platform.h"
 
+#include "../inferno.h"
+
 namespace inferno {
     Platform current_platform() {
 #ifdef PLATFORM_DESKTOP
