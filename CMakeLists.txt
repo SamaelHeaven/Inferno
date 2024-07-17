@@ -112,8 +112,7 @@ add_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
 
-include(GNUInstallDirs)
-
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/include"
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+target_include_directories(${PROJECT_NAME} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
+        $<INSTALL_INTERFACE:include>
 )

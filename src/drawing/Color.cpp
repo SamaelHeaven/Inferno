@@ -29,7 +29,7 @@ namespace inferno {
     const Color Color::DARK_BROWN = Color(76, 63, 47);
 
     Color::Color(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha) {
-        _color = internal::Color(red, green, blue, alpha);
+        _color = internal::Color{red, green, blue, alpha};
     }
 
     Color::Color(std::string hexadecimal) {
@@ -41,7 +41,12 @@ namespace inferno {
             const auto green = std::stoul(hexadecimal.substr(2, 2), nullptr, 16);
             const auto blue = std::stoul(hexadecimal.substr(4, 2), nullptr, 16);
             const auto alpha = hexadecimal.length() == 9 ? std::stoul(hexadecimal.substr(6, 2), nullptr, 16) : 255;
-            _color = internal::Color(red, green, blue, alpha);
+            _color = internal::Color{
+                static_cast<uint8_t>(red),
+                static_cast<uint8_t>(green),
+                static_cast<uint8_t>(blue),
+                static_cast<uint8_t>(alpha)
+            };
         } catch (const std::exception &_) {
             throw std::invalid_argument("Invalid hexadecimal color code: \"" + hexadecimal + "\"");
         }
