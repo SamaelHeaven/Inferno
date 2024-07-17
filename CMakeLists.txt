@@ -110,5 +110,5 @@ add_library(${PROJECT_NAME}
         src/math/Vector2.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC src/include)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib box2d pugixml magic_enum)
+target_include_directories(${PROJECT_NAME} PRIVATE src/include)
