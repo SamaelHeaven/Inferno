@@ -111,4 +111,3 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-target_include_directories(${PROJECT_NAME} PUBLIC src/include)
