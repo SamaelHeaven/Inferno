@@ -22,6 +22,12 @@ namespace inferno {
 
         static void set_scene(const std::shared_ptr<Scene> &scene);
 
+        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
+            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        static void set_scene(Args... args) {
+            set_scene(std::make_shared<T>(args...));
+        }
+
         static int32_t get_screen_width();
 
         static void set_screen_width(int32_t width);
