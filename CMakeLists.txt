@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-include(GNUInstallDirs)
-
 set(RAYLIB_VERSION 5.0)
 find_package(raylib QUIET)
 if (NOT raylib_FOUND)
@@ -114,12 +112,8 @@ add_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
 
-target_include_directories(${PROJECT_NAME} INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-)
+include(GNUInstallDirs)
 
-install(TARGETS "${PROJECT_NAME}"
-        EXPORT ${PROJECT_NAME}
-        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/include"
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
