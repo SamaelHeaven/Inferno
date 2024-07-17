@@ -77,38 +77,38 @@ if (NOT magic_enum_FOUND)
 endif ()
 
 add_library(${PROJECT_NAME} STATIC
-        inferno/src/inferno.cpp
-        inferno/src/inferno.h
-        inferno/src/include/inferno.h
-        inferno/src/include/inferno-core.h
-        inferno/src/include/inferno-input.h
-        inferno/src/include/inferno-drawing.h
-        inferno/src/include/inferno-math.h
-        inferno/src/core/Platform.cpp
-        inferno/src/core/Platform.h
-        inferno/src/core/file.cpp
-        inferno/src/core/file.h
-        inferno/src/core/GameConfig.cpp
-        inferno/src/core/GameConfig.h
-        inferno/src/core/Game.cpp
-        inferno/src/core/Game.h
-        inferno/src/core/Scene.cpp
-        inferno/src/core/Scene.h
-        inferno/src/core/Time.cpp
-        inferno/src/core/Time.h
-        inferno/src/core/Renderer.cpp
-        inferno/src/core/Renderer.h
-        inferno/src/input/Key.h
-        inferno/src/input/Keyboard.cpp
-        inferno/src/input/Keyboard.h
-        inferno/src/input/MouseButton.h
-        inferno/src/input/Mouse.cpp
-        inferno/src/input/Mouse.h
-        inferno/src/drawing/Color.cpp
-        inferno/src/drawing/Color.h
-        inferno/src/math/Vector2.cpp
-        inferno/src/math/Vector2.h
+        src/inferno.cpp
+        src/inferno.h
+        src/include/inferno.h
+        src/include/inferno-core.h
+        src/include/inferno-input.h
+        src/include/inferno-drawing.h
+        src/include/inferno-math.h
+        src/core/Platform.cpp
+        src/core/Platform.h
+        src/core/file.cpp
+        src/core/file.h
+        src/core/GameConfig.cpp
+        src/core/GameConfig.h
+        src/core/Game.cpp
+        src/core/Game.h
+        src/core/Scene.cpp
+        src/core/Scene.h
+        src/core/Time.cpp
+        src/core/Time.h
+        src/core/Renderer.cpp
+        src/core/Renderer.h
+        src/input/Key.h
+        src/input/Keyboard.cpp
+        src/input/Keyboard.h
+        src/input/MouseButton.h
+        src/input/Mouse.cpp
+        src/input/Mouse.h
+        src/drawing/Color.cpp
+        src/drawing/Color.h
+        src/math/Vector2.cpp
+        src/math/Vector2.h
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/inferno/src/include)
+target_include_directories(${PROJECT_NAME} PUBLIC src/include)
