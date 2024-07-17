@@ -25,13 +25,13 @@ namespace inferno {
 
         Vector2 operator/(const Vector2 &other) const;
 
-        Vector2 &Vector2::operator+=(const Vector2 &other);
+        Vector2 &operator+=(const Vector2 &other);
 
-        Vector2 &Vector2::operator-=(const Vector2 &other);
+        Vector2 &operator-=(const Vector2 &other);
 
-        Vector2 &Vector2::operator*=(const Vector2 &other);
+        Vector2 &operator*=(const Vector2 &other);
 
-        Vector2 &Vector2::operator/=(const Vector2 &other);
+        Vector2 &operator/=(const Vector2 &other);
 
         bool operator==(float xy) const;
 
@@ -43,12 +43,12 @@ namespace inferno {
 
         Vector2 operator/(float xy) const;
 
-        Vector2 &Vector2::operator+=(float xy);
+        Vector2 &operator+=(float xy);
 
-        Vector2 &Vector2::operator-=(float xy);
+        Vector2 &operator-=(float xy);
 
-        Vector2 &Vector2::operator*=(float xy);
+        Vector2 &operator*=(float xy);
 
-        Vector2 &Vector2::operator/=(float xy);
+        Vector2 &operator/=(float xy);
     };
 }
