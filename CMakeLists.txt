@@ -6,7 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(RAYLIB_VERSION 5.0)
-find_package(raylib QUIET)
+find_package(raylib ${RAYLIB_VERSION} QUIET)
 if (NOT raylib_FOUND)
     include(FetchContent)
     FetchContent_Declare(
@@ -24,7 +24,7 @@ if (NOT raylib_FOUND)
 endif ()
 
 set(BOX2D_VERSION 2.4.1)
-find_package(box2d QUIET)
+find_package(box2d ${BOX2D_VERSION} QUIET)
 if (NOT box2d_FOUND)
     include(FetchContent)
     FetchContent_Declare(
@@ -43,7 +43,7 @@ if (NOT box2d_FOUND)
 endif ()
 
 set(PUGIXML_VERSION 1.14)
-find_package(pugixml QUIET)
+find_package(pugixml ${PUGIXML_VERSION} QUIET)
 if (NOT pugixml_FOUND)
     include(FetchContent)
     FetchContent_Declare(
@@ -60,7 +60,7 @@ if (NOT pugixml_FOUND)
 endif ()
 
 set(MAGIC_ENUM_VERSION 0.9.6)
-find_package(magic_enum QUIET)
+find_package(magic_enum ${MAGIC_ENUM_VERSION} QUIET)
 if (NOT magic_enum_FOUND)
     include(FetchContent)
     FetchContent_Declare(
