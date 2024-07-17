@@ -114,10 +114,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     PUBLIC_HEADER "src/include"
 )
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${PROJECT_NAME} PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
         ${CMAKE_CURRENT_SOURCE_DIR}/src/include>
 )
 
-target_link_libraries(${PROJECT_NAME} raylib box2d pugixml magic_enum)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
