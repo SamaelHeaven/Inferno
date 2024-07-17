@@ -76,7 +76,7 @@ if (NOT magic_enum_FOUND)
     endif ()
 endif ()
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} STATIC
         src/inferno.cpp
         src/inferno.h
         src/include/inferno.h
