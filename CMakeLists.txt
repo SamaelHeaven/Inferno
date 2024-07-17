@@ -110,13 +110,8 @@ add_library(${PROJECT_NAME}
         src/math/Vector2.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
-
-target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
-        $<INSTALL_INTERFACE:include>
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    PUBLIC_HEADER "src/include"
 )
 
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
-
-install(DIRECTORY src/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
