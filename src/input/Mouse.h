@@ -24,8 +24,6 @@ namespace inferno {
         static bool is_button_released(MouseButton button);
 
     private:
-        static Mouse *_instance;
-
         std::vector<MouseButton> _buttons;
 
         std::set<MouseButton> _down_buttons;

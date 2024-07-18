@@ -35,8 +35,6 @@ namespace inferno {
         delete _get_instance();
     }
 
-    Renderer *Renderer::_instance = nullptr;
-
     Renderer::Renderer() {
         Game::throw_if_uninitialized();
         _screen = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
@@ -48,6 +46,7 @@ namespace inferno {
     }
 
     Renderer *Renderer::_get_instance() {
-        return _instance = _instance == nullptr ? new Renderer() : _instance;
+        static Renderer *instance = nullptr;
+        return instance = instance == nullptr ? new Renderer() : instance;
     }
 }

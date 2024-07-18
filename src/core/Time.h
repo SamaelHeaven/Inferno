@@ -18,8 +18,6 @@ namespace inferno {
         static std::chrono::nanoseconds since_launch();
 
     private:
-        static Time *_instance;
-
         float _delta;
 
         float _fixed_delta;

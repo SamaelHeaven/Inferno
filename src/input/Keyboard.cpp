@@ -39,8 +39,6 @@ namespace inferno {
         return _get_instance()->_released_keys.contains(key);
     }
 
-    Keyboard *Keyboard::_instance = nullptr;
-
     Keyboard::Keyboard() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<Key>([this](const Key key) {
@@ -97,6 +95,7 @@ namespace inferno {
     }
 
     Keyboard *Keyboard::_get_instance() {
-        return _instance = _instance == nullptr ? new Keyboard() : _instance;
+        static Keyboard *instance = nullptr;
+        return instance = instance == nullptr ? new Keyboard() : instance;
     }
 }

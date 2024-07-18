@@ -10,8 +10,6 @@ namespace inferno {
         static void clear_background(Color color);
 
     private:
-        static Renderer *_instance;
-
         internal::RenderTexture2D _screen{};
 
         Renderer();

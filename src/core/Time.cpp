@@ -55,8 +55,6 @@ namespace inferno {
         delete _get_instance();
     }
 
-    Time *Time::_instance = nullptr;
-
     Time::Time() {
         Game::throw_if_uninitialized();
         const auto now = std::chrono::high_resolution_clock::now();
@@ -71,6 +69,7 @@ namespace inferno {
     Time::~Time() = default;
 
     Time *Time::_get_instance() {
-        return _instance = _instance == nullptr ? new Time() : _instance;
+        static Time *instance = nullptr;
+        return instance = instance == nullptr ? new Time() : instance;
     }
 }

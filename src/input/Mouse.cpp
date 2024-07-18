@@ -3,8 +3,6 @@
 #include "../core/Game.h"
 
 namespace inferno {
-    Mouse *Mouse::_instance = nullptr;
-
     std::set<MouseButton> Mouse::get_down_buttons() {
         return _get_instance()->_down_buttons;
     }
@@ -88,6 +86,7 @@ namespace inferno {
     }
 
     Mouse *Mouse::_get_instance() {
-        return _instance = _instance == nullptr ? new Mouse() : _instance;
+        static Mouse *instance = nullptr;
+        return instance = instance == nullptr ? new Mouse() : instance;
     }
 }
