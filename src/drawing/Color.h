@@ -3,8 +3,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    class Color final {
-    public:
+    struct Color final {
         const static Color WHITE;
         const static Color BLACK;
         const static Color TRANSPARENT;
@@ -30,23 +29,17 @@ namespace inferno {
         const static Color BROWN;
         const static Color DARK_BROWN;
 
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+        uint8_t alpha;
+
         Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255);
 
         explicit Color(std::string hexadecimal);
 
-        [[nodiscard]] uint8_t get_red() const;
-
-        [[nodiscard]] uint8_t get_green() const;
-
-        [[nodiscard]] uint8_t get_blue() const;
-
-        [[nodiscard]] uint8_t get_alpha() const;
+        [[nodiscard]] std::string to_string() const;
 
         bool operator==(const Color &other) const;
-
-    private:
-        internal::Color _color{};
-
-        friend class Renderer;
     };
 }

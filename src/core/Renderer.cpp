@@ -7,7 +7,7 @@ namespace inferno {
     void Renderer::clear_background(const Color color) {
         const auto renderer = _get_instance();
         BeginTextureMode(renderer->_screen);
-        ClearBackground(color._color);
+        ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
         internal::EndTextureMode();
     }
 
@@ -26,8 +26,8 @@ namespace inferno {
         };
         constexpr auto position = (internal::Vector2){0, 0};
         internal::BeginDrawing();
-        ClearBackground(Color::BLACK._color);
-        DrawTexturePro(screen.texture, source, dest, position, 0.0f, Color::WHITE._color);
+        ClearBackground(internal::Color(0, 0, 0, 255));
+        DrawTexturePro(screen.texture, source, dest, position, 0.0f, internal::Color(255, 255, 255, 255));
         internal::EndDrawing();
     }
 

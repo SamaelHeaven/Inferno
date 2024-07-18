@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../inferno.h"
+
 namespace inferno {
     struct Vector2 final {
         const static Vector2 ZERO;
@@ -19,38 +21,70 @@ namespace inferno {
 
         bool operator==(Vector2 other) const;
 
-        Vector2 operator+(Vector2 other) const;
+        Vector2 operator+(Vector2 v) const;
 
-        Vector2 operator-(Vector2 other) const;
+        Vector2 operator-(Vector2 v) const;
 
-        Vector2 operator*(Vector2 other) const;
+        Vector2 operator*(Vector2 v) const;
 
-        Vector2 operator/(Vector2 other) const;
+        Vector2 operator/(Vector2 v) const;
 
-        Vector2 &operator+=(Vector2 other);
+        Vector2 &operator+=(Vector2 v);
 
-        Vector2 &operator-=(Vector2 other);
+        Vector2 &operator-=(Vector2 v);
 
-        Vector2 &operator*=(Vector2 other);
+        Vector2 &operator*=(Vector2 v);
 
-        Vector2 &operator/=(Vector2 other);
+        Vector2 &operator/=(Vector2 v);
 
-        bool operator==(float xy) const;
+        Vector2 operator+(float f) const;
 
-        Vector2 operator+(float xy) const;
+        Vector2 operator-(float f) const;
 
-        Vector2 operator-(float xy) const;
+        Vector2 operator*(float f) const;
 
-        Vector2 operator*(float xy) const;
+        Vector2 operator/(float f) const;
 
-        Vector2 operator/(float xy) const;
+        Vector2 &operator+=(float f);
 
-        Vector2 &operator+=(float xy);
+        Vector2 &operator-=(float f);
 
-        Vector2 &operator-=(float xy);
+        Vector2 &operator*=(float f);
 
-        Vector2 &operator*=(float xy);
+        Vector2 &operator/=(float f);
 
-        Vector2 &operator/=(float xy);
+        [[nodiscard]] std::string to_string() const;
+
+        [[nodiscard]] Vector2 clamp(Vector2 min, Vector2 max) const;
+
+        [[nodiscard]] Vector2 clamp(float min, float max) const;
+
+        [[nodiscard]] Vector2 clamp_x(float min, float max) const;
+
+        [[nodiscard]] Vector2 clamp_y(float min, float max) const;
+
+        [[nodiscard]] float distance_to(Vector2 v) const;
+
+        [[nodiscard]] float dot(Vector2 v) const;
+
+        [[nodiscard]] float cross(Vector2 v) const;
+
+        [[nodiscard]] Vector2 rotate(float degrees, Vector2 v) const;
+
+        [[nodiscard]] float length() const;
+
+        [[nodiscard]] float angle_between(Vector2 v) const;
+
+        [[nodiscard]] Vector2 reflect(Vector2 v) const;
+
+        [[nodiscard]] Vector2 lerp(Vector2 end, float t) const;
+
+        [[nodiscard]] Vector2 slerp(Vector2 end, float t) const;
+
+        [[nodiscard]] Vector2 round() const;
+
+        [[nodiscard]] Vector2 abs() const;
+
+        [[nodiscard]] Vector2 normalize() const;
     };
 }
