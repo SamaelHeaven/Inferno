@@ -11,6 +11,8 @@ namespace inferno {
         float x;
         float y;
 
+        Vector2();
+
         explicit Vector2(float xy);
 
         Vector2(float x, float y);
