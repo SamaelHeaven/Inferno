@@ -16,9 +16,5 @@ namespace inferno {
         bool vsync = true;
         bool resizable = true;
         bool debug = false;
-
-        GameConfig();
-
-        GameConfig(const GameConfig &config);
     };
 }
