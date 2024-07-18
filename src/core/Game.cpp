@@ -39,6 +39,9 @@ namespace inferno {
 
     void Game::set_screen_width(const int32_t width) {
         throw_if_uninitialized();
+        if (get_screen_width() == width) {
+            return;
+        }
         internal::SetWindowSize(width, get_screen_height());
     }
 
@@ -49,7 +52,24 @@ namespace inferno {
 
     void Game::set_screen_height(const int32_t height) {
         throw_if_uninitialized();
+        if (get_screen_height() == height) {
+            return;
+        }
         internal::SetWindowSize(get_screen_width(), height);
+    }
+
+    Vector2 Game::get_screen_size() {
+        throw_if_uninitialized();
+        return {get_screen_width(), get_screen_height()};
+    }
+
+    void Game::set_screen_size(Vector2 size) {
+        throw_if_uninitialized();
+        size = size.round();
+        if (get_screen_size() == size) {
+            return;
+        }
+        internal::SetWindowSize(static_cast<int32_t>(size.x), static_cast<int32_t>(size.y));
     }
 
     int32_t Game::get_width() {
@@ -60,6 +80,59 @@ namespace inferno {
     int32_t Game::get_height() {
         throw_if_uninitialized();
         return _get_instance()->_config.height;
+    }
+
+    Vector2 Game::get_size() {
+        throw_if_uninitialized();
+        return {get_width(), get_height()};
+    }
+
+    std::string Game::get_title() {
+        throw_if_uninitialized();
+        return _get_instance()->_config.title;
+    }
+
+    void Game::set_title(const std::string &title) {
+        throw_if_uninitialized();
+        if (get_title() == title) {
+            return;
+        }
+        _get_instance()->_config.title = title;
+        internal::SetWindowTitle(title.c_str());
+    }
+
+    bool Game::is_fullscreen() {
+        throw_if_uninitialized();
+        return internal::IsWindowFullscreen();
+    }
+
+    void Game::set_fullscreen(const bool fullscreen) {
+        throw_if_uninitialized();
+        if (is_fullscreen() != fullscreen) {
+            toggle_fullscreen();
+        }
+    }
+
+    void Game::toggle_fullscreen() {
+        throw_if_uninitialized();
+#ifdef PLATFORM_DESKTOP
+        internal::ToggleFullscreen();
+#endif
+    }
+
+    int32_t Game::get_fps_target() {
+        throw_if_uninitialized();
+        return _get_instance()->_config.fps_target;
+    }
+
+    void Game::set_fps_target(const int32_t fps_target) {
+        throw_if_uninitialized();
+        if (get_fps_target() == fps_target) {
+            return;
+        }
+        _get_instance()->_config.fps_target = fps_target;
+        internal::SetTargetFPS(fps_target);
+        Time::_restart();
     }
 
     bool Game::is_focused() {
@@ -99,10 +172,8 @@ namespace inferno {
         internal::SetTargetFPS(config.fps_target);
         SetExitKey(internal::KeyboardKey::KEY_NULL);
         internal::SetWindowSize(screen_width, screen_height);
+        toggle_fullscreen();
 #ifdef PLATFORM_DESKTOP
-        if (config.fullscreen) {
-            internal::ToggleFullscreen();
-        }
         if (file::is_file(config.icon)) {
             const auto icon = internal::LoadImage(file::format_path(config.icon).c_str());
             SetWindowIcon(icon);

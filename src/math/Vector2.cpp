@@ -1,25 +1,15 @@
 #include "./Vector2.h"
 
 namespace inferno {
-    const Vector2 Vector2::ZERO = Vector2();
-    const Vector2 Vector2::UP = Vector2(0, -1);
-    const Vector2 Vector2::DOWN = Vector2(0, 1);
-    const Vector2 Vector2::LEFT = Vector2(-1, 0);
-    const Vector2 Vector2::RIGHT = Vector2(1, 0);
+    const Vector2 Vector2::ZERO{};
+    const Vector2 Vector2::UP{0, -1};
+    const Vector2 Vector2::DOWN{0, 1};
+    const Vector2 Vector2::LEFT{-1, 0};
+    const Vector2 Vector2::RIGHT{1, 0};
 
     Vector2::Vector2() {
         x = 0;
         y = 0;
-    }
-
-    Vector2::Vector2(const float xy) {
-        x = xy;
-        y = xy;
-    }
-
-    Vector2::Vector2(const float x, const float y) {
-        this->x = x;
-        this->y = y;
     }
 
     bool Vector2::operator==(const Vector2 other) const {

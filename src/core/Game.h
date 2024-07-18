@@ -4,6 +4,7 @@
 
 #include "./GameConfig.h"
 #include "./Scene.h"
+#include "../math/Vector2.h"
 
 namespace inferno {
     class Game final {
@@ -36,9 +37,29 @@ namespace inferno {
 
         static void set_screen_height(int32_t height);
 
+        static Vector2 get_screen_size();
+
+        static void set_screen_size(Vector2 size);
+
         static int32_t get_width();
 
         static int32_t get_height();
+
+        static Vector2 get_size();
+
+        static std::string get_title();
+
+        static void set_title(const std::string &title);
+
+        static bool is_fullscreen();
+
+        static void set_fullscreen(bool fullscreen);
+
+        static void toggle_fullscreen();
+
+        static int32_t get_fps_target();
+
+        static void set_fps_target(int32_t fps_target);
 
         static bool is_focused();
 

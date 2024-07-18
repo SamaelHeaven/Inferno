@@ -15,9 +15,18 @@ namespace inferno {
 
         Vector2();
 
-        explicit Vector2(float xy);
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        explicit Vector2(T xy) {
+            x = static_cast<float>(xy);
+            y = static_cast<float>(xy);
+        }
 
-        Vector2(float x, float y);
+        template<typename TX, typename TY, std::enable_if_t<std::is_arithmetic_v<TX> > * = nullptr, std::enable_if<
+            std::is_arithmetic_v<TY> >* = nullptr>
+        Vector2(TX x, TY y) {
+            this->x = static_cast<float>(x);
+            this->y = static_cast<float>(y);
+        }
 
         bool operator==(Vector2 other) const;
 
@@ -52,6 +61,46 @@ namespace inferno {
         Vector2 &operator*=(float f);
 
         Vector2 &operator/=(float f);
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 operator+(T t) const {
+            return *this + static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 operator-(T t) const {
+            return *this - static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 operator*(T t) const {
+            return *this * static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 operator/(T t) const {
+            return *this / static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 &operator+=(T t) {
+            return *this += static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 &operator-=(T t) {
+            return *this -= static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 &operator*=(T t) {
+            return *this *= static_cast<float>(t);
+        }
+
+        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        Vector2 &operator/=(T t) {
+            return *this /= static_cast<float>(t);
+        }
 
         [[nodiscard]] std::string to_string() const;
 
