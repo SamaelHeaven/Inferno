@@ -134,8 +134,8 @@ namespace inferno {
 
     Vector2 Vector2::rotate(const float degrees, const Vector2 v) const {
         const auto rad = degrees * (PI / 180);
-        const auto cos = cos(rad);
-        const auto sin = sin(rad);
+        const auto cos = std::cos(rad);
+        const auto sin = std::sin(rad);
         const auto translated = *this - v;
         const auto rotatedX = translated.x * cos - translated.y * sin;
         const auto rotatedY = translated.x * sin + translated.y * cos;
@@ -155,7 +155,7 @@ namespace inferno {
     }
 
     Vector2 Vector2::reflect(const Vector2 v) const {
-        const auto dot = dot(v);
+        const auto dot = this->dot(v);
         return {x - 2 * dot * v.x, y - 2 * dot * v.y};
     }
 
