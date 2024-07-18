@@ -190,4 +190,22 @@ namespace inferno {
     Vector2 Vector2::normalize() const {
         return *this / length();
     }
+
+    float Vector2::modifier_x() const {
+        if (x == 0) {
+            return 0;
+        }
+        return x > 0 ? 1 : -1;
+    }
+
+    float Vector2::modifier_y() const {
+        if (y == 0) {
+            return 0;
+        }
+        return y > 0 ? 1 : -1;
+    }
+
+    Vector2 Vector2::modifiers() const {
+        return {modifier_x(), modifier_y()};
+    }
 }

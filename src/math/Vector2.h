@@ -86,5 +86,11 @@ namespace inferno {
         [[nodiscard]] Vector2 abs() const;
 
         [[nodiscard]] Vector2 normalize() const;
+
+        [[nodiscard]] float modifier_x() const;
+
+        [[nodiscard]] float modifier_y() const;
+
+        [[nodiscard]] Vector2 modifiers() const;
     };
 }
