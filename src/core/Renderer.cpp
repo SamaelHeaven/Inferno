@@ -4,7 +4,7 @@
 #include "../drawing/Color.h"
 
 namespace inferno {
-    void Renderer::clear_background(const Color &color) {
+    void Renderer::clear_background(const Color color) {
         const auto renderer = _get_instance();
         BeginTextureMode(renderer->_screen);
         ClearBackground(color._color);

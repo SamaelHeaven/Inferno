@@ -2,10 +2,12 @@
 
 #include "../inferno.h"
 
+#include "../drawing/Color.h"
+
 namespace inferno {
     class Renderer final {
     public:
-        static void clear_background(const class Color &color);
+        static void clear_background(Color color);
 
     private:
         static Renderer *_instance;

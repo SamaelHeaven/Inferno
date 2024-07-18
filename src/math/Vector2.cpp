@@ -22,44 +22,44 @@ namespace inferno {
         this->y = y;
     }
 
-    bool Vector2::operator==(const Vector2 &other) const {
+    bool Vector2::operator==(const Vector2 other) const {
         return x == other.x && y == other.y;
     }
 
-    Vector2 Vector2::operator+(const Vector2 &other) const {
+    Vector2 Vector2::operator+(const Vector2 other) const {
         return {x + other.x, y + other.y};
     }
 
-    Vector2 Vector2::operator-(const Vector2 &other) const {
+    Vector2 Vector2::operator-(const Vector2 other) const {
         return {x - other.x, y - other.y};
     }
 
-    Vector2 Vector2::operator*(const Vector2 &other) const {
+    Vector2 Vector2::operator*(const Vector2 other) const {
         return {x * other.x, y * other.y};
     }
 
-    Vector2 Vector2::operator/(const Vector2 &other) const {
+    Vector2 Vector2::operator/(const Vector2 other) const {
         const auto x = other.x == 0 ? 0 : this->x / other.x;
         const auto y = other.y == 0 ? 0 : this->y / other.y;
         return {x, y};
     }
 
-    Vector2 &Vector2::operator+=(const Vector2 &other) {
+    Vector2 &Vector2::operator+=(const Vector2 other) {
         *this = *this + other;
         return *this;
     }
 
-    Vector2 &Vector2::operator-=(const Vector2 &other) {
+    Vector2 &Vector2::operator-=(const Vector2 other) {
         *this = *this - other;
         return *this;
     }
 
-    Vector2 &Vector2::operator*=(const Vector2 &other) {
+    Vector2 &Vector2::operator*=(const Vector2 other) {
         *this = *this * other;
         return *this;
     }
 
-    Vector2 &Vector2::operator/=(const Vector2 &other) {
+    Vector2 &Vector2::operator/=(const Vector2 other) {
         *this = *this / other;
         return *this;
     }

@@ -17,23 +17,23 @@ namespace inferno {
 
         Vector2(float x, float y);
 
-        bool operator==(const Vector2 &other) const;
+        bool operator==(Vector2 other) const;
 
-        Vector2 operator+(const Vector2 &other) const;
+        Vector2 operator+(Vector2 other) const;
 
-        Vector2 operator-(const Vector2 &other) const;
+        Vector2 operator-(Vector2 other) const;
 
-        Vector2 operator*(const Vector2 &other) const;
+        Vector2 operator*(Vector2 other) const;
 
-        Vector2 operator/(const Vector2 &other) const;
+        Vector2 operator/(Vector2 other) const;
 
-        Vector2 &operator+=(const Vector2 &other);
+        Vector2 &operator+=(Vector2 other);
 
-        Vector2 &operator-=(const Vector2 &other);
+        Vector2 &operator-=(Vector2 other);
 
-        Vector2 &operator*=(const Vector2 &other);
+        Vector2 &operator*=(Vector2 other);
 
-        Vector2 &operator/=(const Vector2 &other);
+        Vector2 &operator/=(Vector2 other);
 
         bool operator==(float xy) const;
 
