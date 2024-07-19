@@ -41,7 +41,7 @@ namespace inferno {
 
     void Mouse::set_screen_position(Vector2 position) {
         const auto mouse = _get_instance();
-        position = position.round();
+        position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
         if (mouse->_position.round() == position) {
             return;
         }
@@ -83,7 +83,10 @@ namespace inferno {
             }
             return;
         }
-        mouse->_position = {internal::GetMouseX(), internal::GetMouseY()};
+        mouse->_position = Vector2(
+            internal::GetMouseX(),
+            internal::GetMouseY()
+        ).clamp(Vector2::ZERO, Game::get_screen_size()).round();
         for (auto button: mouse->_buttons) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {
