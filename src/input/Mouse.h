@@ -32,6 +32,8 @@ namespace inferno {
 
         static void set_screen_position(Vector2 position);
 
+        static bool is_on_screen();
+
     private:
         std::vector<MouseButton> _buttons;
 

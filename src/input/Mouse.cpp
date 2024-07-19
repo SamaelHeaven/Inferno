@@ -56,7 +56,7 @@ namespace inferno {
 
     void Mouse::set_screen_position(Vector2 position) {
         const auto mouse = _get_instance();
-        if (!Game::is_focused()) {
+        if (!Game::is_focused() || !is_on_screen()) {
             return;
         }
         position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
@@ -65,6 +65,11 @@ namespace inferno {
         }
         mouse->_screen_position = position;
         internal::SetMousePosition(static_cast<int32_t>(position.x), static_cast<int32_t>(position.y));
+    }
+
+    bool Mouse::is_on_screen() {
+        _get_instance();
+        return internal::IsCursorOnScreen();
     }
 
     Mouse::Mouse() {
