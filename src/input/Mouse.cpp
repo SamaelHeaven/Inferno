@@ -1,7 +1,7 @@
 #include "./Mouse.h"
 
 #include "../core/Game.h"
-#include "../math/coordinate.h"
+#include "../math/coordinates.h"
 
 namespace inferno {
     std::set<MouseButton> Mouse::get_down_buttons() {
