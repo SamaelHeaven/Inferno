@@ -35,6 +35,20 @@ namespace inferno {
         return _get_instance()->_released_buttons.contains(button);
     }
 
+    Vector2 Mouse::get_screen_position() {
+        return _get_instance()->_position;
+    }
+
+    void Mouse::set_screen_position(Vector2 position) {
+        const auto mouse = _get_instance();
+        position = position.round();
+        if (mouse->_position.round() == position) {
+            return;
+        }
+        mouse->_position = position;
+        internal::SetMousePosition(static_cast<int32_t>(position.x), static_cast<int32_t>(position.y));
+    }
+
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<MouseButton>([this](const MouseButton key) {
@@ -69,6 +83,7 @@ namespace inferno {
             }
             return;
         }
+        mouse->_position = {internal::GetMouseX(), internal::GetMouseY()};
         for (auto button: mouse->_buttons) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {

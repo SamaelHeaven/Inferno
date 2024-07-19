@@ -3,6 +3,7 @@
 #include "../inferno.h"
 
 #include "./MouseButton.h"
+#include "../math/Vector2.h"
 
 namespace inferno {
     class Mouse final {
@@ -23,6 +24,10 @@ namespace inferno {
 
         static bool is_button_released(MouseButton button);
 
+        static Vector2 get_screen_position();
+
+        static void set_screen_position(Vector2 position);
+
     private:
         std::vector<MouseButton> _buttons;
 
@@ -33,6 +38,8 @@ namespace inferno {
         std::set<MouseButton> _pressed_buttons;
 
         std::set<MouseButton> _released_buttons;
+
+        Vector2 _position;
 
         Mouse();
 
