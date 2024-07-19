@@ -1,4 +1,5 @@
-#include "./coordinate.h"
+#include "./coordinates.h"
+
 #include "../core/Game.h"
 
 namespace inferno::coordinates {
