@@ -37,10 +37,12 @@ namespace inferno {
     }
 
     Vector2 Mouse::get_position() {
+        _get_instance();
         return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size());
     }
 
     void Mouse::set_position(const Vector2 position) {
+        _get_instance();
         set_screen_position(coordinates::local_to_screen(position.clamp(Vector2::ZERO, Game::get_size())));
     }
 
@@ -50,6 +52,9 @@ namespace inferno {
 
     void Mouse::set_screen_position(Vector2 position) {
         const auto mouse = _get_instance();
+        if (!Game::is_focused()) {
+            return;
+        }
         position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
         if (mouse->_screen_position.round() == position) {
             return;
