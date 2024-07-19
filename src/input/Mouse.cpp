@@ -55,6 +55,10 @@ namespace inferno {
         if (!Game::is_focused()) {
             return;
         }
+        position = position.round();
+        if (mouse->_screen_position == position) {
+            return;
+        }
         position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
         if (mouse->_screen_position == position) {
             return;
