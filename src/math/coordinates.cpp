@@ -7,8 +7,7 @@ namespace inferno::coordinates {
         const auto size = Game::get_size();
         const auto screen_size = Game::get_screen_size();
         const auto scale = std::min(screen_size.x / size.x, screen_size.y / size.y);
-        coordinates.x -= (screen_size.x - size.x * scale) * 0.5f;
-        coordinates.y -= (screen_size.y - size.y * scale) * 0.5f;
+        coordinates -= (screen_size - size * scale) * 0.5;
         coordinates /= scale;
         return coordinates;
     }
@@ -18,8 +17,7 @@ namespace inferno::coordinates {
         const auto screen_size = Game::get_screen_size();
         const auto scale = std::min(screen_size.x / size.x, screen_size.y / size.y);
         coordinates *= scale;
-        coordinates.x += (screen_size.x - size.x * scale) * 0.5f;
-        coordinates.y += (screen_size.y - size.y * scale) * 0.5f;
+        coordinates += (screen_size - size * scale) * 0.5;
         return coordinates;
     }
 }
