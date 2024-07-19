@@ -34,7 +34,7 @@ namespace inferno {
         uint8_t blue;
         uint8_t alpha;
 
-        Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255);
+        explicit Color(uint8_t red = 0, uint8_t green = 0, uint8_t blue = 0, uint8_t alpha = 255);
 
         explicit Color(std::string hexadecimal);
 
