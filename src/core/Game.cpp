@@ -150,6 +150,7 @@ namespace inferno {
         Mouse::_destroy();
         Renderer::_destroy();
         internal::CloseWindow();
+        exit(0);
     }
 
     Game *Game::_instance = nullptr;
