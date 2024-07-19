@@ -41,7 +41,7 @@ namespace inferno {
     }
 
     void Mouse::set_position(const Vector2 position) {
-        set_screen_position(coordinates::local_to_screen(position).clamp(Vector2::ZERO, Game::get_size()));
+        set_screen_position(coordinates::local_to_screen(position.clamp(Vector2::ZERO, Game::get_size())));
     }
 
     Vector2 Mouse::get_screen_position() {
