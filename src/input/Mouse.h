@@ -24,6 +24,10 @@ namespace inferno {
 
         static bool is_button_released(MouseButton button);
 
+        static Vector2 get_position();
+
+        static void set_position(Vector2 position);
+
         static Vector2 get_screen_position();
 
         static void set_screen_position(Vector2 position);
@@ -39,7 +43,7 @@ namespace inferno {
 
         std::set<MouseButton> _released_buttons;
 
-        Vector2 _position;
+        Vector2 _screen_position;
 
         Mouse();
 

@@ -107,6 +107,8 @@ add_library(${PROJECT_NAME} STATIC
         src/drawing/Color.h
         src/math/Vector2.cpp
         src/math/Vector2.h
+        src/math/coordinates.cpp
+        src/math/coordinates.h
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)

@@ -1,6 +1,7 @@
 #include "./Mouse.h"
 
 #include "../core/Game.h"
+#include "../math/coordinate.h"
 
 namespace inferno {
     std::set<MouseButton> Mouse::get_down_buttons() {
@@ -35,17 +36,25 @@ namespace inferno {
         return _get_instance()->_released_buttons.contains(button);
     }
 
+    Vector2 Mouse::get_position() {
+        return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size());
+    }
+
+    void Mouse::set_position(const Vector2 position) {
+        set_screen_position(coordinates::local_to_screen(position).clamp(Vector2::ZERO, Game::get_size()));
+    }
+
     Vector2 Mouse::get_screen_position() {
-        return _get_instance()->_position;
+        return _get_instance()->_screen_position;
     }
 
     void Mouse::set_screen_position(Vector2 position) {
         const auto mouse = _get_instance();
         position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
-        if (mouse->_position.round() == position) {
+        if (mouse->_screen_position.round() == position) {
             return;
         }
-        mouse->_position = position;
+        mouse->_screen_position = position;
         internal::SetMousePosition(static_cast<int32_t>(position.x), static_cast<int32_t>(position.y));
     }
 
@@ -83,7 +92,7 @@ namespace inferno {
             }
             return;
         }
-        mouse->_position = Vector2(
+        mouse->_screen_position = Vector2(
             internal::GetMouseX(),
             internal::GetMouseY()
         ).clamp(Vector2::ZERO, Game::get_screen_size()).round();
