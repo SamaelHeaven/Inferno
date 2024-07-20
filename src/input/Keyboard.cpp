@@ -4,97 +4,97 @@
 
 namespace inferno {
     std::string Keyboard::get_typed_string() {
-        return _get_instance()->_typed_string;
+        return get_()->typed_string_;
     }
 
     std::set<Key> Keyboard::get_down_keys() {
-        return _get_instance()->_down_keys;
+        return get_()->down_keys_;
     }
 
     std::set<Key> Keyboard::get_up_keys() {
-        return _get_instance()->_up_keys;
+        return get_()->up_keys_;
     }
 
     std::set<Key> Keyboard::get_pressed_keys() {
-        return _get_instance()->_pressed_keys;
+        return get_()->pressed_keys_;
     }
 
     std::set<Key> Keyboard::get_released_keys() {
-        return _get_instance()->_released_keys;
+        return get_()->released_keys_;
     }
 
     bool Keyboard::is_key_down(const Key key) {
-        return _get_instance()->_down_keys.contains(key);
+        return get_()->down_keys_.contains(key);
     }
 
     bool Keyboard::is_key_up(const Key key) {
-        return _get_instance()->_up_keys.contains(key);
+        return get_()->up_keys_.contains(key);
     }
 
     bool Keyboard::is_key_pressed(const Key key) {
-        return _get_instance()->_pressed_keys.contains(key);
+        return get_()->pressed_keys_.contains(key);
     }
 
     bool Keyboard::is_key_released(const Key key) {
-        return _get_instance()->_released_keys.contains(key);
+        return get_()->released_keys_.contains(key);
     }
 
     Keyboard::Keyboard() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<Key>([this](const Key key) {
-            _keys.push_back(key);
+            keys_.push_back(key);
         });
     }
 
     Keyboard::~Keyboard() = default;
 
-    void Keyboard::_update() {
-        _reset_state();
-        _update_state();
+    void Keyboard::update_() {
+        reset_state_();
+        update_state_();
     }
 
-    void Keyboard::_destroy() {
-        delete _get_instance();
+    void Keyboard::destroy_() {
+        delete get_();
     }
 
-    void Keyboard::_reset_state() {
-        const auto keyboard = _get_instance();
-        keyboard->_typed_string = std::string();
-        keyboard->_down_keys.clear();
-        keyboard->_up_keys.clear();
-        keyboard->_pressed_keys.clear();
-        keyboard->_released_keys.clear();
+    void Keyboard::reset_state_() {
+        const auto keyboard = get_();
+        keyboard->typed_string_ = std::string();
+        keyboard->down_keys_.clear();
+        keyboard->up_keys_.clear();
+        keyboard->pressed_keys_.clear();
+        keyboard->released_keys_.clear();
     }
 
-    void Keyboard::_update_state() {
-        const auto keyboard = _get_instance();
+    void Keyboard::update_state_() {
+        const auto keyboard = get_();
         if (!Game::is_focused()) {
-            for (auto key: keyboard->_keys) {
-                keyboard->_up_keys.insert(key);
+            for (auto key: keyboard->keys_) {
+                keyboard->up_keys_.insert(key);
             }
             return;
         }
         char charTyped;
         while ((charTyped = static_cast<char>(internal::GetCharPressed()))) {
-            keyboard->_typed_string.push_back(charTyped);
+            keyboard->typed_string_.push_back(charTyped);
         }
-        for (auto key: keyboard->_keys) {
+        for (auto key: keyboard->keys_) {
             const auto key_code = static_cast<int32_t>(key);
             if (internal::IsKeyDown(key_code)) {
-                keyboard->_down_keys.insert(key);
+                keyboard->down_keys_.insert(key);
             } else {
-                keyboard->_up_keys.insert(key);
+                keyboard->up_keys_.insert(key);
             }
             if (internal::IsKeyPressed(key_code)) {
-                keyboard->_pressed_keys.insert(key);
+                keyboard->pressed_keys_.insert(key);
             }
             if (internal::IsKeyReleased(key_code)) {
-                keyboard->_released_keys.insert(key);
+                keyboard->released_keys_.insert(key);
             }
         }
     }
 
-    Keyboard *Keyboard::_get_instance() {
+    Keyboard *Keyboard::get_() {
         static Keyboard *instance = nullptr;
         return instance = instance == nullptr ? new Keyboard() : instance;
     }

@@ -18,29 +18,29 @@ namespace inferno {
         static std::chrono::nanoseconds since_launch();
 
     private:
-        float _delta;
+        float delta_;
 
-        float _fixed_delta;
+        float fixed_delta_;
 
-        float _average_fps;
+        float average_fps_;
 
-        uint64_t _frame_count;
+        uint64_t frame_count_;
 
-        std::chrono::nanoseconds _launch_time{};
+        std::chrono::nanoseconds launch_time_{};
 
-        std::chrono::nanoseconds _start_time{};
+        std::chrono::nanoseconds start_time_{};
 
         Time();
 
         ~Time();
 
-        static void _update();
+        static void update_();
 
-        static void _restart();
+        static void restart_();
 
-        static void _destroy();
+        static void destroy_();
 
-        static Time *_get_instance();
+        static Time *get_();
 
         friend class Game;
 

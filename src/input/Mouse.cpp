@@ -5,44 +5,44 @@
 
 namespace inferno {
     std::set<MouseButton> Mouse::get_down_buttons() {
-        return _get_instance()->_down_buttons;
+        return get_()->down_buttons_;
     }
 
     std::set<MouseButton> Mouse::get_up_buttons() {
-        return _get_instance()->_up_buttons;
+        return get_()->up_buttons_;
     }
 
     std::set<MouseButton> Mouse::get_pressed_buttons() {
-        return _get_instance()->_pressed_buttons;
+        return get_()->pressed_buttons_;
     }
 
     std::set<MouseButton> Mouse::get_released_buttons() {
-        return _get_instance()->_released_buttons;
+        return get_()->released_buttons_;
     }
 
     bool Mouse::is_button_down(const MouseButton button) {
-        return _get_instance()->_down_buttons.contains(button);
+        return get_()->down_buttons_.contains(button);
     }
 
     bool Mouse::is_button_up(const MouseButton button) {
-        return _get_instance()->_up_buttons.contains(button);
+        return get_()->up_buttons_.contains(button);
     }
 
     bool Mouse::is_button_pressed(const MouseButton button) {
-        return _get_instance()->_pressed_buttons.contains(button);
+        return get_()->pressed_buttons_.contains(button);
     }
 
     bool Mouse::is_button_released(const MouseButton button) {
-        return _get_instance()->_released_buttons.contains(button);
+        return get_()->released_buttons_.contains(button);
     }
 
     Vector2 Mouse::get_position() {
-        _get_instance();
+        get_();
         return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size()).round();
     }
 
     void Mouse::set_position(Vector2 position) {
-        _get_instance();
+        get_();
         position = position.clamp(Vector2::ZERO, Game::get_size().round());
         if (get_position() == position) {
             return;
@@ -51,82 +51,82 @@ namespace inferno {
     }
 
     Vector2 Mouse::get_screen_position() {
-        return _get_instance()->_screen_position;
+        return get_()->screen_position_;
     }
 
     void Mouse::set_screen_position(Vector2 position) {
-        const auto mouse = _get_instance();
+        const auto mouse = get_();
         if (!Game::is_focused()) {
             return;
         }
         position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
-        if (mouse->_screen_position == position) {
+        if (mouse->screen_position_ == position) {
             return;
         }
-        mouse->_screen_position = position;
+        mouse->screen_position_ = position;
         internal::SetMousePosition(static_cast<int32_t>(position.x), static_cast<int32_t>(position.y));
     }
 
     bool Mouse::is_on_screen() {
-        _get_instance();
+        get_();
         return internal::IsCursorOnScreen();
     }
 
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<MouseButton>([this](const MouseButton key) {
-            _buttons.push_back(key);
+            buttons_.push_back(key);
         });
     }
 
     Mouse::~Mouse() = default;
 
-    void Mouse::_update() {
-        _reset_state();
-        _update_state();
+    void Mouse::update_() {
+        reset_state_();
+        update_state_();
     }
 
-    void Mouse::_destroy() {
-        delete _get_instance();
+    void Mouse::destroy_() {
+        delete get_();
     }
 
-    void Mouse::_reset_state() {
-        const auto mouse = _get_instance();
-        mouse->_down_buttons.clear();
-        mouse->_up_buttons.clear();
-        mouse->_pressed_buttons.clear();
-        mouse->_released_buttons.clear();
+    void Mouse::reset_state_() {
+        const auto mouse = get_();
+        mouse->down_buttons_.clear();
+        mouse->up_buttons_.clear();
+        mouse->pressed_buttons_.clear();
+        mouse->released_buttons_.clear();
     }
 
-    void Mouse::_update_state() {
-        const auto mouse = _get_instance();
+    void Mouse::update_state_() {
+        const auto mouse = get_();
         if (!Game::is_focused()) {
-            for (auto button: mouse->_buttons) {
-                mouse->_up_buttons.insert(button);
+            for (auto button: mouse->buttons_) {
+                mouse->up_buttons_.insert(button);
             }
             return;
         }
-        mouse->_screen_position = Vector2(
+        mouse->screen_position_ = Vector2(
             internal::GetMouseX(),
             internal::GetMouseY()
         ).clamp(Vector2::ZERO, Game::get_screen_size()).round();
-        for (auto button: mouse->_buttons) {
+        for (auto button: mouse->buttons_) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {
-                mouse->_down_buttons.insert(button);
+                mouse->down_buttons_.insert(button);
             } else {
-                mouse->_up_buttons.insert(button);
+                mouse->up_buttons_.insert(button);
             }
             if (internal::IsMouseButtonPressed(button_code)) {
-                mouse->_pressed_buttons.insert(button);
+                mouse->pressed_buttons_.insert(button);
             }
             if (internal::IsMouseButtonReleased(button_code)) {
-                mouse->_released_buttons.insert(button);
+                mouse->released_buttons_.insert(button);
             }
         }
     }
 
-    Mouse *Mouse::_get_instance() {
+    Mouse *Mouse::get_() {
         static Mouse *instance = nullptr;
         return instance = instance == nullptr ? new Mouse() : instance;
     }

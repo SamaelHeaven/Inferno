@@ -100,6 +100,7 @@ add_library(${PROJECT_NAME} STATIC
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
+        src/input/Cursor.h
         src/input/MouseButton.h
         src/input/Mouse.cpp
         src/input/Mouse.h

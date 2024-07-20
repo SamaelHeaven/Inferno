@@ -26,31 +26,31 @@ namespace inferno {
         static bool is_key_released(Key key);
 
     private:
-        std::string _typed_string;
+        std::string typed_string_;
 
-        std::vector<Key> _keys;
+        std::vector<Key> keys_;
 
-        std::set<Key> _down_keys;
+        std::set<Key> down_keys_;
 
-        std::set<Key> _up_keys;
+        std::set<Key> up_keys_;
 
-        std::set<Key> _pressed_keys;
+        std::set<Key> pressed_keys_;
 
-        std::set<Key> _released_keys;
+        std::set<Key> released_keys_;
 
         Keyboard();
 
         ~Keyboard();
 
-        static void _update();
+        static void update_();
 
-        static void _destroy();
+        static void destroy_();
 
-        static void _reset_state();
+        static void reset_state_();
 
-        static void _update_state();
+        static void update_state_();
 
-        static Keyboard *_get_instance();
+        static Keyboard *get_();
 
         friend class Game;
     };

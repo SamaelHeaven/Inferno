@@ -4,72 +4,72 @@
 
 namespace inferno {
     float Time::delta() {
-        return _get_instance()->_delta;
+        return get_()->delta_;
     }
 
     float Time::fixed_delta() {
-        return _get_instance()->_fixed_delta;
+        return get_()->fixed_delta_;
     }
 
     float Time::average_fps() {
-        return _get_instance()->_average_fps;
+        return get_()->average_fps_;
     }
 
     float Time::current_fps() {
-        _get_instance();
+        get_();
         const auto delta_time = delta();
         return delta_time <= 0.f ? 0.f : 1 / delta_time;
     }
 
     std::chrono::nanoseconds Time::since_start() {
-        const auto time = _get_instance();
+        const auto time = get_();
         const auto now = std::chrono::high_resolution_clock::now();
-        const auto result = now.time_since_epoch() - time->_start_time;
+        const auto result = now.time_since_epoch() - time->start_time_;
         return std::chrono::duration_cast<std::chrono::nanoseconds>(result);
     }
 
     std::chrono::nanoseconds Time::since_launch() {
-        const auto time = _get_instance();
+        const auto time = get_();
         const auto now = std::chrono::high_resolution_clock::now();
-        const auto result = now.time_since_epoch() - time->_launch_time;
+        const auto result = now.time_since_epoch() - time->launch_time_;
         return std::chrono::duration_cast<std::chrono::nanoseconds>(result);
     }
 
-    void Time::_update() {
-        const auto time = _get_instance();
+    void Time::update_() {
+        const auto time = get_();
         const auto time_in_seconds = static_cast<float>(since_start().count()) / 1e9f;
-        time->_frame_count++;
-        time->_delta = internal::GetFrameTime();
-        time->_average_fps = time_in_seconds == 0.f ? 0.f : static_cast<float>(time->_frame_count) / time_in_seconds;
+        time->frame_count_++;
+        time->delta_ = internal::GetFrameTime();
+        time->average_fps_ = time_in_seconds == 0.f ? 0.f : static_cast<float>(time->frame_count_) / time_in_seconds;
     }
 
-    void Time::_restart() {
-        const auto time = _get_instance();
+    void Time::restart_() {
+        const auto time = get_();
         const auto now = std::chrono::high_resolution_clock::now();
-        time->_start_time = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
-        time->_delta = 0;
-        time->_frame_count = 0;
-        time->_average_fps = 0;
+        time->start_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+        time->delta_ = 0;
+        time->frame_count_ = 0;
+        time->average_fps_ = 0;
     }
 
-    void Time::_destroy() {
-        delete _get_instance();
+    void Time::destroy_() {
+        delete get_();
     }
 
     Time::Time() {
         Game::throw_if_uninitialized();
         const auto now = std::chrono::high_resolution_clock::now();
-        _launch_time = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
-        _start_time = _launch_time;
-        _delta = 0;
-        _fixed_delta = 1 / 60.f;
-        _average_fps = 0;
-        _frame_count = 0;
+        launch_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+        start_time_ = launch_time_;
+        delta_ = 0;
+        fixed_delta_ = 1 / 60.f;
+        average_fps_ = 0;
+        frame_count_ = 0;
     }
 
     Time::~Time() = default;
 
-    Time *Time::_get_instance() {
+    Time *Time::get_() {
         static Time *instance = nullptr;
         return instance = instance == nullptr ? new Time() : instance;
     }

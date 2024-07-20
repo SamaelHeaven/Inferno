@@ -5,20 +5,20 @@
 
 namespace inferno {
     void Renderer::clear_background(const Color color) {
-        const auto renderer = _get_instance();
-        BeginTextureMode(renderer->_screen);
+        const auto renderer = get_();
+        BeginTextureMode(renderer->screen_);
         ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
         internal::EndTextureMode();
     }
 
-    void Renderer::_update() {
-        const auto renderer = _get_instance();
+    void Renderer::update_() {
+        const auto renderer = get_();
         const auto screen_width = static_cast<float>(Game::get_screen_width());
         const auto screen_height = static_cast<float>(Game::get_screen_height());
         const auto width = static_cast<float>(Game::get_width());
         const auto height = static_cast<float>(Game::get_height());
         const auto scale = std::min(screen_width / width, screen_height / height);
-        const auto screen = renderer->_screen;
+        const auto screen = renderer->screen_;
         const auto source = (internal::Rectangle){0.0f, 0.0f, width, -height};
         const auto dest = (internal::Rectangle){
             (screen_width - width * scale) * 0.5f, (screen_height - height * scale) * 0.5f, width * scale,
@@ -31,21 +31,21 @@ namespace inferno {
         internal::EndDrawing();
     }
 
-    void Renderer::_destroy() {
-        delete _get_instance();
+    void Renderer::destroy_() {
+        delete get_();
     }
 
     Renderer::Renderer() {
         Game::throw_if_uninitialized();
-        _screen = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
-        SetTextureFilter(_screen.texture, internal::TEXTURE_FILTER_BILINEAR);
+        screen_ = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
+        SetTextureFilter(screen_.texture, internal::TEXTURE_FILTER_BILINEAR);
     }
 
     Renderer::~Renderer() {
-        UnloadRenderTexture(_screen);
+        UnloadRenderTexture(screen_);
     }
 
-    Renderer *Renderer::_get_instance() {
+    Renderer *Renderer::get_() {
         static Renderer *instance = nullptr;
         return instance = instance == nullptr ? new Renderer() : instance;
     }

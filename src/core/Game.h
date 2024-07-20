@@ -66,20 +66,20 @@ namespace inferno {
         ~Game();
 
     private:
-        static Game *_instance;
+        static Game *intance_;
 
-        GameConfig _config;
+        GameConfig config_;
 
-        std::shared_ptr<Scene> _scene;
+        std::shared_ptr<Scene> scene_;
 
         Game();
 
-        static Game *_get_instance();
+        static Game *get_();
 
-        static void _init(const GameConfig &config, const std::shared_ptr<Scene> &scene);
+        static void init_(const GameConfig &config, const std::shared_ptr<Scene> &scene);
 
-        static uint32_t _get_config_flags(const GameConfig &config);
+        static uint32_t get_config_flags_(const GameConfig &config);
 
-        static void _run();
+        static void run_();
     };
 }

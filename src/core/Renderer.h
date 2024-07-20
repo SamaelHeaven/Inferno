@@ -10,17 +10,17 @@ namespace inferno {
         static void clear_background(Color color);
 
     private:
-        internal::RenderTexture2D _screen{};
+        internal::RenderTexture2D screen_{};
 
         Renderer();
 
         ~Renderer();
 
-        static void _update();
+        static void update_();
 
-        static void _destroy();
+        static void destroy_();
 
-        static Renderer *_get_instance();
+        static Renderer *get_();
 
         friend class Game;
     };

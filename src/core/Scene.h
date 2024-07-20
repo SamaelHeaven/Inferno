@@ -11,11 +11,11 @@ namespace inferno {
         virtual void update();
 
     private:
-        bool _initialized = false;
+        bool initialized_ = false;
 
-        void _initialize();
+        void initialize_();
 
-        void _update();
+        void update_();
 
         friend class Game;
     };

@@ -9,16 +9,16 @@ namespace inferno {
 
     void Scene::update() {}
 
-    void Scene::_initialize() {
-        if (_initialized) {
+    void Scene::initialize_() {
+        if (initialized_) {
             return;
         }
-        _initialized = true;
-        Time::_restart();
+        initialized_ = true;
+        Time::restart_();
         initialize();
     }
 
-    void Scene::_update() {
+    void Scene::update_() {
         update();
     }
 }

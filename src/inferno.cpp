@@ -1,5 +1,4 @@
 #include "./inferno.h"
-
 #undef main
 
 void inferno_main();

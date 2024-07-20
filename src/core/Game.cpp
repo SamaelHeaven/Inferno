@@ -8,28 +8,28 @@
 
 namespace inferno {
     void Game::launch(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
-        if (_instance != nullptr) {
+        if (intance_ != nullptr) {
             throw std::runtime_error("Game as already been launched");
         }
-        const auto _ = std::unique_ptr<Game>(_get_instance());
-        _init(GameConfig(config), scene);
-        _run();
+        const auto _ = std::unique_ptr<Game>(get_());
+        init_(GameConfig(config), scene);
+        run_();
     }
 
     void Game::throw_if_uninitialized() {
-        if (_instance == nullptr) {
+        if (intance_ == nullptr) {
             throw std::runtime_error("Game has not been launched yet");
         }
     }
 
     std::shared_ptr<Scene> Game::get_scene() {
         throw_if_uninitialized();
-        return _get_instance()->_scene;
+        return get_()->scene_;
     }
 
     void Game::set_scene(const std::shared_ptr<Scene> &scene) {
         throw_if_uninitialized();
-        _get_instance()->_scene = scene;
+        get_()->scene_ = scene;
     }
 
     int32_t Game::get_screen_width() {
@@ -74,12 +74,12 @@ namespace inferno {
 
     int32_t Game::get_width() {
         throw_if_uninitialized();
-        return _get_instance()->_config.width;
+        return get_()->config_.width;
     }
 
     int32_t Game::get_height() {
         throw_if_uninitialized();
-        return _get_instance()->_config.height;
+        return get_()->config_.height;
     }
 
     Vector2 Game::get_size() {
@@ -89,7 +89,7 @@ namespace inferno {
 
     std::string Game::get_title() {
         throw_if_uninitialized();
-        return _get_instance()->_config.title;
+        return get_()->config_.title;
     }
 
     void Game::set_title(const std::string &title) {
@@ -97,7 +97,7 @@ namespace inferno {
         if (get_title() == title) {
             return;
         }
-        _get_instance()->_config.title = title;
+        get_()->config_.title = title;
         internal::SetWindowTitle(title.c_str());
     }
 
@@ -122,7 +122,7 @@ namespace inferno {
 
     int32_t Game::get_fps_target() {
         throw_if_uninitialized();
-        return _get_instance()->_config.fps_target;
+        return get_()->config_.fps_target;
     }
 
     void Game::set_fps_target(const int32_t fps_target) {
@@ -130,9 +130,9 @@ namespace inferno {
         if (get_fps_target() == fps_target) {
             return;
         }
-        _get_instance()->_config.fps_target = fps_target;
+        get_()->config_.fps_target = fps_target;
         internal::SetTargetFPS(fps_target);
-        Time::_restart();
+        Time::restart_();
     }
 
     bool Game::is_focused() {
@@ -145,30 +145,30 @@ namespace inferno {
     }
 
     Game::~Game() {
-        Time::_destroy();
-        Keyboard::_destroy();
-        Mouse::_destroy();
-        Renderer::_destroy();
+        Time::destroy_();
+        Keyboard::destroy_();
+        Mouse::destroy_();
+        Renderer::destroy_();
         internal::CloseWindow();
         exit(0);
     }
 
-    Game *Game::_instance = nullptr;
+    Game *Game::intance_ = nullptr;
 
     Game::Game() = default;
 
-    Game *Game::_get_instance() {
-        return _instance = _instance == nullptr ? new Game() : _instance;
+    Game *Game::get_() {
+        return intance_ = intance_ == nullptr ? new Game() : intance_;
     }
 
-    void Game::_init(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
-        const auto game = _get_instance();
+    void Game::init_(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
+        const auto game = get_();
         const auto screen_width = config.screen_width >= 0 ? config.screen_width : config.width;
         const auto screen_height = config.screen_height >= 0 ? config.screen_height : config.height;
-        game->_config = config;
-        game->_scene = scene;
+        game->config_ = config;
+        game->scene_ = scene;
         SetTraceLogLevel(config.debug ? internal::LOG_ALL : internal::LOG_NONE);
-        internal::SetConfigFlags(_get_config_flags(config));
+        internal::SetConfigFlags(get_config_flags_(config));
         internal::InitWindow(config.width, config.height, config.title.c_str());
         internal::SetTargetFPS(config.fps_target);
         SetExitKey(internal::KeyboardKey::KEY_NULL);
@@ -185,7 +185,7 @@ namespace inferno {
 #endif
     }
 
-    uint32_t Game::_get_config_flags(const GameConfig &config) {
+    uint32_t Game::get_config_flags_(const GameConfig &config) {
         uint32_t flags = 0;
         if (config.resizable) {
             flags |= internal::FLAG_WINDOW_RESIZABLE;
@@ -199,19 +199,19 @@ namespace inferno {
         return flags;
     }
 
-    void Game::_run() {
-        const auto game = _get_instance();
-        auto scene = game->_scene;
+    void Game::run_() {
+        const auto game = get_();
+        auto scene = game->scene_;
         while (!internal::WindowShouldClose()) {
-            Time::_update();
-            Keyboard::_update();
-            Mouse::_update();
-            if (scene.get() != game->_scene.get()) {
-                scene = game->_scene;
+            Time::update_();
+            Keyboard::update_();
+            Mouse::update_();
+            if (scene.get() != game->scene_.get()) {
+                scene = game->scene_;
             }
-            scene->_initialize();
-            scene->_update();
-            Renderer::_update();
+            scene->initialize_();
+            scene->update_();
+            Renderer::update_();
         }
     }
 }

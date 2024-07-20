@@ -3,6 +3,7 @@
 #include "../inferno.h"
 
 #include "./MouseButton.h"
+#include "./Cursor.h"
 #include "../math/Vector2.h"
 
 namespace inferno {
@@ -35,31 +36,33 @@ namespace inferno {
         static bool is_on_screen();
 
     private:
-        std::vector<MouseButton> _buttons;
+        std::vector<MouseButton> buttons_;
 
-        std::set<MouseButton> _down_buttons;
+        std::set<MouseButton> down_buttons_;
 
-        std::set<MouseButton> _up_buttons;
+        std::set<MouseButton> up_buttons_;
 
-        std::set<MouseButton> _pressed_buttons;
+        std::set<MouseButton> pressed_buttons_;
 
-        std::set<MouseButton> _released_buttons;
+        std::set<MouseButton> released_buttons_;
 
-        Vector2 _screen_position;
+        Cursor cursor_;
+
+        Vector2 screen_position_;
 
         Mouse();
 
         ~Mouse();
 
-        static void _update();
+        static void update_();
 
-        static void _destroy();
+        static void destroy_();
 
-        static void _reset_state();
+        static void reset_state_();
 
-        static void _update_state();
+        static void update_state_();
 
-        static Mouse *_get_instance();
+        static Mouse *get_();
 
         friend class Game;
     };
