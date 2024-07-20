@@ -55,8 +55,7 @@ namespace inferno {
     Property<T>::Property(
         const T &value,
         const PropertySetter<T> &setter
-    ) : value_(value), setter_(setter) {
-    }
+    ) : value_(value), setter_(setter) {}
 
     template<typename T>
     void Property<T>::add_listener(const PropertyListener<T> &listener) {
