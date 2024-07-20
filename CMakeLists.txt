@@ -104,6 +104,10 @@ add_library(${PROJECT_NAME} STATIC
         src/input/MouseButton.h
         src/input/Mouse.cpp
         src/input/Mouse.h
+        src/input/GamepadButton.h
+        src/input/GamepadAxis.h
+        src/input/Gamepad.cpp
+        src/input/Gamepad.h
         src/drawing/Color.cpp
         src/drawing/Color.h
         src/math/Vector2.cpp
