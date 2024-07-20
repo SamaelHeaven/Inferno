@@ -20,6 +20,8 @@ namespace inferno {
 
         [[nodiscard]] bool is_connected() const;
 
+        [[nodiscard]] std::string get_name() const;
+
         [[nodiscard]] std::set<GamepadButton> get_down_buttons() const;
 
         [[nodiscard]] std::set<GamepadButton> get_up_buttons() const;

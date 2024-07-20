@@ -19,6 +19,13 @@ namespace inferno {
         return connected_;
     }
 
+    std::string Gamepad::get_name() const {
+        if (!connected_) {
+            return "Unknown";
+        }
+        return internal::GetGamepadName(id_);
+    }
+
     std::set<GamepadButton> Gamepad::get_down_buttons() const {
         return down_buttons_;
     }
