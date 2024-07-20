@@ -86,7 +86,7 @@ namespace inferno {
 
     template<typename T>
     PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
-        const auto id = random::int32(0, INT32_MAX);
+        const auto id = random::int32(INT32_MIN, INT32_MAX);
         listeners_.emplace(id, listener);
         return id;
     }
