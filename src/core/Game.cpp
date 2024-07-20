@@ -118,11 +118,11 @@ namespace inferno {
 #ifdef PLATFORM_DESKTOP
         const auto game = get_();
         const bool fullscreen = is_fullscreen();
-        if (fullscreen) {
+        if (!fullscreen) {
             game->previous_screen_size_ = get_screen_size();
         }
         internal::ToggleFullscreen();
-        if (!fullscreen) {
+        if (fullscreen) {
             game->reset_size_ = true;
         }
 #endif
