@@ -163,7 +163,9 @@ namespace inferno {
 
     Game *Game::intance_ = nullptr;
 
-    Game::Game() = default;
+    Game::Game() {
+        reset_size_ = false;
+    }
 
     Game *Game::get_() {
         return intance_ = intance_ == nullptr ? new Game() : intance_;

@@ -74,7 +74,7 @@ namespace inferno {
 
         Vector2 previous_screen_size_;
 
-        bool reset_size_ = false;
+        bool reset_size_;
 
         Game();
 
