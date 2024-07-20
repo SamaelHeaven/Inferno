@@ -63,7 +63,7 @@ namespace inferno {
         Game::throw_if_uninitialized();
         constexpr auto nb_gamepads = 8;
         for (auto i = 0; i < nb_gamepads; i++) {
-            gamepads_.emplace_back(std::make_shared<Gamepad>(i));
+            gamepads_.emplace_back(std::shared_ptr<Gamepad>(new Gamepad(i)));
         }
         magic_enum::enum_for_each<GamepadButton>([this](const GamepadButton button) {
             buttons_.push_back(button);
