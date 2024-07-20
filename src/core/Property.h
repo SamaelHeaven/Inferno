@@ -60,7 +60,7 @@ namespace inferno {
 
     template<typename T>
     void Property<T>::add_listener(const PropertyListener<T> &listener) {
-        listeners_.insert(listener);
+        listeners_.push_back(listener);
     }
 
     template<typename T>
