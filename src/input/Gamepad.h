@@ -5,18 +5,20 @@
 #include "./GamepadButton.h"
 #include "./GamepadAxis.h"
 
+using GamepadID = uint8_t;
+
 namespace inferno {
     class Gamepad final {
     public:
         static std::vector<Gamepad *> get_gamepads();
 
-        static Gamepad *get(int32_t id);
+        static Gamepad *get(GamepadID id);
 
         Gamepad(const Gamepad &gamepad) = delete;
 
         Gamepad &operator=(const Gamepad &gamepad) = delete;
 
-        [[nodiscard]] int32_t get_id() const;
+        [[nodiscard]] GamepadID get_id() const;
 
         [[nodiscard]] bool is_connected() const;
 
@@ -43,9 +45,9 @@ namespace inferno {
         [[nodiscard]] float get_axis(GamepadAxis axis) const;
 
     private:
-        explicit Gamepad(int32_t id);
+        explicit Gamepad(GamepadID id);
 
-        int32_t id_;
+        GamepadID id_;
 
         bool connected_;
 

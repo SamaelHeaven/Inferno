@@ -3,10 +3,12 @@
 #include "../inferno.h"
 
 template<typename T>
-using PropertySetter = std::function<void(const T &old_value, const T &new_value, const std::function<void(const T &t)> &set)>;
+using PropertySetter = std::function<void(const T &old_value, const T &new_value,const std::function<void(const T &t)> &set)>;
 
 template<typename T>
 using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
+
+using PropertyListenerID = size_t;
 
 namespace inferno {
     template<typename T>
@@ -25,14 +27,15 @@ namespace inferno {
             }
         );
 
-        void add_listener(const PropertyListener<T> &listener);
+        PropertyListenerID add_listener(const PropertyListener<T> &listener) const;
 
-        void remove_listener(const PropertyListener<T> &listener);
+        void remove_listener(PropertyListenerID id) const;
 
     private:
         T value_;
         PropertySetter<T> setter_;
-        mutable std::list<PropertyListener<T> > listeners_;
+        mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
+        mutable PropertyListenerID next_listener_id_ = 0;
     };
 
     template<typename T>
@@ -45,8 +48,8 @@ namespace inferno {
         setter_(value_, value, [this](const T &t) {
             T old_value = value_;
             value_ = t;
-            for (const auto &listener: listeners_) {
-                listener(old_value, t);
+            for (const auto &entry: listeners_) {
+                entry.second(old_value, t);
             }
         });
     }
@@ -55,15 +58,17 @@ namespace inferno {
     Property<T>::Property(
         const T &value,
         const PropertySetter<T> &setter
-    ) : value_(value), setter_(setter) {}
-
-    template<typename T>
-    void Property<T>::add_listener(const PropertyListener<T> &listener) {
-        listeners_.push_back(listener);
+    ) : value_(value), setter_(setter) {
     }
 
     template<typename T>
-    void Property<T>::remove_listener(const PropertyListener<T> &listener) {
-        listeners_.remove(listener);
+    PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
+        listeners_.emplace(next_listener_id_, listener);
+        return next_listener_id_++;
+    }
+
+    template<typename T>
+    void Property<T>::remove_listener(PropertyListenerID id) const {
+        listeners_.erase(id);
     }
 }

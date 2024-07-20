@@ -25,7 +25,7 @@ namespace inferno {
         const std::optional<Key> &plus_key,
         const std::optional<Key> &plus_key_alt,
         const std::optional<GamepadAxis> &gamepad_axis,
-        const std::optional<int32_t> &gamepad
+        const std::optional<GamepadID> &gamepad
     ) {
         this->minus_key = minus_key;
         this->minus_key_alt = minus_key_alt;

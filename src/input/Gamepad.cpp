@@ -12,7 +12,7 @@ namespace inferno {
         return result;
     }
 
-    Gamepad *Gamepad::get(const int32_t id) {
+    Gamepad *Gamepad::get(const GamepadID id) {
         const auto object = get_();
         if (id < 0 || id >= object->gamepads_.size()) {
             throw std::out_of_range("Gamepad ID out of range");
@@ -20,7 +20,7 @@ namespace inferno {
         return object->gamepads_[id].get();
     }
 
-    int32_t Gamepad::get_id() const {
+    GamepadID Gamepad::get_id() const {
         return id_;
     }
 
@@ -88,7 +88,7 @@ namespace inferno {
 
     Gamepad::Object_::~Object_() = default;
 
-    Gamepad::Gamepad(const int32_t id) {
+    Gamepad::Gamepad(const GamepadID id) {
         id_ = id;
         connected_ = false;
         magic_enum::enum_for_each<GamepadAxis>([this](const GamepadAxis axis) {
