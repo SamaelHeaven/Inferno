@@ -223,6 +223,7 @@ namespace inferno {
                     game->reset_size_ = false;
                 }
             }
+            std::cout << game->previous_screen_size_.to_string() << '\n';
             if (scene.get() != game->scene_.get()) {
                 scene = game->scene_;
             }
