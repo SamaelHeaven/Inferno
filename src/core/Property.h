@@ -100,7 +100,7 @@ namespace inferno {
         bound_listener_id_ = other.add_listener([this]([[maybe_unused]] const T &old_value, const T &new_value) {
             set(new_value);
         });
-        other.set(value_);
+        set(other.value_);
     }
 
     template<typename T>
