@@ -6,7 +6,7 @@ namespace inferno {
     std::vector<const Gamepad *> Gamepad::get_gamepads() {
         const auto object = get_();
         std::vector<const Gamepad *> result;
-        for (const auto gamepad &: object->gamepads_) {
+        for (const auto &gamepad: object->gamepads_) {
             result.push_back(&gamepad);
         }
         return result;
