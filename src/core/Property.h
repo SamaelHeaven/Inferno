@@ -40,6 +40,8 @@ namespace inferno {
 
         void bind(Property &other);
 
+        void bind_bidirectionnal(Property &other);
+
         void unbind();
 
     private:
@@ -99,6 +101,12 @@ namespace inferno {
             set(new_value);
         });
         other.set(value_);
+    }
+
+    template<typename T>
+    void Property<T>::bind_bidirectionnal(Property &other) {
+        bind(other);
+        other.bind(*this);
     }
 
     template<typename T>
