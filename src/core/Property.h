@@ -25,9 +25,9 @@ namespace inferno {
             }
         );
 
-        void addListener(const PropertyListener<T> &listener);
+        void add_listener(const PropertyListener<T> &listener);
 
-        void removeListener(const PropertyListener<T> &listener);
+        void remove_listener(const PropertyListener<T> &listener);
 
     private:
         T value_;
@@ -59,12 +59,12 @@ namespace inferno {
     }
 
     template<typename T>
-    void Property<T>::addListener(const PropertyListener<T> &listener) {
+    void Property<T>::add_listener(const PropertyListener<T> &listener) {
         listeners_.insert(listener);
     }
 
     template<typename T>
-    void Property<T>::removeListener(const PropertyListener<T> &listener) {
+    void Property<T>::remove_listener(const PropertyListener<T> &listener) {
         listeners_.erase(listener);
     }
 }
