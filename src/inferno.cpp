@@ -1,4 +1,5 @@
 #include "./inferno.h"
+
 #undef main
 
 void inferno_main(std::vector<std::string> args);
