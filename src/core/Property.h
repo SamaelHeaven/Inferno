@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../inferno.h"
+
 #include "../math/random.h"
 
 template<typename T>
