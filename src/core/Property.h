@@ -10,7 +10,7 @@ using PropertySetter = std::function<void(const T &old_value, const T &new_value
 template<typename T>
 using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
 
-using PropertyListenerID = uint64_t;
+using PropertyListenerID = int32_t;
 
 namespace inferno {
     template<typename T>
@@ -90,7 +90,7 @@ namespace inferno {
 
     template<typename T>
     PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
-        const auto id = random::uint64(0, UINT64_MAX);
+        const auto id = random::int32(0, INT32_MAX);
         listeners_.emplace(id, listener);
         return id;
     }
