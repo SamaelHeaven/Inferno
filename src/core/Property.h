@@ -44,7 +44,7 @@ namespace inferno {
         void unbind();
 
     private:
-        static std::unordered_map<size_t, Property*> properties_;
+        static std::unordered_map<size_t, Property *> properties_;
         T value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
@@ -57,12 +57,12 @@ namespace inferno {
         const T &value,
         const PropertySetter<T> &setter
     ) : value_(value), setter_(setter) {
-        properties_[static_cast<size_t>(this)] = this;
+        properties_[reinterpret_cast<size_t>(this)] = this;
     }
 
     template<typename T>
     Property<T>::~Property() {
-        properties_.erase(static_cast<size_t>(this));
+        properties_.erase(reinterpret_cast<size_t>(this));
         unbind();
     }
 
@@ -106,7 +106,7 @@ namespace inferno {
             return;
         }
         unbind();
-        bound_property_ = &const_cast<Property>(other);
+        bound_property_ = const_cast<Property *>(&other);
         bound_listener_id_ = other.add_listener([this]([[maybe_unused]] const T &old_value, const T &new_value) {
             set(new_value);
         });
@@ -122,7 +122,7 @@ namespace inferno {
     template<typename T>
     void Property<T>::unbind() {
         if (bound_property_) {
-            if (properties_.contains(static_cast<size_t>(bound_property_))) {
+            if (properties_.contains(reinterpret_cast<size_t>(bound_property_))) {
                 bound_property_->remove_listener(bound_listener_id_);
             }
             bound_property_ = nullptr;
