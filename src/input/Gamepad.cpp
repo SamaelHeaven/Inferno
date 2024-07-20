@@ -110,7 +110,7 @@ namespace inferno {
         up_buttons_.clear();
         pressed_buttons_.clear();
         released_buttons_.clear();
-        for (const auto axis &: object->axes_) {
+        for (auto axis: object->axes_) {
             axes_[axis] = 0.f;
         }
     }
