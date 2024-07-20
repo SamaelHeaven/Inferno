@@ -38,12 +38,12 @@ namespace inferno {
 
     Vector2 Mouse::get_position() {
         _get_instance();
-        return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size()).round();
+        return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size());
     }
 
     void Mouse::set_position(Vector2 position) {
         _get_instance();
-        position = position.clamp(Vector2::ZERO, Game::get_size().round());
+        position = position.clamp(Vector2::ZERO, Game::get_size());
         if (get_position() == position) {
             return;
         }
@@ -59,7 +59,7 @@ namespace inferno {
         if (!Game::is_focused() || !is_on_screen()) {
             return;
         }
-        position = position.clamp(Vector2::ZERO, Game::get_screen_size()).round();
+        position = position.clamp(Vector2::ZERO, Game::get_screen_size());
         if (mouse->_screen_position == position) {
             return;
         }
@@ -109,7 +109,7 @@ namespace inferno {
         mouse->_screen_position = Vector2(
             internal::GetMouseX(),
             internal::GetMouseY()
-        ).clamp(Vector2::ZERO, Game::get_screen_size()).round();
+        ).clamp(Vector2::ZERO, Game::get_screen_size());
         for (auto button: mouse->_buttons) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {
