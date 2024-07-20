@@ -101,6 +101,9 @@ namespace inferno {
 
     template<typename T>
     void Property<T>::bind(const Property &other) {
+        if (&other == this) {
+            return;
+        }
         unbind();
         bound_property_ = &const_cast<Property>(other);
         bound_listener_id_ = other.add_listener([this]([[maybe_unused]] const T &old_value, const T &new_value) {
