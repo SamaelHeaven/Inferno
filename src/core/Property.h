@@ -45,7 +45,7 @@ namespace inferno {
 
     private:
         inline static std::unordered_map<size_t, Property *> properties_;
-        T value_;
+        T &value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
         Property *bound_property_ = nullptr;
