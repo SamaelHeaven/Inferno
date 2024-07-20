@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../inferno.h"
+#include "../math/random.h"
 
 template<typename T>
 using PropertySetter = std::function<void(const T &old_value, const T &new_value,const std::function<void(const T &t)> &set)>;
@@ -35,7 +36,6 @@ namespace inferno {
         T value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
-        mutable PropertyListenerID next_listener_id_ = 0;
     };
 
     template<typename T>
@@ -62,8 +62,9 @@ namespace inferno {
 
     template<typename T>
     PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
-        listeners_.emplace(next_listener_id_, listener);
-        return next_listener_id_++;
+        const auto id = random::uint64(0, UINT64_MAX);
+        listeners_.emplace(id, listener);
+        return id;
     }
 
     template<typename T>

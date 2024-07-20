@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <chrono>
 #include <functional>
+#include <random>
 #include <pugixml.hpp>
 #include <box2d/box2d.h>
 
