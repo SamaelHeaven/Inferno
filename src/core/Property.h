@@ -4,7 +4,7 @@
 #include "../math/random.h"
 
 template<typename T>
-using PropertySetter = std::function<void(const T &old_value, const T &new_value,const std::function<void(const T &t)> &set)>;
+using PropertySetter = std::function<void(const T &old_value, const T &new_value, const std::function<void(const T &t)> &set)>;
 
 template<typename T>
 using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
@@ -28,14 +28,25 @@ namespace inferno {
             }
         );
 
+        ~Property() {
+            unbind();
+        }
+
         PropertyListenerID add_listener(const PropertyListener<T> &listener) const;
 
         void remove_listener(PropertyListenerID id) const;
+
+        void bind(Property &other);
+
+        void unbind();
 
     private:
         T value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
+
+        Property *bound_property_ = nullptr;
+        PropertyListenerID bound_listener_id_ = 0;
     };
 
     template<typename T>
@@ -45,11 +56,17 @@ namespace inferno {
 
     template<typename T>
     void Property<T>::set(const T &value) {
+        if (value_ == value) {
+            return;
+        }
         setter_(value_, value, [this](const T &t) {
             T old_value = value_;
             value_ = t;
             for (const auto &entry: listeners_) {
                 entry.second(old_value, t);
+            }
+            if (bound_property_) {
+                bound_property_->set(t);
             }
         });
     }
@@ -70,5 +87,24 @@ namespace inferno {
     template<typename T>
     void Property<T>::remove_listener(PropertyListenerID id) const {
         listeners_.erase(id);
+    }
+
+    template<typename T>
+    void Property<T>::bind(Property &other) {
+        unbind();
+        bound_property_ = &other;
+        bound_listener_id_ = other.add_listener([this]([[maybe_unused]] const T &old_value, const T &new_value) {
+            set(new_value);
+        });
+        other.set(value_);
+    }
+
+    template<typename T>
+    void Property<T>::unbind() {
+        if (bound_property_) {
+            bound_property_->remove_listener(bound_listener_id_);
+            bound_property_ = nullptr;
+            bound_listener_id_ = 0;
+        }
     }
 }
