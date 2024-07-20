@@ -82,9 +82,6 @@ namespace inferno {
             for (const auto &entry: listeners_) {
                 entry.second(old_value, t);
             }
-            if (bound_property_) {
-                bound_property_->set(t);
-            }
         });
     }
 
