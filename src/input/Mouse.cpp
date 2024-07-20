@@ -72,11 +72,33 @@ namespace inferno {
         return internal::IsCursorOnScreen();
     }
 
+    Cursor Mouse::get_cursor() {
+        return get_()->cursor_;
+    }
+
+    void Mouse::set_cursor(const Cursor cursor) {
+        const auto mouse = get_();
+        if (cursor == mouse->cursor_) {
+            return;
+        }
+        if (cursor == Cursor::NONE) {
+            internal::HideCursor();
+            mouse->cursor_ = cursor;
+            return;
+        }
+        if (mouse->cursor_ == Cursor::NONE) {
+            internal::ShowCursor();
+        }
+        internal::SetMouseCursor(static_cast<int32_t>(cursor));
+        mouse->cursor_ = cursor;
+    }
+
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<MouseButton>([this](const MouseButton key) {
             buttons_.push_back(key);
         });
+        cursor_ = Cursor::DEFAULT;
     }
 
     Mouse::~Mouse() = default;

@@ -35,6 +35,10 @@ namespace inferno {
 
         static bool is_on_screen();
 
+        static Cursor get_cursor();
+
+        static void set_cursor(Cursor cursor);
+
     private:
         std::vector<MouseButton> buttons_;
 
