@@ -32,7 +32,7 @@ namespace inferno {
     private:
         T value_;
         PropertySetter<T> setter_;
-        mutable std::vector<PropertyListener<T> > listeners_;
+        mutable std::list<PropertyListener<T> > listeners_;
     };
 
     template<typename T>
@@ -64,6 +64,6 @@ namespace inferno {
 
     template<typename T>
     void Property<T>::remove_listener(const PropertyListener<T> &listener) {
-        listeners_.erase(listener);
+        listeners_.remove(listener);
     }
 }
