@@ -44,7 +44,7 @@ namespace inferno {
         void unbind();
 
     private:
-        static std::unordered_map<size_t, Property *> properties_;
+        inline static std::unordered_map<size_t, Property *> properties_;
         T value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
