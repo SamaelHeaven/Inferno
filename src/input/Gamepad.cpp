@@ -13,7 +13,7 @@ namespace inferno {
     }
 
     const Gamepad *Gamepad::get(const int32_t id) {
-        return &get_()->gamepads_[id];
+        return &get_()->gamepads_.at(id);
     }
 
     int32_t Gamepad::get_id() const {
