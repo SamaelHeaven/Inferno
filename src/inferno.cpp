@@ -1,9 +1,14 @@
 #include "./inferno.h"
 #undef main
 
-void inferno_main();
+void inferno_main(std::vector<std::string> args);
 
-int main() {
+int32_t main(const int32_t argc, const char **argv) {
     SetTraceLogLevel(inferno::internal::LOG_NONE);
-    inferno_main();
+    std::vector<std::string> args;
+    for (int32_t i = 0; i < argc; i++) {
+        args.emplace_back(argv[i]);
+    }
+    inferno_main(std::move(args));
+    return 0;
 }
