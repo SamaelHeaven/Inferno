@@ -9,7 +9,7 @@ using PropertySetter = std::function<void(const T &old_value, const T &new_value
 template<typename T>
 using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
 
-using PropertyListenerID = size_t;
+using PropertyListenerID = uint64_t;
 
 namespace inferno {
     template<typename T>
@@ -24,9 +24,7 @@ namespace inferno {
             }
         );
 
-        ~Property() {
-            unbind();
-        }
+        ~Property();
 
         Property &operator=(const Property &property) = delete;
 
@@ -38,20 +36,34 @@ namespace inferno {
 
         void remove_listener(PropertyListenerID id) const;
 
-        void bind(Property &other);
+        void bind(const Property &other);
 
         void bind_bidirectionnal(Property &other);
 
         void unbind();
 
     private:
+        static std::unordered_map<size_t, Property*> properties_;
         T value_;
         PropertySetter<T> setter_;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
-
         Property *bound_property_ = nullptr;
         PropertyListenerID bound_listener_id_ = 0;
     };
+
+    template<typename T>
+    Property<T>::Property(
+        const T &value,
+        const PropertySetter<T> &setter
+    ) : value_(value), setter_(setter) {
+        properties_[static_cast<size_t>(this)] = this;
+    }
+
+    template<typename T>
+    Property<T>::~Property() {
+        properties_.erase(static_cast<size_t>(this));
+        unbind();
+    }
 
     template<typename T>
     T Property<T>::get() const {
@@ -76,12 +88,6 @@ namespace inferno {
     }
 
     template<typename T>
-    Property<T>::Property(
-        const T &value,
-        const PropertySetter<T> &setter
-    ) : value_(value), setter_(setter) {}
-
-    template<typename T>
     PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
         const auto id = random::uint64(0, UINT64_MAX);
         listeners_.emplace(id, listener);
@@ -94,9 +100,9 @@ namespace inferno {
     }
 
     template<typename T>
-    void Property<T>::bind(Property &other) {
+    void Property<T>::bind(const Property &other) {
         unbind();
-        bound_property_ = &other;
+        bound_property_ = &const_cast<Property>(other);
         bound_listener_id_ = other.add_listener([this]([[maybe_unused]] const T &old_value, const T &new_value) {
             set(new_value);
         });
@@ -112,7 +118,9 @@ namespace inferno {
     template<typename T>
     void Property<T>::unbind() {
         if (bound_property_) {
-            bound_property_->remove_listener(bound_listener_id_);
+            if (properties_.contains(static_cast<size_t>(bound_property_))) {
+                bound_property_->remove_listener(bound_listener_id_);
+            }
             bound_property_ = nullptr;
             bound_listener_id_ = 0;
         }
