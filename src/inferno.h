@@ -9,6 +9,7 @@
 #include <set>
 #include <unordered_map>
 #include <chrono>
+#include <functional>
 #include <pugixml.hpp>
 #include <box2d/box2d.h>
 

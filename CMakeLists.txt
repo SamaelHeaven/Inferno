@@ -88,6 +88,7 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Platform.h
         src/core/file.cpp
         src/core/file.h
+        src/core/Property.h
         src/core/GameConfig.h
         src/core/Game.cpp
         src/core/Game.h
