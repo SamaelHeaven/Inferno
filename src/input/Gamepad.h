@@ -49,6 +49,8 @@ namespace inferno {
 
         bool connected_;
 
+        std::string name_;
+
         std::set<GamepadButton> down_buttons_;
 
         std::set<GamepadButton> up_buttons_;

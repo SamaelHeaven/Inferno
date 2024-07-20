@@ -20,10 +20,7 @@ namespace inferno {
     }
 
     std::string Gamepad::get_name() const {
-        if (!connected_) {
-            return "Unknown";
-        }
-        return internal::GetGamepadName(id_);
+        return name_;
     }
 
     std::set<GamepadButton> Gamepad::get_down_buttons() const {
@@ -108,6 +105,7 @@ namespace inferno {
     void Gamepad::reset_state_() {
         const auto object = get_();
         connected_ = internal::IsGamepadAvailable(id_);
+        name_ = "Unknown";
         down_buttons_.clear();
         up_buttons_.clear();
         pressed_buttons_.clear();
@@ -125,6 +123,7 @@ namespace inferno {
             }
             return;
         }
+        name_ = internal::GetGamepadName(id_);
         for (auto button: object->buttons_) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsGamepadButtonDown(id_, button_code)) {
