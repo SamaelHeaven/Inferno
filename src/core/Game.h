@@ -72,6 +72,8 @@ namespace inferno {
 
         std::shared_ptr<Scene> scene_;
 
+        Vector2 previous_screen_size_;
+
         Game();
 
         static Game *get_();

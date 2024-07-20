@@ -116,7 +116,15 @@ namespace inferno {
     void Game::toggle_fullscreen() {
         throw_if_uninitialized();
 #ifdef PLATFORM_DESKTOP
+        const auto game = get_();
+        const bool fullscreen = is_fullscreen();
+        if (fullscreen) {
+            game->previous_screen_size_ = get_screen_size();
+        }
         internal::ToggleFullscreen();
+        if (!fullscreen) {
+            set_screen_size(game->previous_screen_size_);
+        }
 #endif
     }
 
@@ -167,6 +175,7 @@ namespace inferno {
         const auto screen_height = config.screen_height >= 0 ? config.screen_height : config.height;
         game->config_ = config;
         game->scene_ = scene;
+        game->previous_screen_size_ = {config.width, config.height};
         SetTraceLogLevel(config.debug ? internal::LOG_ALL : internal::LOG_NONE);
         internal::SetConfigFlags(get_config_flags_(config));
         internal::InitWindow(config.width, config.height, config.title.c_str());
