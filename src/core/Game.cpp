@@ -123,7 +123,7 @@ namespace inferno {
         }
         internal::ToggleFullscreen();
         if (!fullscreen) {
-            set_screen_size(game->previous_screen_size_);
+            game->reset_size_ = true;
         }
 #endif
     }
@@ -215,6 +215,12 @@ namespace inferno {
             Time::update_();
             Keyboard::update_();
             Mouse::update_();
+            if (game->reset_size_) {
+                set_screen_size(game->previous_screen_size_);
+                if (get_screen_size() == game->previous_screen_size_) {
+                    game->reset_size_ = false;
+                }
+            }
             if (scene.get() != game->scene_.get()) {
                 scene = game->scene_;
             }
