@@ -32,7 +32,7 @@ namespace inferno {
     private:
         T value_;
         PropertySetter<T> setter_;
-        mutable std::set<PropertyListener<T> > listeners_;
+        mutable std::vector<PropertyListener<T> > listeners_;
     };
 
     template<typename T>
