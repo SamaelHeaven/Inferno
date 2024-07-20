@@ -15,10 +15,6 @@ namespace inferno {
     template<typename T>
     class Property final {
     public:
-        [[nodiscard]] T get() const;
-
-        void set(const T &value);
-
         // ReSharper disable once CppNonExplicitConvertingConstructor
         Property( // NOLINT(*-explicit-constructor)
             const T &value,
@@ -31,6 +27,12 @@ namespace inferno {
         ~Property() {
             unbind();
         }
+
+        Property &operator=(const Property &property) = delete;
+
+        [[nodiscard]] T get() const;
+
+        void set(const T &value);
 
         PropertyListenerID add_listener(const PropertyListener<T> &listener) const;
 
