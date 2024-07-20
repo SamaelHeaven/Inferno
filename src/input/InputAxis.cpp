@@ -1,6 +1,7 @@
 #include "./InputAxis.h"
 
-#include "Keyboard.h"
+#include "./Keyboard.h"
+#include "./Gamepad.h"
 
 namespace inferno {
     const InputAxis InputAxis::HORIZONTAL = InputAxis(
@@ -24,7 +25,7 @@ namespace inferno {
         const std::optional<Key> &plus_key,
         const std::optional<Key> &plus_key_alt,
         const std::optional<GamepadAxis> &gamepad_axis,
-        Gamepad *gamepad
+        const std::optional<int32_t> &gamepad
     ) {
         this->minus_key = minus_key;
         this->minus_key_alt = minus_key_alt;
@@ -40,8 +41,8 @@ namespace inferno {
 
     int InputAxis::get() const {
         auto axis = 0;
-        if (gamepad != nullptr && gamepad_axis.has_value()) {
-            axis = static_cast<int32_t>(std::round(gamepad->get_axis(gamepad_axis.value())));
+        if (gamepad.has_value() && gamepad_axis.has_value()) {
+            axis = static_cast<int32_t>(std::round(Gamepad::get(gamepad.value())->get_axis(gamepad_axis.value())));
         }
         const auto minus = (minus_key.has_value() && Keyboard::is_key_down(minus_key.value())) || (
                                minus_key_alt.has_value() && Keyboard::is_key_down(minus_key_alt.value())) || axis == -1;
