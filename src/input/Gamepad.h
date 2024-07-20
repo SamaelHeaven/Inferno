@@ -69,7 +69,7 @@ namespace inferno {
 
         void update_state_();
 
-        class Object final {
+        class Object_ final {
         public:
             std::vector<std::shared_ptr<Gamepad> > gamepads_;
 
@@ -77,12 +77,12 @@ namespace inferno {
 
             std::vector<GamepadAxis> axes_;
 
-            Object();
+            Object_();
 
-            ~Object();
+            ~Object_();
         };
 
-        static Object *get_();
+        static Object_ *get_();
 
         friend class Game;
     };

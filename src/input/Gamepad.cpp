@@ -66,7 +66,7 @@ namespace inferno {
         return axes_.at(axis);
     }
 
-    Gamepad::Object::Object() {
+    Gamepad::Object_::Object_() {
         Game::throw_if_uninitialized();
         constexpr auto nb_gamepads = 8;
         for (auto i = 0; i < nb_gamepads; i++) {
@@ -80,7 +80,7 @@ namespace inferno {
         });
     }
 
-    Gamepad::Object::~Object() = default;
+    Gamepad::Object_::~Object_() = default;
 
     Gamepad::Gamepad(const int32_t id) {
         id_ = id;
@@ -145,8 +145,8 @@ namespace inferno {
         }
     }
 
-    Gamepad::Object *Gamepad::get_() {
-        static Object *instance = nullptr;
-        return instance = instance == nullptr ? new Object() : instance;
+    Gamepad::Object_ *Gamepad::get_() {
+        static Object_ *instance = nullptr;
+        return instance = instance == nullptr ? new Object_() : instance;
     }
 }
