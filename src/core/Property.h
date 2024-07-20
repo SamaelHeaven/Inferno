@@ -16,8 +16,7 @@ namespace inferno {
     template<typename T>
     class Property final {
     public:
-        // ReSharper disable once CppNonExplicitConvertingConstructor
-        Property( // NOLINT(*-explicit-constructor)
+        explicit Property(
             const T &value,
             const PropertySetter<T> &setter = [](
                 [[maybe_unused]] const auto &old_value, const auto &new_value, const auto &set) {
@@ -118,12 +117,13 @@ namespace inferno {
 
     template<typename T>
     void Property<T>::unbind() {
-        if (bound_property_) {
-            if (properties_.contains(reinterpret_cast<size_t>(bound_property_))) {
-                bound_property_->remove_listener(bound_listener_id_);
-            }
-            bound_property_ = nullptr;
-            bound_listener_id_ = 0;
+        if (!bound_property_) {
+            return;
         }
+        if (properties_.contains(reinterpret_cast<size_t>(bound_property_))) {
+            bound_property_->remove_listener(bound_listener_id_);
+        }
+        bound_property_ = nullptr;
+        bound_listener_id_ = 0;
     }
 }
