@@ -39,6 +39,8 @@ namespace inferno {
 
         static void set_cursor(Cursor cursor);
 
+        static Vector2 get_scroll();
+
     private:
         std::vector<MouseButton> buttons_;
 
@@ -53,6 +55,8 @@ namespace inferno {
         Cursor cursor_;
 
         Vector2 screen_position_;
+
+        Vector2 scroll_;
 
         Mouse();
 

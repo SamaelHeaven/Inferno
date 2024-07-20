@@ -93,6 +93,10 @@ namespace inferno {
         mouse->cursor_ = cursor;
     }
 
+    Vector2 Mouse::get_scroll() {
+        return get_()->scroll_;
+    }
+
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<MouseButton>([this](const MouseButton key) {
@@ -114,6 +118,7 @@ namespace inferno {
 
     void Mouse::reset_state_() {
         const auto mouse = get_();
+        mouse->scroll_ = Vector2::ZERO;
         mouse->down_buttons_.clear();
         mouse->up_buttons_.clear();
         mouse->pressed_buttons_.clear();
@@ -128,10 +133,10 @@ namespace inferno {
             }
             return;
         }
-        mouse->screen_position_ = Vector2(
-            internal::GetMouseX(),
-            internal::GetMouseY()
-        ).clamp(Vector2::ZERO, Game::get_screen_size()).round();
+        const auto position = internal::GetMousePosition();
+        const auto scroll = internal::GetMouseWheelMoveV();
+        mouse->screen_position_ = Vector2(position.x, position.y).clamp(Vector2::ZERO, Game::get_screen_size()).round();
+        mouse->scroll_ = {scroll.x, scroll.y};
         for (auto button: mouse->buttons_) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {
