@@ -3,6 +3,7 @@
 #include "./file.h"
 #include "./Time.h"
 #include "./Renderer.h"
+#include "../input/Gamepad.h"
 #include "../input/Keyboard.h"
 #include "../input/Mouse.h"
 
@@ -156,6 +157,7 @@ namespace inferno {
         Time::destroy_();
         Keyboard::destroy_();
         Mouse::destroy_();
+        Gamepad::destroy_();
         Renderer::destroy_();
         internal::CloseWindow();
         exit(0);
@@ -217,6 +219,7 @@ namespace inferno {
             Time::update_();
             Keyboard::update_();
             Mouse::update_();
+            Gamepad::update_all_();
             if (game->reset_size_) {
                 set_screen_size(game->previous_screen_size_);
                 if (get_screen_size() == game->previous_screen_size_) {

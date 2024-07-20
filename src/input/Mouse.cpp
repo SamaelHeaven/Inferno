@@ -99,8 +99,8 @@ namespace inferno {
 
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
-        magic_enum::enum_for_each<MouseButton>([this](const MouseButton key) {
-            buttons_.push_back(key);
+        magic_enum::enum_for_each<MouseButton>([this](const MouseButton button) {
+            buttons_.push_back(button);
         });
         cursor_ = Cursor::DEFAULT;
     }
