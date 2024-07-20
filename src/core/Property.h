@@ -17,7 +17,7 @@ namespace inferno {
         void set(const T &value);
 
         // ReSharper disable once CppNonExplicitConvertingConstructor
-        Property(
+        Property( // NOLINT(*-explicit-constructor)
             const T &value,
             const PropertySetter<T> &setter = [](
                 [[maybe_unused]] const auto &old_value, const auto &new_value, const auto &set) {
