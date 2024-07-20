@@ -108,6 +108,8 @@ add_library(${PROJECT_NAME} STATIC
         src/input/GamepadAxis.h
         src/input/Gamepad.cpp
         src/input/Gamepad.h
+        src/input/InputAxis.cpp
+        src/input/InputAxis.h
         src/drawing/Color.cpp
         src/drawing/Color.h
         src/math/Vector2.cpp

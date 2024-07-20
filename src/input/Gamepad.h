@@ -8,9 +8,9 @@
 namespace inferno {
     class Gamepad final {
     public:
-        static std::vector<std::shared_ptr<Gamepad> > get_gamepads();
+        static std::vector<Gamepad *> get_gamepads();
 
-        static std::shared_ptr<Gamepad> get(int32_t id);
+        static Gamepad *get(int32_t id);
 
         Gamepad(const Gamepad &gamepad) = delete;
 
@@ -73,7 +73,7 @@ namespace inferno {
 
         class Object_ final {
         public:
-            std::vector<std::shared_ptr<Gamepad> > gamepads_;
+            std::vector<std::unique_ptr<Gamepad> > gamepads_;
 
             std::vector<GamepadButton> buttons_;
 

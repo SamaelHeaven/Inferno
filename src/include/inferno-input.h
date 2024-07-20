@@ -8,3 +8,4 @@
 #include "../input/GamepadButton.h"
 #include "../input/GamepadAxis.h"
 #include "../input/Gamepad.h"
+#include "../input/InputAxis.h"

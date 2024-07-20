@@ -3,12 +3,17 @@
 #include "../core/Game.h"
 
 namespace inferno {
-    std::vector<std::shared_ptr<Gamepad> > Gamepad::get_gamepads() {
-        return get_()->gamepads_;
+    std::vector<Gamepad *> Gamepad::get_gamepads() {
+        const auto object = get_();
+        std::vector<Gamepad *> result;
+        for (const auto &gamepad: object->gamepads_) {
+            result.push_back(gamepad.get());
+        }
+        return result;
     }
 
-    std::shared_ptr<Gamepad> Gamepad::get(const int32_t id) {
-        return get_()->gamepads_[id];
+    Gamepad *Gamepad::get(const int32_t id) {
+        return get_()->gamepads_[id].get();
     }
 
     int32_t Gamepad::get_id() const {
@@ -67,7 +72,7 @@ namespace inferno {
         Game::throw_if_uninitialized();
         constexpr auto nb_gamepads = 8;
         for (auto i = 0; i < nb_gamepads; i++) {
-            gamepads_.emplace_back(std::shared_ptr<Gamepad>(new Gamepad(i)));
+            gamepads_.emplace_back(std::unique_ptr<Gamepad>(new Gamepad(i)));
         }
         magic_enum::enum_for_each<GamepadButton>([this](const GamepadButton button) {
             buttons_.push_back(button);
