@@ -1,6 +1,5 @@
 #include "./Game.h"
 
-#include "./file.h"
 #include "./Time.h"
 #include "./Renderer.h"
 #include "../input/Gamepad.h"
@@ -8,15 +7,6 @@
 #include "../input/Mouse.h"
 
 namespace inferno {
-    void Game::launch(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
-        if (intance_ != nullptr) {
-            throw std::runtime_error("Game as already been launched");
-        }
-        const auto _ = std::unique_ptr<Game>(get_());
-        init_(GameConfig(config), scene);
-        run_();
-    }
-
     void Game::throw_if_uninitialized() {
         if (intance_ == nullptr) {
             throw std::runtime_error("Game has not been launched yet");
@@ -171,31 +161,6 @@ namespace inferno {
 
     Game *Game::get_() {
         return intance_ = intance_ == nullptr ? new Game() : intance_;
-    }
-
-    void Game::init_(const GameConfig &config, const std::shared_ptr<Scene> &scene) {
-        const auto game = get_();
-        const auto screen_width = config.screen_width >= 0 ? config.screen_width : config.width;
-        const auto screen_height = config.screen_height >= 0 ? config.screen_height : config.height;
-        game->config_ = config;
-        game->scene_ = scene;
-        game->previous_screen_size_ = {config.width, config.height};
-        SetTraceLogLevel(config.debug ? internal::LOG_ALL : internal::LOG_NONE);
-        internal::SetConfigFlags(get_config_flags_(config));
-        internal::InitWindow(config.width, config.height, config.title.c_str());
-        internal::SetTargetFPS(config.fps_target);
-        SetExitKey(internal::KeyboardKey::KEY_NULL);
-        internal::SetWindowSize(screen_width, screen_height);
-        if (config.fullscreen) {
-            toggle_fullscreen();
-        }
-#ifdef PLATFORM_DESKTOP
-        if (file::is_file(config.icon)) {
-            const auto icon = internal::LoadImage(file::format_path(config.icon).c_str());
-            SetWindowIcon(icon);
-            UnloadImage(icon);
-        }
-#endif
     }
 
     uint32_t Game::get_config_flags_(const GameConfig &config) {

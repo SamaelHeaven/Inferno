@@ -2,6 +2,7 @@
 
 #include "../inferno.h"
 
+#include "./file.h"
 #include "./GameConfig.h"
 #include "./Scene.h"
 #include "../math/Vector2.h"
@@ -9,12 +10,15 @@
 namespace inferno {
     class Game final {
     public:
-        static void launch(const GameConfig &config, const std::shared_ptr<Scene> &scene);
-
         template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
             std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
         static void launch(const GameConfig &config, Args... args) {
-            launch(config, std::make_shared<T>(args...));
+            if (intance_ != nullptr) {
+                throw std::runtime_error("Game as already been launched");
+            }
+            const auto _ = std::unique_ptr<Game>(get_());
+            init_<T>(GameConfig(config), args...);
+            run_();
         }
 
         static void throw_if_uninitialized();
@@ -80,7 +84,32 @@ namespace inferno {
 
         static Game *get_();
 
-        static void init_(const GameConfig &config, const std::shared_ptr<Scene> &scene);
+        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
+            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        static void init_(const GameConfig &config, Args... args) {
+            const auto game = get_();
+            const auto screen_width = config.screen_width >= 0 ? config.screen_width : config.width;
+            const auto screen_height = config.screen_height >= 0 ? config.screen_height : config.height;
+            game->config_ = config;
+            game->scene_ = std::make_shared<T>(args...);
+            game->previous_screen_size_ = {config.width, config.height};
+            SetTraceLogLevel(config.debug ? internal::LOG_ALL : internal::LOG_NONE);
+            internal::SetConfigFlags(get_config_flags_(config));
+            internal::InitWindow(config.width, config.height, config.title.c_str());
+            internal::SetTargetFPS(config.fps_target);
+            SetExitKey(internal::KeyboardKey::KEY_NULL);
+            internal::SetWindowSize(screen_width, screen_height);
+            if (config.fullscreen) {
+                toggle_fullscreen();
+            }
+#ifdef PLATFORM_DESKTOP
+            if (file::is_file(config.icon)) {
+                const auto icon = internal::LoadImage(file::format_path(config.icon).c_str());
+                SetWindowIcon(icon);
+                UnloadImage(icon);
+            }
+#endif
+        }
 
         static uint32_t get_config_flags_(const GameConfig &config);
 
