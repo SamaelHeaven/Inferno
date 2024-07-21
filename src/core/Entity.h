@@ -90,7 +90,7 @@ namespace inferno {
         template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Component, T> >* = nullptr,
             std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
         void add_component(Args... args) {
-            add_component(std::make_shared<T>(std::forward<Args>(args)...));
+            add_component(std::make_shared<T>(args...));
         }
 
         void add_components(const std::list<std::shared_ptr<Component> > &components);
