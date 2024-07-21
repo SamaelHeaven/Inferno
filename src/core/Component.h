@@ -1,8 +1,8 @@
 #pragma once
 
-#include "./Entity.h"
-
 namespace inferno {
+    class Entity;
+
     class Component {
     public:
         virtual ~Component() = default;
