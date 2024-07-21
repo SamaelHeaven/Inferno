@@ -7,12 +7,12 @@
 namespace inferno {
     class Scene {
     public:
-        virtual ~Scene() = default;
+        virtual ~Scene();
 
     protected:
-        virtual void initialize() {}
+        virtual void initialize();
 
-        virtual void update() {}
+        virtual void update();
 
         [[nodiscard]] std::shared_ptr<Entity> find_entity_by_name(const std::string &name) const;
 

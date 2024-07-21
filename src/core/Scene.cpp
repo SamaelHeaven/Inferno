@@ -3,6 +3,12 @@
 #include "./Time.h"
 
 namespace inferno {
+    Scene::~Scene() = default;
+
+    void Scene::initialize() {}
+
+    void Scene::update() {}
+
     std::shared_ptr<Entity> Scene::find_entity_by_name(const std::string &name) const {
         for (const auto &entity: entities_) {
             if (entity->name == name) {

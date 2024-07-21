@@ -5,18 +5,18 @@ namespace inferno {
 
     class Component {
     public:
-        virtual ~Component() = default;
+        virtual ~Component();
 
         [[nodiscard]] Entity *get_entity() const;
 
     protected:
-        virtual void start() {}
+        virtual void start();
 
-        virtual void update() {}
+        virtual void update();
 
-        virtual void fixed_update() {}
+        virtual void fixed_update();
 
-        virtual void destroy() {}
+        virtual void destroy();
 
     private:
         Entity *entity_ = nullptr;
