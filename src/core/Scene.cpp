@@ -1,6 +1,7 @@
 #include "./Scene.h"
 
 #include "./Time.h"
+#include "./Entity.h"
 
 namespace inferno {
     std::shared_ptr<Entity> Scene::find_entity_by_name(const std::string &name) const {
