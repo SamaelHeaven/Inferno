@@ -43,10 +43,10 @@ namespace inferno {
 
     Renderer::~Renderer() {
         UnloadRenderTexture(screen_);
+        instance_ = nullptr;
     }
 
     Renderer *Renderer::get_() {
-        static Renderer *instance = nullptr;
-        return instance = instance == nullptr ? new Renderer() : instance;
+        return instance_ = instance_ == nullptr ? new Renderer() : instance_;
     }
 }

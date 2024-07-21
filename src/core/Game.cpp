@@ -150,7 +150,7 @@ namespace inferno {
         Gamepad::destroy_();
         Renderer::destroy_();
         internal::CloseWindow();
-        exit(0);
+        intance_ = nullptr;
     }
 
     Game *Game::intance_ = nullptr;

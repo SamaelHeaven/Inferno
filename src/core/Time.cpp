@@ -35,6 +35,23 @@ namespace inferno {
         return std::chrono::duration_cast<std::chrono::nanoseconds>(result);
     }
 
+    Time *Time::instance_ = nullptr;
+
+    Time::Time() {
+        Game::throw_if_uninitialized();
+        const auto now = std::chrono::high_resolution_clock::now();
+        launch_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+        start_time_ = launch_time_;
+        delta_ = 0;
+        fixed_delta_ = 1 / 60.f;
+        average_fps_ = 0;
+        frame_count_ = 0;
+    }
+
+    Time::~Time() {
+        instance_ = nullptr;
+    }
+
     void Time::update_() {
         const auto time = get_();
         const auto time_in_seconds = static_cast<float>(since_start().count()) / 1e9f;
@@ -56,21 +73,7 @@ namespace inferno {
         delete get_();
     }
 
-    Time::Time() {
-        Game::throw_if_uninitialized();
-        const auto now = std::chrono::high_resolution_clock::now();
-        launch_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
-        start_time_ = launch_time_;
-        delta_ = 0;
-        fixed_delta_ = 1 / 60.f;
-        average_fps_ = 0;
-        frame_count_ = 0;
-    }
-
-    Time::~Time() = default;
-
     Time *Time::get_() {
-        static Time *instance = nullptr;
-        return instance = instance == nullptr ? new Time() : instance;
+        return instance_ = instance_ == nullptr ? new Time() : instance_;
     }
 }

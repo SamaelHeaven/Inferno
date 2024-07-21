@@ -75,6 +75,8 @@ namespace inferno {
 
         class Object_ final {
         public:
+            static Object_ *instance_;
+
             std::vector<std::unique_ptr<Gamepad> > gamepads_;
 
             std::vector<GamepadButton> buttons_;

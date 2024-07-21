@@ -26,6 +26,8 @@ namespace inferno {
         static bool is_key_released(Key key);
 
     private:
+        static Keyboard *instance_;
+
         std::string typed_string_;
 
         std::vector<Key> keys_;

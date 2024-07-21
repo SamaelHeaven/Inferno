@@ -97,6 +97,8 @@ namespace inferno {
         return get_()->scroll_;
     }
 
+    Mouse *Mouse::instance_ = nullptr;
+
     Mouse::Mouse() {
         Game::throw_if_uninitialized();
         magic_enum::enum_for_each<MouseButton>([this](const MouseButton button) {
@@ -105,7 +107,9 @@ namespace inferno {
         cursor_ = Cursor::DEFAULT;
     }
 
-    Mouse::~Mouse() = default;
+    Mouse::~Mouse() {
+        instance_ = nullptr;
+    }
 
     void Mouse::update_() {
         reset_state_();
@@ -154,7 +158,6 @@ namespace inferno {
     }
 
     Mouse *Mouse::get_() {
-        static Mouse *instance = nullptr;
-        return instance = instance == nullptr ? new Mouse() : instance;
+        return instance_ = instance_ == nullptr ? new Mouse() : instance_;
     }
 }

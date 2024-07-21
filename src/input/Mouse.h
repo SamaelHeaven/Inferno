@@ -42,6 +42,8 @@ namespace inferno {
         static Vector2 get_scroll();
 
     private:
+        static Mouse *instance_;
+
         std::vector<MouseButton> buttons_;
 
         std::set<MouseButton> down_buttons_;
