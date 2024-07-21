@@ -125,8 +125,8 @@ namespace inferno {
         if (initialized_) {
             return;
         }
-        Time::restart_();
         initialize();
+        Time::restart_();
         initialized_ = true;
     }
 
