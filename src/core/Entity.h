@@ -4,7 +4,6 @@
 
 #include "./Component.h"
 #include "./Property.h"
-#include "./Game.h"
 #include "../math/Vector2.h"
 
 namespace inferno {
@@ -109,7 +108,7 @@ namespace inferno {
                 }
             }
             is_clean_ = false;
-            if (Game::get_scene()->initialized_) {
+            if (is_scene_initialized_()) {
                 return;
             }
             clean_();
@@ -134,6 +133,8 @@ namespace inferno {
         void add_pending_components_();
 
         void remove_pending_components_();
+
+        bool is_scene_initialized_();
 
         friend class Scene;
     };

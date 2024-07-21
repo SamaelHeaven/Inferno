@@ -1,5 +1,7 @@
 #include "./Entity.h"
 
+#include "./Game.h"
+
 namespace inferno {
     Entity::Entity(std::string name): name(std::move(name)) {}
 
@@ -78,7 +80,7 @@ namespace inferno {
         }
         components_to_add_.insert(component);
         is_clean_ = false;
-        if (Game::get_scene()->initialized_) {
+        if (is_scene_initialized_()) {
             return;
         }
         clean_();
@@ -96,7 +98,7 @@ namespace inferno {
         }
         components_to_remove_.insert(component);
         is_clean_ = false;
-        if (Game::get_scene()->initialized_) {
+        if (is_scene_initialized_()) {
             return;
         }
         clean_();
@@ -121,7 +123,7 @@ namespace inferno {
 
     void Entity::start_() {
         auto &components = components_;
-        if (!Game::get_scene()->initialized_) {
+        if (!is_scene_initialized_()) {
             components = get_components();
         }
         for (const auto &component: components) {
@@ -146,7 +148,7 @@ namespace inferno {
 
     void Entity::destroy_() {
         auto &components = components_;
-        if (!Game::get_scene()->initialized_) {
+        if (!is_scene_initialized_()) {
             components = get_components();
         }
         for (const auto &component: components) {
@@ -189,5 +191,9 @@ namespace inferno {
             component->entity_ = nullptr;
             components_to_remove_.erase(component);
         }
+    }
+
+    bool Entity::is_scene_initialized_() {
+        return Game::get_scene()->initialized_;
     }
 }
