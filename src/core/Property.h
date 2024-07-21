@@ -3,7 +3,7 @@
 #include "../inferno.h"
 
 template<typename T>
-using PropertySetter = std::function<void(const T &old_value, const T &new_value, const std::function<void(const T &t)> &set)>;
+using PropertySetter = std::function<void(const T &value, const std::function<void(const T &t)> &set)>;
 
 template<typename T>
 using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
@@ -16,9 +16,8 @@ namespace inferno {
     public:
         explicit Property(
             const T &value,
-            const PropertySetter<T> &setter = [](
-                [[maybe_unused]] const auto &old_value, const auto &new_value, const auto &set) {
-                set(new_value);
+            const PropertySetter<T> &setter = [](const auto &v, const auto &s) {
+                s(v);
             }
         );
 
@@ -74,7 +73,7 @@ namespace inferno {
         if (value_ == value) {
             return;
         }
-        setter_(value_, value, [this](const T &t) {
+        setter_(value, [this](const T &t) {
             T old_value = value_;
             value_ = t;
             for (const auto &entry: listeners_) {

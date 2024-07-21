@@ -8,3 +8,5 @@
 #include "../core/Scene.h"
 #include "../core/Time.h"
 #include "../core/Renderer.h"
+#include "../core/Entity.h"
+#include "../core/Component.h"

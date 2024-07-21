@@ -21,9 +21,9 @@ namespace inferno {
             y = static_cast<float>(xy);
         }
 
-        template<typename TX, typename TY, std::enable_if_t<std::is_arithmetic_v<TX> > * = nullptr, std::enable_if<
-            std::is_arithmetic_v<TY> >* = nullptr>
-        Vector2(const TX x, const TY y) {
+        template<typename X, typename Y, std::enable_if_t<std::is_arithmetic_v<X> > * = nullptr, std::enable_if<
+            std::is_arithmetic_v<Y> >* = nullptr>
+        Vector2(const X x, const Y y) {
             this->x = static_cast<float>(x);
             this->y = static_cast<float>(y);
         }
@@ -112,21 +112,21 @@ namespace inferno {
 
         [[nodiscard]] Vector2 clamp_y(float min, float max) const;
 
-        template<typename TMIN, typename TMAX, std::enable_if_t<std::is_arithmetic_v<TMIN> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<TMAX> >* = nullptr>
-        [[nodiscard]] Vector2 clamp(const TMIN min, const TMAX max) const {
+        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
+            <std::is_arithmetic_v<Max> >* = nullptr>
+        [[nodiscard]] Vector2 clamp(const Min min, const Max max) const {
             return clamp(static_cast<float>(min), static_cast<float>(max));
         }
 
-        template<typename TMIN, typename TMAX, std::enable_if_t<std::is_arithmetic_v<TMIN> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<TMAX> >* = nullptr>
-        [[nodiscard]] Vector2 clamp_x(const TMIN min, const TMAX max) const {
+        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
+            <std::is_arithmetic_v<Max> >* = nullptr>
+        [[nodiscard]] Vector2 clamp_x(const Min min, const Max max) const {
             return clamp_x(static_cast<float>(min), static_cast<float>(max));
         }
 
-        template<typename TMIN, typename TMAX, std::enable_if_t<std::is_arithmetic_v<TMIN> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<TMAX> >* = nullptr>
-        [[nodiscard]] Vector2 clamp_y(const TMIN min, const TMAX max) const {
+        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
+            <std::is_arithmetic_v<Max> >* = nullptr>
+        [[nodiscard]] Vector2 clamp_y(const Min min, const Max max) const {
             return clamp_y(static_cast<float>(min), static_cast<float>(max));
         }
 

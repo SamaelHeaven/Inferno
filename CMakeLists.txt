@@ -98,6 +98,10 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Time.h
         src/core/Renderer.cpp
         src/core/Renderer.h
+        src/core/Entity.cpp
+        src/core/Entity.h
+        src/core/Component.cpp
+        src/core/Component.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
