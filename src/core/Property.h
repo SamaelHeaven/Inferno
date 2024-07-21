@@ -2,8 +2,6 @@
 
 #include "../inferno.h"
 
-#include "../math/random.h"
-
 template<typename T>
 using PropertySetter = std::function<void(const T &old_value, const T &new_value, const std::function<void(const T &t)> &set)>;
 
@@ -46,9 +44,10 @@ namespace inferno {
         inline static std::unordered_map<size_t, Property *> properties_;
         T value_;
         PropertySetter<T> setter_;
+        mutable PropertyListenerID current_listener_id_ = -1;
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T> > listeners_;
         Property *bound_property_ = nullptr;
-        PropertyListenerID bound_listener_id_ = 0;
+        PropertyListenerID bound_listener_id_ = -1;
     };
 
     template<typename T>
@@ -86,7 +85,7 @@ namespace inferno {
 
     template<typename T>
     PropertyListenerID Property<T>::add_listener(const PropertyListener<T> &listener) const {
-        const auto id = random::int32(INT32_MIN, INT32_MAX);
+        const auto id = ++current_listener_id_;
         listeners_.emplace(id, listener);
         return id;
     }
@@ -124,6 +123,6 @@ namespace inferno {
             bound_property_->remove_listener(bound_listener_id_);
         }
         bound_property_ = nullptr;
-        bound_listener_id_ = 0;
+        bound_listener_id_ = -1;
     }
 }
