@@ -121,6 +121,10 @@ namespace inferno {
         }
     }
 
+    bool Entity::is_scene_initialized_() {
+        return Game::get_scene()->initialized_;
+    }
+
     void Entity::start_() {
         auto &components = components_;
         if (!is_scene_initialized_()) {
@@ -191,9 +195,5 @@ namespace inferno {
             component->entity_ = nullptr;
             components_to_remove_.erase(component);
         }
-    }
-
-    bool Entity::is_scene_initialized_() {
-        return Game::get_scene()->initialized_;
     }
 }

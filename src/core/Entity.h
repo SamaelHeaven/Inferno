@@ -120,6 +120,8 @@ namespace inferno {
         std::set<std::shared_ptr<Component> > components_to_remove_;
         bool is_clean_ = false;
 
+        static bool is_scene_initialized_();
+
         void start_();
 
         void update_();
@@ -133,8 +135,6 @@ namespace inferno {
         void add_pending_components_();
 
         void remove_pending_components_();
-
-        bool is_scene_initialized_();
 
         friend class Scene;
     };
