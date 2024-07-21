@@ -35,6 +35,8 @@ namespace inferno {
         delete get_();
     }
 
+    Renderer *Renderer::instance_ = nullptr;
+
     Renderer::Renderer() {
         Game::throw_if_uninitialized();
         screen_ = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
