@@ -2,9 +2,9 @@
 
 #include "../inferno.h"
 
-namespace inferno {
-    class Entity;
+#include "./Entity.h"
 
+namespace inferno {
     class Scene {
     public:
         virtual ~Scene() = default;
