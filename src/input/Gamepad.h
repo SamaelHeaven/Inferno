@@ -5,9 +5,9 @@
 #include "./GamepadButton.h"
 #include "./GamepadAxis.h"
 
-using GamepadID = uint8_t;
-
 namespace inferno {
+    using GamepadID = uint8_t;
+
     class Gamepad final {
     public:
         static std::vector<Gamepad *> get_gamepads();
