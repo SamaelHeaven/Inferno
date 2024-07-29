@@ -30,7 +30,7 @@ namespace inferno {
 
     void Game::set_screen_width(const int32_t width) {
         throw_if_uninitialized();
-        if (is_fullscreen()) {
+        if (is_fullscreen() && width != get_width()) {
             return;
         }
         if (get_screen_width() == width) {
@@ -46,7 +46,7 @@ namespace inferno {
 
     void Game::set_screen_height(const int32_t height) {
         throw_if_uninitialized();
-        if (is_fullscreen()) {
+        if (is_fullscreen() && height != get_height()) {
             return;
         }
         if (get_screen_height() == height) {
@@ -62,10 +62,10 @@ namespace inferno {
 
     void Game::set_screen_size(Vector2 size) {
         throw_if_uninitialized();
-        if (is_fullscreen()) {
+        size = size.round();
+        if (is_fullscreen() && size != get_size()) {
             return;
         }
-        size = size.round();
         if (get_screen_size() == size) {
             return;
         }
@@ -120,10 +120,10 @@ namespace inferno {
         const bool fullscreen = is_fullscreen();
         if (!fullscreen) {
             game->previous_screen_size_ = get_screen_size();
-            set_screen_size(get_size());
         }
         internal::ToggleFullscreen();
         if (fullscreen) {
+            set_screen_size(get_size());
             game->reset_size_ = true;
         }
 #endif
