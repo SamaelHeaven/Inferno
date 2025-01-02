@@ -2,13 +2,13 @@
 
 #include "../inferno.h"
 
-#include "./MouseButton.h"
-#include "./Cursor.h"
 #include "../math/Vector2.h"
+#include "./Cursor.h"
+#include "./MouseButton.h"
 
 namespace inferno {
     class Mouse final {
-    public:
+        public:
         static std::set<MouseButton> get_down_buttons();
 
         static std::set<MouseButton> get_up_buttons();
@@ -41,7 +41,7 @@ namespace inferno {
 
         static Vector2 get_scroll();
 
-    private:
+        private:
         static Mouse *instance_;
 
         std::vector<MouseButton> buttons_;

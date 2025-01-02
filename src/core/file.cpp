@@ -4,8 +4,8 @@ namespace inferno::file {
     std::string format_path(std::string path) {
         std::ranges::replace(path, '\\', '/');
         const auto consecutive_separators = std::ranges::unique(path, [](const char a, const char b) {
-            return a == '/' && b == '/';
-        }).begin();
+                                                return a == '/' && b == '/';
+                                            }).begin();
         path.erase(consecutive_separators, path.end());
         const auto start_pos = path.find_first_not_of(" \n\r\t/");
         const auto end_pos = path.find_last_not_of(" \n\r\t/");
@@ -17,7 +17,7 @@ namespace inferno::file {
 
     std::string path_of(const std::vector<std::string> &paths) {
         std::string result;
-        for (const auto &path: paths) {
+        for (const auto &path : paths) {
             result += path + "/";
         }
         return format_path(std::move(result));

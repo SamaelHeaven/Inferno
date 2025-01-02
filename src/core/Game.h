@@ -2,16 +2,16 @@
 
 #include "../inferno.h"
 
-#include "./file.h"
+#include "../math/Vector2.h"
 #include "./GameConfig.h"
 #include "./Scene.h"
-#include "../math/Vector2.h"
+#include "./file.h"
 
 namespace inferno {
     class Game final {
-    public:
-        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
-            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        public:
+        template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
+                  std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         static void launch(const GameConfig &config, Args... args) {
             if (intance_ != nullptr) {
                 throw std::runtime_error("Game as already been launched");
@@ -27,8 +27,8 @@ namespace inferno {
 
         static void set_scene(const std::shared_ptr<Scene> &scene);
 
-        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
-            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
+                  std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         static void set_scene(Args... args) {
             set_scene(std::make_shared<T>(args...));
         }
@@ -69,7 +69,7 @@ namespace inferno {
 
         ~Game();
 
-    private:
+        private:
         static Game *intance_;
 
         GameConfig config_;
@@ -84,8 +84,8 @@ namespace inferno {
 
         static Game *get_();
 
-        template<typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T> >* = nullptr,
-            std::enable_if_t<std::is_constructible_v<T, Args...> >* = nullptr>
+        template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
+                  std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         static void init_(const GameConfig &config, Args... args) {
             const auto game = get_();
             const auto screen_width = config.screen_width >= 0 ? config.screen_width : config.width;

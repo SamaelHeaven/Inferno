@@ -132,7 +132,7 @@ namespace inferno {
     void Mouse::update_state_() {
         const auto mouse = get_();
         if (!Game::is_focused()) {
-            for (auto button: mouse->buttons_) {
+            for (auto button : mouse->buttons_) {
                 mouse->up_buttons_.insert(button);
             }
             return;
@@ -141,7 +141,7 @@ namespace inferno {
         const auto scroll = internal::GetMouseWheelMoveV();
         mouse->screen_position_ = Vector2(position.x, position.y).clamp(Vector2::ZERO, Game::get_screen_size()).round();
         mouse->scroll_ = {scroll.x, scroll.y};
-        for (auto button: mouse->buttons_) {
+        for (auto button : mouse->buttons_) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsMouseButtonDown(button_code)) {
                 mouse->down_buttons_.insert(button);

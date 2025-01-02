@@ -1,18 +1,18 @@
 #pragma once
 
-#include <iostream>
+#include <algorithm>
+#include <box2d/box2d.h>
+#include <chrono>
 #include <cstdint>
 #include <cstring>
-#include <string>
-#include <algorithm>
-#include <vector>
-#include <list>
-#include <set>
-#include <unordered_map>
-#include <chrono>
 #include <functional>
+#include <iostream>
+#include <list>
 #include <random>
-#include <box2d/box2d.h>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 #define MAGIC_ENUM_RANGE_MIN (-2048)
 #define MAGIC_ENUM_RANGE_MAX 2048

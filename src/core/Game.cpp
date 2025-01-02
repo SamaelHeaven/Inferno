@@ -1,10 +1,10 @@
 #include "./Game.h"
 
-#include "./Time.h"
-#include "./Renderer.h"
 #include "../input/Gamepad.h"
 #include "../input/Keyboard.h"
 #include "../input/Mouse.h"
+#include "./Renderer.h"
+#include "./Time.h"
 
 namespace inferno {
     void Game::throw_if_uninitialized() {

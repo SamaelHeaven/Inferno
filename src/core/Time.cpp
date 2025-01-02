@@ -23,24 +23,21 @@ namespace inferno {
 
     std::chrono::nanoseconds Time::since_start() {
         const auto time = get_();
-        const auto now = std::chrono::high_resolution_clock::now();
-        const auto result = now.time_since_epoch() - time->start_time_;
-        return std::chrono::duration_cast<std::chrono::nanoseconds>(result);
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::duration<double>(internal::GetTime() - time->start_time_));
     }
 
     std::chrono::nanoseconds Time::since_launch() {
         const auto time = get_();
-        const auto now = std::chrono::high_resolution_clock::now();
-        const auto result = now.time_since_epoch() - time->launch_time_;
-        return std::chrono::duration_cast<std::chrono::nanoseconds>(result);
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::duration<double>(internal::GetTime() - time->launch_time_));
     }
 
     Time *Time::instance_ = nullptr;
 
     Time::Time() {
         Game::throw_if_uninitialized();
-        const auto now = std::chrono::high_resolution_clock::now();
-        launch_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+        launch_time_ = internal::GetTime();
         start_time_ = launch_time_;
         delta_ = 0;
         fixed_delta_ = 1 / 60.f;
@@ -62,8 +59,7 @@ namespace inferno {
 
     void Time::restart_() {
         const auto time = get_();
-        const auto now = std::chrono::high_resolution_clock::now();
-        time->start_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+        time->start_time_ = internal::GetTime();
         time->delta_ = 0;
         time->frame_count_ = 0;
         time->average_fps_ = 0;

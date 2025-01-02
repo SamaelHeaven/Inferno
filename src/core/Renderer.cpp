@@ -1,7 +1,7 @@
 #include "./Renderer.h"
 
-#include "./Game.h"
 #include "../drawing/Color.h"
+#include "./Game.h"
 
 namespace inferno {
     void Renderer::clear_background(const Color color) {
@@ -20,10 +20,8 @@ namespace inferno {
         const auto scale = std::min(screen_width / width, screen_height / height);
         const auto screen = renderer->screen_;
         const auto source = (internal::Rectangle){0.0f, 0.0f, width, -height};
-        const auto dest = (internal::Rectangle){
-            (screen_width - width * scale) * 0.5f, (screen_height - height * scale) * 0.5f, width * scale,
-            height * scale
-        };
+        const auto dest = (internal::Rectangle){(screen_width - width * scale) * 0.5f,
+                                                (screen_height - height * scale) * 0.5f, width * scale, height * scale};
         constexpr auto position = (internal::Vector2){0, 0};
         internal::BeginDrawing();
         ClearBackground(internal::Color(0, 0, 0, 255));

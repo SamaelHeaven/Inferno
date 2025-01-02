@@ -73,7 +73,7 @@ namespace inferno {
     void Keyboard::update_state_() {
         const auto keyboard = get_();
         if (!Game::is_focused()) {
-            for (auto key: keyboard->keys_) {
+            for (auto key : keyboard->keys_) {
                 keyboard->up_keys_.insert(key);
             }
             return;
@@ -82,7 +82,7 @@ namespace inferno {
         while ((char_typed = static_cast<char>(internal::GetCharPressed()))) {
             keyboard->typed_string_.push_back(char_typed);
         }
-        for (auto key: keyboard->keys_) {
+        for (auto key : keyboard->keys_) {
             const auto key_code = static_cast<int32_t>(key);
             if (internal::IsKeyDown(key_code)) {
                 keyboard->down_keys_.insert(key);

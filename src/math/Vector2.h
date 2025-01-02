@@ -15,14 +15,13 @@ namespace inferno {
 
         Vector2();
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        explicit Vector2(const T xy) {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> explicit Vector2(const T xy) {
             x = static_cast<float>(xy);
             y = static_cast<float>(xy);
         }
 
-        template<typename X, typename Y, std::enable_if_t<std::is_arithmetic_v<X> > * = nullptr, std::enable_if<
-            std::is_arithmetic_v<Y> >* = nullptr>
+        template <typename X, typename Y, std::enable_if_t<std::is_arithmetic_v<X>> * = nullptr,
+                  std::enable_if<std::is_arithmetic_v<Y>> * = nullptr>
         Vector2(const X x, const Y y) {
             this->x = static_cast<float>(x);
             this->y = static_cast<float>(y);
@@ -62,43 +61,35 @@ namespace inferno {
 
         Vector2 &operator/=(float f);
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 operator+(const T t) const {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 operator+(const T t) const {
             return *this + static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 operator-(const T t) const {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 operator-(const T t) const {
             return *this - static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 operator*(const T t) const {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 operator*(const T t) const {
             return *this * static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 operator/(const T t) const {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 operator/(const T t) const {
             return *this / static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 &operator+=(const T t) {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 &operator+=(const T t) {
             return *this += static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 &operator-=(const T t) {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 &operator-=(const T t) {
             return *this -= static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 &operator*=(const T t) {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 &operator*=(const T t) {
             return *this *= static_cast<float>(t);
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
-        Vector2 &operator/=(const T t) {
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr> Vector2 &operator/=(const T t) {
             return *this /= static_cast<float>(t);
         }
 
@@ -112,20 +103,20 @@ namespace inferno {
 
         [[nodiscard]] Vector2 clamp_y(float min, float max) const;
 
-        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<Max> >* = nullptr>
+        template <typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min>> * = nullptr,
+                  std::enable_if<std::is_arithmetic_v<Max>> * = nullptr>
         [[nodiscard]] Vector2 clamp(const Min min, const Max max) const {
             return clamp(static_cast<float>(min), static_cast<float>(max));
         }
 
-        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<Max> >* = nullptr>
+        template <typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min>> * = nullptr,
+                  std::enable_if<std::is_arithmetic_v<Max>> * = nullptr>
         [[nodiscard]] Vector2 clamp_x(const Min min, const Max max) const {
             return clamp_x(static_cast<float>(min), static_cast<float>(max));
         }
 
-        template<typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min> > * = nullptr, std::enable_if
-            <std::is_arithmetic_v<Max> >* = nullptr>
+        template <typename Min, typename Max, std::enable_if_t<std::is_arithmetic_v<Min>> * = nullptr,
+                  std::enable_if<std::is_arithmetic_v<Max>> * = nullptr>
         [[nodiscard]] Vector2 clamp_y(const Min min, const Max max) const {
             return clamp_y(static_cast<float>(min), static_cast<float>(max));
         }
@@ -138,7 +129,7 @@ namespace inferno {
 
         [[nodiscard]] Vector2 rotate(float degrees, Vector2 v) const;
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr>
         [[nodiscard]] Vector2 rotate(const T degrees, const Vector2 v) const {
             return rotate(static_cast<float>(degrees), v);
         }
@@ -153,12 +144,12 @@ namespace inferno {
 
         [[nodiscard]] Vector2 slerp(Vector2 end, float t) const;
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr>
         [[nodiscard]] Vector2 lerp(const Vector2 end, const T t) const {
             return lerp(end, static_cast<float>(t));
         }
 
-        template<typename T, std::enable_if<std::is_arithmetic_v<T> >* = nullptr>
+        template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr>
         [[nodiscard]] Vector2 slerp(const Vector2 end, const T t) const {
             return slerp(end, static_cast<float>(t));
         }

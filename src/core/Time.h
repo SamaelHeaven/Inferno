@@ -4,7 +4,7 @@
 
 namespace inferno {
     class Time final {
-    public:
+        public:
         static float delta();
 
         static float fixed_delta();
@@ -17,7 +17,7 @@ namespace inferno {
 
         static std::chrono::nanoseconds since_launch();
 
-    private:
+        private:
         static Time *instance_;
 
         float delta_;
@@ -28,9 +28,9 @@ namespace inferno {
 
         uint64_t frame_count_;
 
-        std::chrono::nanoseconds launch_time_{};
+        double launch_time_{};
 
-        std::chrono::nanoseconds start_time_{};
+        double start_time_{};
 
         Time();
 

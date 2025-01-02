@@ -6,7 +6,7 @@ namespace inferno {
     std::vector<Gamepad *> Gamepad::get_gamepads() {
         const auto object = get_();
         std::vector<Gamepad *> result;
-        for (const auto &gamepad: object->gamepads_) {
+        for (const auto &gamepad : object->gamepads_) {
             result.push_back(gamepad.get());
         }
         return result;
@@ -101,7 +101,7 @@ namespace inferno {
     }
 
     void Gamepad::update_all_() {
-        for (const auto &gamepad: get_()->gamepads_) {
+        for (const auto &gamepad : get_()->gamepads_) {
             gamepad->update_();
         }
     }
@@ -123,7 +123,7 @@ namespace inferno {
         up_buttons_.clear();
         pressed_buttons_.clear();
         released_buttons_.clear();
-        for (auto axis: object->axes_) {
+        for (auto axis : object->axes_) {
             axes_[axis] = 0.f;
         }
     }
@@ -131,13 +131,13 @@ namespace inferno {
     void Gamepad::update_state_() {
         const auto object = get_();
         if (!Game::is_focused() || !connected_) {
-            for (auto button: object->buttons_) {
+            for (auto button : object->buttons_) {
                 up_buttons_.insert(button);
             }
             return;
         }
         name_ = internal::GetGamepadName(id_);
-        for (auto button: object->buttons_) {
+        for (auto button : object->buttons_) {
             const auto button_code = static_cast<int32_t>(button);
             if (internal::IsGamepadButtonDown(id_, button_code)) {
                 down_buttons_.insert(button);
@@ -151,7 +151,7 @@ namespace inferno {
                 released_buttons_.insert(button);
             }
         }
-        for (auto axis: object->axes_) {
+        for (auto axis : object->axes_) {
             const auto axis_code = static_cast<int32_t>(axis);
             axes_[axis] = internal::GetGamepadAxisMovement(id_, axis_code);
         }
