@@ -23,7 +23,7 @@ if (NOT raylib_FOUND)
     endif ()
 endif ()
 
-set(BOX2D_VERSION 2.4.1)
+set(BOX2D_VERSION 3.0.0)
 find_package(box2d ${BOX2D_VERSION} QUIET)
 if (NOT box2d_FOUND)
     include(FetchContent)
