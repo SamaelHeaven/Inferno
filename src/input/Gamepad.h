@@ -9,7 +9,7 @@ namespace inferno {
     using GamepadID = uint8_t;
 
     class Gamepad final {
-        public:
+    public:
         static std::vector<Gamepad *> get_gamepads();
 
         static Gamepad *get(GamepadID id);
@@ -44,7 +44,7 @@ namespace inferno {
 
         [[nodiscard]] float get_axis(GamepadAxis axis) const;
 
-        private:
+    private:
         explicit Gamepad(GamepadID id);
 
         GamepadID id_;
@@ -74,7 +74,7 @@ namespace inferno {
         void update_state_();
 
         class Object_ final {
-            public:
+        public:
             static Object_ *instance_;
 
             std::vector<std::unique_ptr<Gamepad>> gamepads_;

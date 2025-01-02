@@ -2,15 +2,15 @@
 
 namespace inferno {
     class Scene {
-        public:
+    public:
         virtual ~Scene();
 
-        protected:
+    protected:
         virtual void initialize();
 
         virtual void update();
 
-        private:
+    private:
         bool initialized_ = false;
 
         void initialize_();

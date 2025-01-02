@@ -15,5 +15,5 @@ FixNamespaceComments: false
 CompactNamespaces: true
 AllowShortLambdasOnASingleLine: None
 MaxEmptyLinesToKeep: 1
-AccessModifierOffset: 0
+AccessModifierOffset: -4
 AlignOperands: false

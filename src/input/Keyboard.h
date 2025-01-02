@@ -6,7 +6,7 @@
 
 namespace inferno {
     class Keyboard final {
-        public:
+    public:
         static std::string get_typed_string();
 
         static std::set<Key> get_down_keys();
@@ -25,7 +25,7 @@ namespace inferno {
 
         static bool is_key_released(Key key);
 
-        private:
+    private:
         static Keyboard *instance_;
 
         std::string typed_string_;

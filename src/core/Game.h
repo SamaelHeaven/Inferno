@@ -9,7 +9,7 @@
 
 namespace inferno {
     class Game final {
-        public:
+    public:
         template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
                   std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         static void launch(const GameConfig &config, Args... args) {
@@ -69,7 +69,7 @@ namespace inferno {
 
         ~Game();
 
-        private:
+    private:
         static Game *intance_;
 
         GameConfig config_;
