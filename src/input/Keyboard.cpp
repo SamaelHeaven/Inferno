@@ -78,9 +78,9 @@ namespace inferno {
             }
             return;
         }
-        char charTyped;
-        while ((charTyped = static_cast<char>(internal::GetCharPressed()))) {
-            keyboard->typed_string_.push_back(charTyped);
+        char char_typed;
+        while ((char_typed = static_cast<char>(internal::GetCharPressed()))) {
+            keyboard->typed_string_.push_back(char_typed);
         }
         for (auto key: keyboard->keys_) {
             const auto key_code = static_cast<int32_t>(key);
