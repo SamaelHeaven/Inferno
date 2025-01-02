@@ -21,7 +21,7 @@ namespace inferno {
         const auto screen = renderer->screen_;
         const auto source = (internal::Rectangle){0.0f, 0.0f, width, -height};
         const auto dest = (internal::Rectangle){(screen_width - width * scale) * 0.5f,
-                                                (screen_height - height * scale) * 0.5f, width * scale, height * scale};
+            (screen_height - height * scale) * 0.5f, width * scale, height * scale};
         constexpr auto position = (internal::Vector2){0, 0};
         internal::BeginDrawing();
         ClearBackground(internal::Color(0, 0, 0, 255));

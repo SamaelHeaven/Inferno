@@ -8,8 +8,8 @@ namespace inferno {
     const InputAxis InputAxis::VERTICAL = InputAxis(Key::UP, Key::W, Key::DOWN, Key::S, GamepadAxis::LEFT_Y);
 
     InputAxis::InputAxis(const std::optional<Key> &minus_key, const std::optional<Key> &minus_key_alt,
-                         const std::optional<Key> &plus_key, const std::optional<Key> &plus_key_alt,
-                         const std::optional<GamepadAxis> &gamepad_axis, const std::optional<GamepadID> &gamepad) {
+        const std::optional<Key> &plus_key, const std::optional<Key> &plus_key_alt,
+        const std::optional<GamepadAxis> &gamepad_axis, const std::optional<GamepadID> &gamepad) {
         this->minus_key = minus_key;
         this->minus_key_alt = minus_key_alt;
         this->plus_key = plus_key;

@@ -20,11 +20,11 @@ namespace inferno {
         std::optional<GamepadID> gamepad;
 
         explicit InputAxis(const std::optional<Key> &minus_key = std::optional<Key>{},
-                           const std::optional<Key> &minus_key_alt = std::optional<Key>{},
-                           const std::optional<Key> &plus_key = std::optional<Key>{},
-                           const std::optional<Key> &plus_key_alt = std::optional<Key>{},
-                           const std::optional<GamepadAxis> &gamepad_axis = std::optional<GamepadAxis>{},
-                           const std::optional<GamepadID> &gamepad = 0);
+            const std::optional<Key> &minus_key_alt = std::optional<Key>{},
+            const std::optional<Key> &plus_key = std::optional<Key>{},
+            const std::optional<Key> &plus_key_alt = std::optional<Key>{},
+            const std::optional<GamepadAxis> &gamepad_axis = std::optional<GamepadAxis>{},
+            const std::optional<GamepadID> &gamepad = 0);
 
         static Vector2 get_both();
 
