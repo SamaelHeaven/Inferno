@@ -28,9 +28,9 @@ namespace inferno {
 
         uint64_t frame_count_;
 
-        double launch_time_{};
+        std::chrono::nanoseconds launch_time_{};
 
-        double start_time_{};
+        std::chrono::nanoseconds start_time_{};
 
         Time();
 

@@ -51,7 +51,7 @@ namespace inferno {
 
     std::string Color::to_string() const {
         return "{ red: " + std::to_string(red) + ", green: " + std::to_string(green) +
-               ", blue: " + std::to_string(blue) + ", alpha: " + std::to_string(alpha) + " }";
+            ", blue: " + std::to_string(blue) + ", alpha: " + std::to_string(alpha) + " }";
     }
 
     bool Color::operator==(const Color &other) const {

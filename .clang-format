@@ -16,3 +16,4 @@ CompactNamespaces: true
 AllowShortLambdasOnASingleLine: None
 MaxEmptyLinesToKeep: 1
 AccessModifierOffset: 0
+AlignOperands: false

@@ -28,9 +28,9 @@ namespace inferno {
             axis = static_cast<int32_t>(std::round(Gamepad::get(gamepad.value())->get_axis(gamepad_axis.value())));
         }
         const auto minus = (minus_key.has_value() && Keyboard::is_key_down(minus_key.value())) ||
-                           (minus_key_alt.has_value() && Keyboard::is_key_down(minus_key_alt.value())) || axis == -1;
+            (minus_key_alt.has_value() && Keyboard::is_key_down(minus_key_alt.value())) || axis == -1;
         const auto plus = (plus_key.has_value() && Keyboard::is_key_down(plus_key.value())) ||
-                          (plus_key_alt.has_value() && Keyboard::is_key_down(plus_key_alt.value())) || axis == 1;
+            (plus_key_alt.has_value() && Keyboard::is_key_down(plus_key_alt.value())) || axis == 1;
         if (minus && !plus) {
             return -1;
         }
