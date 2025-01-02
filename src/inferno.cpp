@@ -2,7 +2,7 @@
 
 #undef main
 
-int32_t inferno_main(const std::vector<std::string> &args);
+void inferno_main(const std::vector<std::string> &args);
 
 int32_t main(const int32_t argc, const char **argv) {
     SetTraceLogLevel(inferno::internal::LOG_NONE);
@@ -10,5 +10,5 @@ int32_t main(const int32_t argc, const char **argv) {
     for (auto i = 0; i < argc; i++) {
         args.emplace_back(argv[i]);
     }
-    return inferno_main(args);
+    inferno_main(args);
 }

@@ -42,7 +42,7 @@ if (NOT box2d_FOUND)
     endif ()
 endif ()
 
-set(MAGIC_ENUM_VERSION 0.9.6)
+set(MAGIC_ENUM_VERSION 0.9.7)
 find_package(magic_enum ${MAGIC_ENUM_VERSION} QUIET)
 if (NOT magic_enum_FOUND)
     include(FetchContent)
