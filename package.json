@@ -1,6 +1,6 @@
 {
   "name": "inferno",
-  "private": "true",
+  "private": true,
   "scripts": {
     "format": "clang-format --glob=src/**/*.{cpp,h} -i"
   },
