@@ -12,13 +12,12 @@
 #include <chrono>
 #include <functional>
 #include <random>
-#include <pugixml.hpp>
 #include <box2d/box2d.h>
 
 #define MAGIC_ENUM_RANGE_MIN (-2048)
 #define MAGIC_ENUM_RANGE_MAX 2048
 
-#include <magic_enum_all.hpp>
+#include <magic_enum/magic_enum_all.hpp>
 
 namespace inferno::internal {
 #include <raylib.h>

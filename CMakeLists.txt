@@ -23,7 +23,7 @@ if (NOT raylib_FOUND)
     endif ()
 endif ()
 
-set(BOX2D_VERSION 2.4.1)
+set(BOX2D_VERSION 3.0.0)
 find_package(box2d ${BOX2D_VERSION} QUIET)
 if (NOT box2d_FOUND)
     include(FetchContent)
@@ -42,24 +42,7 @@ if (NOT box2d_FOUND)
     endif ()
 endif ()
 
-set(PUGIXML_VERSION 1.14)
-find_package(pugixml ${PUGIXML_VERSION} QUIET)
-if (NOT pugixml_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-            pugixml
-            DOWNLOAD_EXTRACT_TIMESTAMP OFF
-            URL https://github.com/zeux/pugixml/releases/download/v${PUGIXML_VERSION}/pugixml-${PUGIXML_VERSION}.tar.gz
-    )
-    FetchContent_GetProperties(pugixml)
-    if (NOT pugixml_POPULATED)
-        set(FETCHCONTENT_QUIET NO)
-        FetchContent_Populate(pugixml)
-        add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR})
-    endif ()
-endif ()
-
-set(MAGIC_ENUM_VERSION 0.9.6)
+set(MAGIC_ENUM_VERSION 0.9.7)
 find_package(magic_enum ${MAGIC_ENUM_VERSION} QUIET)
 if (NOT magic_enum_FOUND)
     include(FetchContent)
@@ -120,7 +103,7 @@ add_library(${PROJECT_NAME} STATIC
         src/math/Vector2.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d pugixml magic_enum)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>
