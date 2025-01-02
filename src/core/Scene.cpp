@@ -13,9 +13,9 @@ namespace inferno {
         if (initialized_) {
             return;
         }
+        initialized_ = true;
         initialize();
         Time::restart_();
-        initialized_ = true;
     }
 
     void Scene::update_() {
