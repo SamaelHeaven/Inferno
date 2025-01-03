@@ -98,11 +98,11 @@ namespace inferno {
             internal::InitWindow(config.width, config.height, config.title.c_str());
             internal::SetTargetFPS(config.fps_target);
             SetExitKey(internal::KeyboardKey::KEY_NULL);
+#ifdef PLATFORM_DESKTOP
             internal::SetWindowSize(screen_width, screen_height);
             if (config.fullscreen) {
                 toggle_fullscreen();
             }
-#ifdef PLATFORM_DESKTOP
             if (file::is_file(config.icon)) {
                 const auto icon = internal::LoadImage(file::format_path(config.icon).c_str());
                 SetWindowIcon(icon);
