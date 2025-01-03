@@ -102,10 +102,12 @@ namespace inferno::file {
         if (!is_directory(path)) {
             throw std::runtime_error("Requested directory does not exists: \"" + path + "\"");
         }
-        std::vector<std::string> result;
         const auto files = internal::LoadDirectoryFiles(path.c_str());
-        for (auto i = 0; i < files.count; i++) {
-            result.push_back(format_path(files.paths[i]));
+        const auto count = files.count;
+        const auto paths = files.paths;
+        std::vector<std::string> result(count);
+        for (auto i = 0; i < count; i++) {
+            result.push_back(format_path(paths[i]));
         }
         UnloadDirectoryFiles(files);
         return result;
@@ -140,7 +142,7 @@ namespace inferno::file {
         path = format_path(std::move(path));
         auto size = static_cast<int32_t>(file_size(path));
         const auto data = internal::LoadFileData(path.c_str(), &size);
-        std::vector<uint8_t> result;
+        std::vector<uint8_t> result(size);
         for (auto i = 0; i < size; i++) {
             result.push_back(data[i]);
         }
