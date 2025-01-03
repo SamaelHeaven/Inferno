@@ -100,9 +100,11 @@ namespace inferno {
             SetExitKey(internal::KeyboardKey::KEY_NULL);
 #ifdef PLATFORM_DESKTOP
             internal::SetWindowSize(screen_width, screen_height);
+#endif
             if (config.fullscreen) {
                 toggle_fullscreen();
             }
+#ifdef PLATFORM_DESKTOP
             if (file::is_file(config.icon)) {
                 const auto icon = internal::LoadImage(file::format_path(config.icon).c_str());
                 SetWindowIcon(icon);

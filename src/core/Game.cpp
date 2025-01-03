@@ -30,6 +30,7 @@ namespace inferno {
 
     void Game::set_screen_width(const int32_t width) {
         throw_if_uninitialized();
+#ifdef PLATFORM_DESKTOP
         if (is_fullscreen() && width != get_width()) {
             return;
         }
@@ -37,6 +38,7 @@ namespace inferno {
             return;
         }
         internal::SetWindowSize(width, get_screen_height());
+#endif
     }
 
     int32_t Game::get_screen_height() {
@@ -46,6 +48,7 @@ namespace inferno {
 
     void Game::set_screen_height(const int32_t height) {
         throw_if_uninitialized();
+#ifdef PLATFORM_DESKTOP
         if (is_fullscreen() && height != get_height()) {
             return;
         }
@@ -53,6 +56,7 @@ namespace inferno {
             return;
         }
         internal::SetWindowSize(get_screen_width(), height);
+#endif
     }
 
     Vector2 Game::get_screen_size() {
@@ -62,6 +66,7 @@ namespace inferno {
 
     void Game::set_screen_size(Vector2 size) {
         throw_if_uninitialized();
+#ifdef PLATFORM_DESKTOP
         size = size.round();
         if (is_fullscreen() && size != get_size()) {
             return;
@@ -70,6 +75,7 @@ namespace inferno {
             return;
         }
         internal::SetWindowSize(static_cast<int32_t>(size.x), static_cast<int32_t>(size.y));
+#endif
     }
 
     int32_t Game::get_width() {
@@ -115,7 +121,6 @@ namespace inferno {
 
     void Game::toggle_fullscreen() {
         throw_if_uninitialized();
-#ifdef PLATFORM_DESKTOP
         const auto game = get_();
         if (is_fullscreen()) {
             game->reset_size_ = true;
@@ -124,7 +129,6 @@ namespace inferno {
             set_screen_size(get_size());
         }
         internal::ToggleFullscreen();
-#endif
     }
 
     int32_t Game::get_fps_target() {
@@ -144,11 +148,7 @@ namespace inferno {
 
     bool Game::is_focused() {
         throw_if_uninitialized();
-#ifdef PLATFORM_DESKTOP
         return internal::IsWindowFocused();
-#else
-        return true;
-#endif
     }
 
     Game::~Game() {
