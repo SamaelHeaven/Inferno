@@ -36,8 +36,8 @@ namespace inferno {
         }
 
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
-            registry_.view<T...>().each([&](auto entity, auto &...components) {
-                if constexpr (std::is_invocable_v<Callback, decltype(entity), decltype(components)...>) {
+            registry_.view<T...>().each([&]<typename... Components>(auto entity, Components &...components) {
+                if constexpr (std::is_invocable_v<Callback, Entity, Components...>) {
                     callback(static_cast<Entity>(entity), components...);
                 } else {
                     callback(components...);
