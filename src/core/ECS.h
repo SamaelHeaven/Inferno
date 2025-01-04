@@ -38,9 +38,9 @@ namespace inferno {
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
             registry_.view<T...>().each([&]<typename... C>(auto entity, C &...components) {
                 if constexpr (std::is_invocable_v<Callback, C...>) {
-                    callback(components...);
+                    callback(&components...);
                 } else if constexpr (std::is_invocable_v<Callback, Entity, C...>) {
-                    callback(static_cast<Entity>(entity), components...);
+                    callback(static_cast<Entity>(entity), &components...);
                 } else {
                     static_assert(false, "Callback signature is not supported");
                 }
