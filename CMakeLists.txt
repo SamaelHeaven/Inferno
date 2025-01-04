@@ -59,6 +59,23 @@ if (NOT magic_enum_FOUND)
     endif ()
 endif ()
 
+set(ENTT_VERSION 3.14.0)
+find_package(EnTT ${ENTT_VERSION} QUIET)
+if (NOT EnTT_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+            EnTT
+            DOWNLOAD_EXTRACT_TIMESTAMP OFF
+            URL https://github.com/skypjack/entt/archive/refs/tags/v${ENTT_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(EnTT)
+    if (NOT EnTT_POPULATED)
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_Populate(EnTT)
+        add_subdirectory(${EnTT_SOURCE_DIR} ${EnTT_SOURCE_DIR})
+    endif ()
+endif ()
+
 add_library(${PROJECT_NAME} STATIC
         src/inferno.cpp
         src/inferno.h
@@ -80,6 +97,8 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Time.h
         src/core/Renderer.cpp
         src/core/Renderer.h
+        src/core/ECS.cpp
+        src/core/ECS.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
@@ -103,7 +122,7 @@ add_library(${PROJECT_NAME} STATIC
         src/math/Vector2.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>

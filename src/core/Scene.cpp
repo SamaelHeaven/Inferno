@@ -5,6 +5,10 @@
 namespace inferno {
     Scene::~Scene() = default;
 
+    ECS &Scene::ecs() {
+        return ecs_;
+    }
+
     void Scene::initialize() {}
 
     void Scene::update() {}
