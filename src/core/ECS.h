@@ -35,12 +35,16 @@ namespace inferno {
             return registry_.any_of<T...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T, typename Callback> void forEach(Callback &&callback) {
+        template <typename... T, typename Callback>
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
+        forEach(Callback &&callback) {
             registry_.view<T...>().each([&](auto entity, auto &...components) {
-                if constexpr (std::is_invocable_v<Callback, T &...>) {
+                if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
+                    callback(static_cast<Entity>(entity), components...);
+                } else if constexpr (std::is_invocable_v<Callback, T &...>) {
                     callback(components...);
                 } else {
-                    callback(static_cast<Entity>(entity), components...);
+                    static_assert(false, "Invalid callback signature");
                 }
             });
         }
