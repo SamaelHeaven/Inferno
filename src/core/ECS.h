@@ -24,15 +24,15 @@ namespace inferno {
         }
 
         template <typename T, typename... Other> std::size_t remove(Entity entity) {
-            return registry_.remove<T, Other>(static_cast<entt::entity>(entity));
+            return registry_.remove<T, Other...>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T> [[nodiscard]] bool hasAllOf(Entity entity) const {
-            return registry_.all_of<T>(static_cast<entt::entity>(entity));
+            return registry_.all_of<T...>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T> [[nodiscard]] bool hasAnyOf(Entity entity) const {
-            return registry_.any_of<T>(static_cast<entt::entity>(entity));
+            return registry_.any_of<T...>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
