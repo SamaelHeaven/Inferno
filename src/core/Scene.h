@@ -7,7 +7,7 @@ namespace inferno {
     public:
         virtual ~Scene();
 
-        ECS &ecs();
+        ECS &get_ecs();
 
     protected:
         virtual void initialize();

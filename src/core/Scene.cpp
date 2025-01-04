@@ -5,7 +5,7 @@
 namespace inferno {
     Scene::~Scene() = default;
 
-    ECS &Scene::ecs() {
+    ECS &Scene::get_ecs() {
         return ecs_;
     }
 
