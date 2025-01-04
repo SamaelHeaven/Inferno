@@ -4,7 +4,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    using System = std::function<void(class ECS &)>;
+    typedef void (*System)(class ECS &);
 
     enum class Entity : uint32_t {};
 
@@ -12,7 +12,7 @@ namespace inferno {
     public:
         ECS(const ECS &) = delete;
 
-        static void system(const System &system);
+        static void system(System system);
 
         Entity create();
 
@@ -35,7 +35,7 @@ namespace inferno {
             return registry_.any_of<T>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> void forEach(const std::function<void(Entity, T &...)> &callback) {
+        template <typename... T> void forEach(void (*callback)(Entity, T &...)) {
             auto view = registry_.view<T...>();
             view.each(callback);
         }
