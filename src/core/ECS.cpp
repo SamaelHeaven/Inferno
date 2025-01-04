@@ -1,6 +1,8 @@
 #include "ECS.h"
 
 namespace inferno {
+    std::vector<System> ECS::systems_;
+
     ECS::ECS() = default;
 
     void ECS::system(const System &system) {
