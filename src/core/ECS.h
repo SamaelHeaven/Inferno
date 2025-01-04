@@ -20,7 +20,7 @@ namespace inferno {
 
         template <typename T, typename... Args, std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         auto add(Entity entity, Args... args) {
-            return registry_.emplace<T, Args...>(entity, args...);
+            return registry_.emplace<T, Args...>(static_cast<entt::entity>(entity), args...);
         }
 
         template <typename T, typename... Other> std::size_t remove(Entity entity) {
@@ -37,7 +37,9 @@ namespace inferno {
 
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
             auto view = registry_.view<T...>();
-            view.each(callback);
+            view.each([callback](entt::entity entity, const auto... args) {
+                callback(static_cast<Entity>(entity), args...);
+            });
         }
 
     private:
