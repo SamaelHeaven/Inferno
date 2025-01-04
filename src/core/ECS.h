@@ -36,14 +36,13 @@ namespace inferno {
         }
 
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
-            registry_.view<T...>().each(
-                [callback = std::forward<Callback>(callback)](auto entity, auto &...components) {
-                    if constexpr (std::is_invocable_v<Callback, Entity, T...>) {
-                        callback(static_cast<Entity>(entity), components...);
-                    } else {
-                        callback(components...);
-                    }
-                });
+            registry_.view<T...>().each([&](auto entity, auto &...components) {
+                if constexpr (std::is_convertible_v<Callback, void (*)(Entity, T...)>) {
+                    callback(static_cast<Entity>(entity), components...);
+                } else {
+                    callback(components...);
+                }
+            });
         }
 
     private:
