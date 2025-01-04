@@ -19,8 +19,8 @@ namespace inferno {
         void destroy(Entity entity);
 
         template <typename T, typename... Args, std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
-        auto add(Entity entity, Args... args) {
-            return registry_.emplace<T, Args...>(static_cast<entt::entity>(entity), args...);
+        auto add(Entity entity, Args &&...args) {
+            return registry_.emplace<T>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
 
         template <typename T, typename... Other> std::size_t remove(Entity entity) {
