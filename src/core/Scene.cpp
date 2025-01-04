@@ -24,5 +24,8 @@ namespace inferno {
 
     void Scene::update_() {
         update();
+        for (const auto &system : ECS::systems_) {
+            system(ecs_);
+        }
     }
 }

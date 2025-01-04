@@ -9,7 +9,6 @@ namespace inferno {
 
         ECS &get_ecs();
 
-    protected:
         virtual void initialize();
 
         virtual void update();
