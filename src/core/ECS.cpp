@@ -3,7 +3,7 @@
 namespace inferno {
     ECS::ECS() = default;
 
-    void ECS::system(const System system) {
+    void ECS::system(const System &system) {
         systems_.push_back(system);
     }
 

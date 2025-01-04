@@ -12,7 +12,7 @@ namespace inferno {
     public:
         ECS(const ECS &) = delete;
 
-        static void system(System system);
+        static void system(const System &system);
 
         Entity create();
 
@@ -23,8 +23,8 @@ namespace inferno {
             return registry_.emplace<T>(entity, args...);
         }
 
-        template <typename T, typename... O> std::size_t remove(Entity entity) {
-            return registry_.remove<T, O>(static_cast<entt::entity>(entity));
+        template <typename T, typename... Other> std::size_t remove(Entity entity) {
+            return registry_.remove<T, Other>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T> [[nodiscard]] bool hasAllOf(Entity entity) const {
@@ -35,7 +35,7 @@ namespace inferno {
             return registry_.any_of<T>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> void forEach(void (*callback)(Entity, T &...)) {
+        template <typename... T, typename Callback> void forEach(Callback &&callback) {
             auto view = registry_.view<T...>();
             view.each(callback);
         }
