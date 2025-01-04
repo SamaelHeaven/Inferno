@@ -3,7 +3,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    using Entity = uint32_t;
+    enum class Entity : uint32_t {};
 
     class ECS final {
     public:
