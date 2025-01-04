@@ -72,7 +72,7 @@ if (NOT EnTT_FOUND)
     if (NOT EnTT_POPULATED)
         set(FETCHCONTENT_QUIET NO)
         FetchContent_Populate(EnTT)
-        add_subdirectory(${EnTT_SOURCE_DIR} ${EnTT_SOURCE_DIR})
+        add_subdirectory(${EnTT_SOURCE_DIR} ${EnTT_BINARY_DIR})
     endif ()
 endif ()
 
