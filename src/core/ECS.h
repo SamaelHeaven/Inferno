@@ -36,9 +36,8 @@ namespace inferno {
         }
 
         template <typename... T, typename Callback> void forEach(Callback &&callback) {
-            auto view = registry_.view<T...>();
-            view.each([callback](entt::entity entity, const auto... args) {
-                callback(static_cast<Entity>(entity), args...);
+            registry_.view<T...>().each([&](auto entity, auto &...components) {
+                callback(static_cast<Entity>(entity), components...);
             });
         }
 
