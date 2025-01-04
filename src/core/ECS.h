@@ -7,6 +7,8 @@ namespace inferno {
 
     class ECS final {
     public:
+        ECS();
+
         ECS(const ECS &) = delete;
 
         Entity create();
