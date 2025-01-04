@@ -3,7 +3,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    struct Color final {
+    struct Color {
         const static Color WHITE;
         const static Color BLACK;
         const static Color TRANSPARENT;

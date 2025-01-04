@@ -3,7 +3,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    struct Vector2 final {
+    struct Vector2 {
         const static Vector2 ZERO;
         const static Vector2 UP;
         const static Vector2 DOWN;
