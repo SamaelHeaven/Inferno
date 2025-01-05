@@ -3,11 +3,14 @@
 #include "../inferno.h"
 
 #include "../drawing/Color.h"
+#include "../math/Vector2.h"
 
 namespace inferno {
     class Renderer final {
     public:
         static void clear_background(Color color);
+
+        static void draw_rectangle(const Vector2 &position, const Vector2 &size, const Color &color);
 
     private:
         static Renderer *instance_;

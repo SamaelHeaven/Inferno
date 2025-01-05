@@ -5,10 +5,13 @@
 
 namespace inferno {
     void Renderer::clear_background(const Color color) {
-        const auto renderer = get_();
-        BeginTextureMode(renderer->screen_);
+        get_();
         ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
-        internal::EndTextureMode();
+    }
+    void Renderer::draw_rectangle(const Vector2 &position, const Vector2 &size, const Color &color) {
+        get_();
+        DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x),
+            static_cast<int>(size.y), internal::Color(color.red, color.green, color.blue, color.alpha));
     }
 
     void Renderer::update_() {
@@ -23,10 +26,12 @@ namespace inferno {
         const auto dest = (internal::Rectangle){(screen_width - width * scale) * 0.5f,
             (screen_height - height * scale) * 0.5f, width * scale, height * scale};
         constexpr auto position = (internal::Vector2){0, 0};
+        internal::EndTextureMode();
         internal::BeginDrawing();
         ClearBackground(internal::Color(0, 0, 0, 255));
         DrawTexturePro(screen.texture, source, dest, position, 0.0f, internal::Color(255, 255, 255, 255));
         internal::EndDrawing();
+        BeginTextureMode(renderer->screen_);
     }
 
     void Renderer::destroy_() {
@@ -38,7 +43,7 @@ namespace inferno {
     Renderer::Renderer() {
         Game::throw_if_uninitialized();
         screen_ = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
-        SetTextureFilter(screen_.texture, internal::TEXTURE_FILTER_BILINEAR);
+        BeginTextureMode(screen_);
     }
 
     Renderer::~Renderer() {
