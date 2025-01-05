@@ -16,11 +16,12 @@ namespace inferno {
                                                auto &ecs = Game::get_scene()->get_ecs();
                                                auto &entities = ecs.entities_;
                                                const auto range = entities.equal_range(z_index_property.get());
-                                               for (auto it = range.first; it != range.second; ++it) {
+                                               for (auto it = range.first; it != range.second;) {
                                                    if (it->second == entity) {
-                                                       entities.erase(it);
+                                                       it = entities.erase(it);
                                                        break;
                                                    }
+                                                   ++it;
                                                }
                                                entities.emplace(value, entity);
                                                set(value);
