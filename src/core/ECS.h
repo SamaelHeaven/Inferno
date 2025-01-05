@@ -78,12 +78,6 @@ namespace inferno {
             });
         }
 
-        void ordered_for_each(const std::function<void(Entity)> &callback) {
-            for (const auto &[z_index, entity] : entities_) {
-                callback(entity);
-            }
-        }
-
     private:
         static std::vector<System> systems_;
 
