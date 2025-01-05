@@ -62,7 +62,7 @@ namespace inferno {
         template <typename... T, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
         for_each(Callback &&callback) {
-            auto view = registry_.view<Transform, T...>();
+            auto view = registry_.view<T...>();
             view.sort([&](const entt::entity lhs, const entt::entity rhs) {
                 const auto &lhs_transform = registry_.get<Transform>(lhs);
                 const auto &rhs_transform = registry_.get<Transform>(rhs);
