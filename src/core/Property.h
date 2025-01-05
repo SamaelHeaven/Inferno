@@ -19,7 +19,13 @@ namespace inferno {
 
         ~Property();
 
-        Property &operator=(const Property &property) = delete;
+        Property &operator=(const Property &property) {
+            if (this == &property) {
+                return *this;
+            }
+            value_ = property.value_;
+            return *this;
+        }
 
         [[nodiscard]] T get() const;
 
