@@ -1,4 +1,4 @@
-#include "./Gamepad.h"
+#include "Gamepad.h"
 
 #include "../core/Game.h"
 

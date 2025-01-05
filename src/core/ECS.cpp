@@ -1,6 +1,6 @@
 #include "ECS.h"
 
-#include "./Transform.h"
+#include "../components/Transform.h"
 
 namespace inferno {
     std::vector<System> ECS::systems_;
@@ -9,6 +9,14 @@ namespace inferno {
 
     void ECS::system(const System &system) {
         systems_.push_back(system);
+    }
+
+    void ECS::on_update(const UpdateListener &update_listener) {
+        update_listeners_.push_back(update_listener);
+    }
+
+    void ECS::on_fixed_update(const FixedUpdateListener &fixed_update_listener) {
+        fixed_update_listeners_.push_back(fixed_update_listener);
     }
 
     Entity ECS::create() {

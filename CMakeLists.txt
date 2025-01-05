@@ -100,7 +100,6 @@ add_library(${PROJECT_NAME} STATIC
         src/core/ECS.cpp
         src/core/ECS.h
         src/core/Property.h
-        src/core/Transform.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
@@ -122,6 +121,9 @@ add_library(${PROJECT_NAME} STATIC
         src/math/random.h
         src/math/Vector2.cpp
         src/math/Vector2.h
+        src/components/Transform.cpp
+        src/components/Transform.h
+        src/include/inferno-components.h
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT)

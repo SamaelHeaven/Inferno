@@ -1,4 +1,4 @@
-#include "./file.h"
+#include "file.h"
 
 namespace inferno::file {
     std::string format_path(std::string path) {

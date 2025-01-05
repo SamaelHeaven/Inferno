@@ -1,4 +1,4 @@
-#include "./random.h"
+#include "random.h"
 
 static std::random_device rd;
 static std::mt19937 engine(rd());

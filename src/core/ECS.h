@@ -1,17 +1,38 @@
 #pragma once
 
+#include "../components/Transform.h"
 #include "../inferno.h"
 
 namespace inferno {
-    typedef void (*System)(class ECS &);
-
     enum class Entity : uint32_t {};
+
+    using System = std::function<void(class ECS &)>;
+
+    using UpdateListener = std::function<void()>;
+
+    using FixedUpdateListener = std::function<void()>;
 
     class ECS final {
     public:
         ECS(const ECS &) = delete;
 
         static void system(const System &system);
+
+        void on_update(const UpdateListener &update_listener);
+
+        void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
+
+        template <typename... T> void on_add(const std::function<void(Entity)> &callback) {
+            registry_.on_construct<T...>().connect([&](entt::entity entity) {
+                callback(static_cast<Entity>(entity));
+            });
+        }
+
+        template <typename... T> void on_remove(const std::function<void(Entity)> &callback) {
+            registry_.on_destroy<T...>().connect([&](entt::entity entity) {
+                callback(static_cast<Entity>(entity));
+            });
+        }
 
         Entity create();
 
@@ -30,18 +51,19 @@ namespace inferno {
             return registry_.remove<T, Other...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool hasAllOf(Entity entity) const {
+        template <typename... T> [[nodiscard]] bool has_all_of(Entity entity) const {
             return registry_.all_of<T...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool hasAnyOf(Entity entity) const {
+        template <typename... T> [[nodiscard]] bool has_any_of(Entity entity) const {
             return registry_.any_of<T...>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
-        forEach(Callback &&callback) {
-            registry_.view<T...>().each([&](auto entity, auto &...components) {
+        for_each(Callback &&callback) {
+            const auto view = registry_.view<T...>();
+            view.each([&](auto entity, auto &...components) {
                 if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
                     callback(static_cast<Entity>(entity), components...);
                 } else if constexpr (std::is_invocable_v<Callback, T &...>) {
@@ -52,8 +74,21 @@ namespace inferno {
             });
         }
 
+        template <typename... T> std::vector<std::tuple<Entity, T...>> find() {
+            const auto view = registry_.view<T...>();
+            std::vector<std::tuple<Entity, T...>> results(view.size());
+            view.each([&](auto entity, auto &...components) {
+                results.emplace_back(static_cast<Entity>(entity), components...);
+            });
+            return results;
+        }
+
     private:
         static std::vector<System> systems_;
+
+        std::vector<UpdateListener> update_listeners_;
+
+        std::vector<FixedUpdateListener> fixed_update_listeners_;
 
         ECS();
 

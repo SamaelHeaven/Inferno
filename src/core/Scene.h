@@ -11,14 +11,20 @@ namespace inferno {
 
         virtual void initialize();
 
+        virtual void fixed_update();
+
         virtual void update();
 
     private:
+        float time_;
+
         ECS ecs_;
 
         bool initialized_ = false;
 
         void initialize_();
+
+        void fixed_update_();
 
         void update_();
 

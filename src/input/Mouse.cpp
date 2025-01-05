@@ -1,4 +1,4 @@
-#include "./Mouse.h"
+#include "Mouse.h"
 
 #include "../core/Game.h"
 #include "../math/coordinates.h"

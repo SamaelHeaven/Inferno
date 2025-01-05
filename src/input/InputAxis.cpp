@@ -1,4 +1,4 @@
-#include "./InputAxis.h"
+#include "InputAxis.h"
 
 #include "./Gamepad.h"
 #include "./Keyboard.h"

@@ -1,4 +1,4 @@
-#include "./Renderer.h"
+#include "Renderer.h"
 
 #include "../drawing/Color.h"
 #include "./Game.h"
