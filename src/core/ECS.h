@@ -60,18 +60,16 @@ namespace inferno {
         }
 
         template <typename... T, typename Callback>
-        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...> ||
-            std::is_invocable_v<Callback, Entity, Transform, T &...> ||
-            std::is_invocable_v<Callback, Transform, T &...>>
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
         for_each(Callback &&callback) {
             auto view = registry_.view<Transform, T...>();
-            view.template use<Transform>();
-            view.each([&](entt::entity entity, Transform &transform, auto &...components) {
-                if constexpr (std::is_invocable_v<Callback, Entity, Transform &, T &...>) {
-                    callback(static_cast<Entity>(entity), transform, components...);
-                } else if constexpr (std::is_invocable_v<Callback, Transform &, T &...>) {
-                    callback(transform, components...);
-                } else if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
+            view.sort([&](const entt::entity lhs, const entt::entity rhs) {
+                const auto &lhs_transform = registry_.get<Transform>(lhs);
+                const auto &rhs_transform = registry_.get<Transform>(rhs);
+                return lhs_transform.get_z_index() < rhs_transform.get_z_index();
+            });
+            view.each([&](entt::entity entity, auto &...components) {
+                if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
                     callback(static_cast<Entity>(entity), components...);
                 } else if constexpr (std::is_invocable_v<Callback, T &...>) {
                     callback(components...);
