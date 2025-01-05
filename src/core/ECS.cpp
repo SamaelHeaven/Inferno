@@ -21,7 +21,8 @@ namespace inferno {
 
     Entity ECS::create() {
         const auto entity = static_cast<Entity>(registry_.create());
-        add<Transform>(entity);
+        auto transform = add<Transform>(entity);
+        transform.entity = entity;
         entities_.emplace(0, entity);
         return entity;
     }
