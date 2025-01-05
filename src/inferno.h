@@ -5,6 +5,7 @@
 #include <chrono>
 #include <cstdint>
 #include <cstring>
+#include <entt/entity/registry.hpp>
 #include <functional>
 #include <iostream>
 #include <list>
