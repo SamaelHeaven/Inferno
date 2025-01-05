@@ -63,11 +63,6 @@ namespace inferno {
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
         for_each(Callback &&callback) {
             auto view = registry_.view<T...>();
-            view.sort([&](const entt::entity lhs, const entt::entity rhs) {
-                const auto &lhs_transform = registry_.get<Transform>(lhs);
-                const auto &rhs_transform = registry_.get<Transform>(rhs);
-                return lhs_transform.get_z_index() < rhs_transform.get_z_index();
-            });
             view.each([&](entt::entity entity, auto &...components) {
                 if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
                     callback(static_cast<Entity>(entity), components...);
