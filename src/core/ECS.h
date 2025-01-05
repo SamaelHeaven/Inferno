@@ -18,11 +18,11 @@ namespace inferno {
         void destroy(Entity entity);
 
         template <typename T, typename... Args, std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
-        T *add(Entity entity, Args &&...args) {
+        T &add(Entity entity, Args &&...args) {
             return registry_.emplace<T>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
 
-        template <typename T> [[nodiscard]] auto get(Entity entity) const {
+        template <typename T> [[nodiscard]] T *get(Entity entity) const {
             return registry_.try_get<T>(entity);
         }
 
