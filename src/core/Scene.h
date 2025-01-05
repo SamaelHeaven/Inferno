@@ -9,10 +9,6 @@ namespace inferno {
     public:
         virtual ~Scene();
 
-        Scene(const Scene &entity) = delete;
-
-        Scene &operator=(const Scene &entity) = delete;
-
     protected:
         virtual void initialize();
 
