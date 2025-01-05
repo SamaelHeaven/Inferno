@@ -23,7 +23,7 @@ namespace inferno {
         }
 
         template <typename T> [[nodiscard]] T *get(Entity entity) const {
-            return registry_.try_get<T>(entity);
+            return registry_.try_get<T>(static_cast<entt::entity>(entity));
         }
 
         template <typename T, typename... Other> std::size_t remove(Entity entity) {
