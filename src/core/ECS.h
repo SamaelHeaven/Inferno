@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../components/Transform.h"
 #include "../inferno.h"
 
 namespace inferno {

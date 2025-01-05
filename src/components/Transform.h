@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/ECS.h"
 #include "../core/Game.h"
 #include "../core/Property.h"
 #include "../math/Vector2.h"
