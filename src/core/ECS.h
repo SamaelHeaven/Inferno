@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../inferno.h"
-#include "Property.h"
 
 namespace inferno {
     enum class Entity : uint32_t {};
