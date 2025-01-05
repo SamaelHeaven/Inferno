@@ -60,7 +60,9 @@ namespace inferno {
         }
 
         template <typename... T, typename Callback>
-        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...> ||
+            std::is_invocable_v<Callback, Entity, Transform, T &...> ||
+            std::is_invocable_v<Callback, Transform, T &...>>
         for_each(Callback &&callback) {
             auto view = registry_.view<Transform, T...>();
             view.template use<Transform>();
