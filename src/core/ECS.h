@@ -62,9 +62,14 @@ namespace inferno {
         template <typename... T, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
         for_each(Callback &&callback) {
-            const auto view = registry_.view<T...>();
-            view.each([&](auto entity, auto &...components) {
-                if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
+            const auto view = registry_.view<Transform, T...>();
+            view.template use<Transform>();
+            view.each([&](entt::entity entity, Transform &transform, auto &...components) {
+                if constexpr (std::is_invocable_v<Callback, Entity, Transform &, T &...>) {
+                    callback(static_cast<Entity>(entity), transform, components...);
+                } else if constexpr (std::is_invocable_v<Callback, Transform &, T &...>) {
+                    callback(transform, components...);
+                } else if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
                     callback(static_cast<Entity>(entity), components...);
                 } else if constexpr (std::is_invocable_v<Callback, T &...>) {
                     callback(components...);
@@ -72,15 +77,6 @@ namespace inferno {
                     static_assert(false, "Invalid callback signature");
                 }
             });
-        }
-
-        template <typename... T> std::vector<std::tuple<Entity, T...>> find() {
-            const auto view = registry_.view<T...>();
-            std::vector<std::tuple<Entity, T...>> results;
-            view.each([&](auto entity, auto &...components) {
-                results.emplace_back(static_cast<Entity>(entity), components...);
-            });
-            return results;
         }
 
     private:

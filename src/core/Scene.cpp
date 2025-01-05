@@ -28,6 +28,9 @@ namespace inferno {
     }
 
     void Scene::update_() {
+        ecs_.registry_.sort<Transform>([](const Transform &a, const Transform &b) {
+            return a.get_z_index() < b.get_z_index();
+        });
         update();
         for (const auto &update_listener : ecs_.update_listeners_) {
             update_listener();
