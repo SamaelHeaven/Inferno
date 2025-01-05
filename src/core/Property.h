@@ -38,7 +38,7 @@ namespace inferno {
         void unbind();
 
     private:
-        inline static std::vector<Property *> properties_;
+        inline static std::set<Property *> properties_;
         T value_;
         PropertySetter<T> setter_;
         mutable PropertyListenerID current_listener_id_ = static_cast<PropertyListenerID>(-1);
@@ -51,7 +51,7 @@ namespace inferno {
 
     template <typename T>
     Property<T>::Property(const T &value, const PropertySetter<T> &setter) : value_(value), setter_(setter) {
-        properties_.push_back(this);
+        properties_.insert(this);
     }
 
     template <typename T> Property<T>::~Property() {
