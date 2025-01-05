@@ -72,7 +72,7 @@ namespace inferno {
     }
 
     void Scene::add_entities(std::vector<std::shared_ptr<Entity>> entities) {
-        std::ranges::sort(entities, Entity::sort);
+        std::ranges::stable_sort(entities, Entity::sort);
         if (initialized_) {
             for (const auto &entity : entities) {
                 entities_to_add_.insert(entity);
@@ -129,7 +129,7 @@ namespace inferno {
     void Scene::update_() {
         update();
         clean_();
-        std::ranges::sort(entities_, Entity::sort);
+        std::ranges::stable_sort(entities_, Entity::sort);
         for (const auto &entity : entities_) {
             entity->update_();
         }
