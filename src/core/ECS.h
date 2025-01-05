@@ -76,7 +76,7 @@ namespace inferno {
 
         template <typename... T> std::vector<std::tuple<Entity, T...>> find() {
             const auto view = registry_.view<T...>();
-            std::vector<std::tuple<Entity, T...>> results(view.capacity());
+            std::vector<std::tuple<Entity, T...>> results;
             view.each([&](auto entity, auto &...components) {
                 results.emplace_back(static_cast<Entity>(entity), components...);
             });
