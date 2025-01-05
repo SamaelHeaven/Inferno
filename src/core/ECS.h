@@ -22,7 +22,7 @@ namespace inferno {
             return registry_.emplace<T>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
 
-        template <typename T> [[nodiscard]] T *get(Entity entity) const {
+        template <typename T> [[nodiscard]] const T *get(Entity entity) const {
             return registry_.try_get<T>(static_cast<entt::entity>(entity));
         }
 
