@@ -28,6 +28,7 @@ namespace inferno {
     }
 
     void Scene::update_() {
+        update();
         for (const auto &update_listener : ecs_.update_listeners_) {
             update_listener();
         }
