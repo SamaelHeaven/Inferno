@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+#include "../components/Transform.h"
 #include "./Time.h"
 
 namespace inferno {
@@ -32,6 +33,26 @@ namespace inferno {
         for (const auto &update_listener : ecs_.update_listeners_) {
             update_listener();
         }
+        for (const auto entity_to_create : ecs_.entities_to_create_) {
+            const auto transform = ecs_.get<Transform>(entity_to_create);
+            ecs_.entities_.emplace_back(&transform->z_index_property, entity_to_create);
+        }
+        ecs_.entities_to_create_.clear();
+        std::ranges::stable_sort(ecs_.entities_,
+            [](const std::tuple<Property<int32_t> *, Entity> &a, const std::tuple<Property<int32_t> *, Entity> &b) {
+                return std::get<0>(a)->get() < std::get<0>(b)->get();
+            });
+        for (const auto [z_index, entity] : ecs_.entities_) {
+            for (const auto &ordered_update_listener : ecs_.ordered_update_listeners_) {
+                ordered_update_listener(entity);
+            }
+        }
+        for (const auto entity_to_destroy : ecs_.entities_to_destroy_) {
+            std::erase_if(ecs_.entities_, [entity_to_destroy](const std::tuple<Property<int32_t> *, Entity> &entry) {
+                return std::get<1>(entry) == entity_to_destroy;
+            });
+        }
+        ecs_.entities_to_destroy_.clear();
         const auto delta = Time::delta();
         const auto fixed_delta = Time::fixed_delta();
         for (time_ += delta; time_ >= fixed_delta; time_ -= fixed_delta) { // NOLINT(*-flp30-c)

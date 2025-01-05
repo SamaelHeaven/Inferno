@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../inferno.h"
+#include "Property.h"
 
 namespace inferno {
     enum class Entity : uint32_t {};
@@ -8,6 +9,8 @@ namespace inferno {
     using System = std::function<void(class ECS &)>;
 
     using UpdateListener = std::function<void()>;
+
+    using OrderedUpdateListener = std::function<void(Entity)>;
 
     using FixedUpdateListener = std::function<void()>;
 
@@ -18,6 +21,8 @@ namespace inferno {
         static void system(const System &system);
 
         void on_update(const UpdateListener &update_listener);
+
+        void on_ordered_update(const OrderedUpdateListener &update_listener);
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
@@ -84,11 +89,17 @@ namespace inferno {
 
         std::vector<UpdateListener> update_listeners_;
 
+        std::vector<OrderedUpdateListener> ordered_update_listeners_;
+
         std::vector<FixedUpdateListener> fixed_update_listeners_;
 
         entt::registry registry_;
 
-        std::multimap<int32_t, Entity> entities_;
+        std::vector<std::tuple<Property<int32_t> *, Entity>> entities_;
+
+        std::vector<Entity> entities_to_create_;
+
+        std::vector<Entity> entities_to_destroy_;
 
         ECS();
 

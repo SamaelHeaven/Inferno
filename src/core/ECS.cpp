@@ -15,6 +15,10 @@ namespace inferno {
         update_listeners_.push_back(update_listener);
     }
 
+    void ECS::on_ordered_update(const OrderedUpdateListener &update_listener) {
+        ordered_update_listeners_.push_back(update_listener);
+    }
+
     void ECS::on_fixed_update(const FixedUpdateListener &fixed_update_listener) {
         fixed_update_listeners_.push_back(fixed_update_listener);
     }
@@ -22,12 +26,12 @@ namespace inferno {
     Entity ECS::create() {
         const auto entity = static_cast<Entity>(registry_.create());
         auto transform = add<Transform>(entity);
-        transform.entity = entity;
-        entities_.emplace(0, entity);
+        entities_to_create_.push_back(entity);
         return entity;
     }
 
     void ECS::destroy(Entity entity) {
         registry_.destroy(static_cast<entt::entity>(entity));
+        entities_to_destroy_.push_back(entity);
     }
 }
