@@ -45,6 +45,8 @@ namespace inferno {
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T>> listeners_;
         Property *bound_property_ = nullptr;
         PropertyListenerID bound_listener_id_ = static_cast<PropertyListenerID>(-1);
+
+        friend class Scene;
     };
 
     template <typename T>

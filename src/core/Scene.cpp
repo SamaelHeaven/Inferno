@@ -34,22 +34,22 @@ namespace inferno {
             update_listener();
         }
         for (const auto entity_to_create : ecs_.entities_to_create_) {
-            ecs_.entities_.push_back(entity_to_create);
+            const auto transform = ecs_.get<Transform>(entity_to_create);
+            ecs_.entities_.emplace_back(&transform->z_index_property.value_, entity_to_create);
         }
         ecs_.entities_to_create_.clear();
-        std::ranges::stable_sort(ecs_.entities_, [&](const Entity a, const Entity b) {
-            const auto a_transform = ecs_.get<Transform>(a);
-            const auto b_transform = ecs_.get<Transform>(b);
-            return a_transform->get_z_index() < b_transform->get_z_index();
-        });
-        for (const auto entity : ecs_.entities_) {
+        std::ranges::stable_sort(
+            ecs_.entities_, [](const std::tuple<int32_t *, Entity> &a, const std::tuple<int32_t *, Entity> &b) {
+                return *std::get<0>(a) < *std::get<0>(b);
+            });
+        for (const auto [z_index, entity] : ecs_.entities_) {
             for (const auto &ordered_update_listener : ecs_.ordered_update_listeners_) {
                 ordered_update_listener(entity);
             }
         }
         for (const auto entity_to_destroy : ecs_.entities_to_destroy_) {
-            std::erase_if(ecs_.entities_, [entity_to_destroy](const Entity entity) {
-                return entity == entity_to_destroy;
+            std::erase_if(ecs_.entities_, [entity_to_destroy](const std::tuple<int32_t *, Entity> &entry) {
+                return std::get<1>(entry) == entity_to_destroy;
             });
         }
         ecs_.entities_to_destroy_.clear();

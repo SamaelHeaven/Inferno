@@ -89,7 +89,7 @@ namespace inferno {
 
         entt::registry registry_;
 
-        std::vector<Entity> entities_;
+        std::vector<std::tuple<int32_t *, Entity>> entities_;
 
         std::vector<Entity> entities_to_create_;
 
