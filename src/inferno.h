@@ -9,6 +9,7 @@
 #include <functional>
 #include <iostream>
 #include <list>
+#include <map>
 #include <random>
 #include <set>
 #include <string>

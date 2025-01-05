@@ -74,6 +74,12 @@ namespace inferno {
             });
         }
 
+        void ordered_for_each(const std::function<void(Entity)> &callback) {
+            for (const auto &[z_index, entity] : entities_) {
+                callback(entity);
+            }
+        }
+
     private:
         static std::vector<System> systems_;
 
@@ -81,10 +87,14 @@ namespace inferno {
 
         std::vector<FixedUpdateListener> fixed_update_listeners_;
 
-        ECS();
-
         entt::registry registry_;
 
+        std::multimap<int32_t, Entity> entities_;
+
+        ECS();
+
         friend class Scene;
+
+        friend struct Transform;
     };
 }

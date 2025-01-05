@@ -1,15 +1,29 @@
 #pragma once
 
-#include "../core//Property.h"
+#include "../core/Game.h"
+#include "../core/Property.h"
 #include "../math/Vector2.h"
 
 namespace inferno {
     struct Transform {
+        Entity entity;
         Property<Vector2> position_property{Vector2::ZERO};
         Property<Vector2> size_property{Vector2::ZERO};
         Property<Vector2> pivot_point_property{Vector2::ZERO};
         Property<float> rotation_property{0};
-        Property<int> z_index_property{0};
+        Property<int32_t> z_index_property{0, [&](int32_t value, auto set) {
+                                               auto &ecs = Game::get_scene()->get_ecs();
+                                               auto &entities = ecs.entities_;
+                                               const auto range = entities.equal_range(z_index_property.get());
+                                               for (auto it = range.first; it != range.second; ++it) {
+                                                   if (it->second == entity) {
+                                                       entities.erase(it);
+                                                       break;
+                                                   }
+                                               }
+                                               entities.emplace(value, entity);
+                                               set(value);
+                                           }};
 
         Transform();
 
