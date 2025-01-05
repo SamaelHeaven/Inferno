@@ -39,8 +39,8 @@ namespace inferno {
         }
         ecs_.entities_to_create_.clear();
         std::ranges::stable_sort(
-            ecs_.entities_, [](const std::tuple<int32_t *, Entity> &a, const std::tuple<int32_t *, Entity> &b) {
-                return *std::get<0>(a) < *std::get<0>(b);
+            ecs_.entities_, [](const std::pair<int32_t *, Entity> &a, const std::pair<int32_t *, Entity> &b) {
+                return *a.first < *b.first;
             });
         for (const auto [z_index, entity] : ecs_.entities_) {
             for (const auto &ordered_update_listener : ecs_.ordered_update_listeners_) {
@@ -48,8 +48,8 @@ namespace inferno {
             }
         }
         for (const auto entity_to_destroy : ecs_.entities_to_destroy_) {
-            std::erase_if(ecs_.entities_, [entity_to_destroy](const std::tuple<int32_t *, Entity> &entry) {
-                return std::get<1>(entry) == entity_to_destroy;
+            std::erase_if(ecs_.entities_, [entity_to_destroy](const std::pair<int32_t *, Entity> &entry) {
+                return entry.second == entity_to_destroy;
             });
         }
         ecs_.entities_to_destroy_.clear();

@@ -38,7 +38,7 @@ namespace inferno {
         void unbind();
 
     private:
-        inline static std::unordered_map<size_t, Property *> properties_;
+        inline static std::vector<Property *> properties_;
         T value_;
         PropertySetter<T> setter_;
         mutable PropertyListenerID current_listener_id_ = static_cast<PropertyListenerID>(-1);
@@ -51,11 +51,11 @@ namespace inferno {
 
     template <typename T>
     Property<T>::Property(const T &value, const PropertySetter<T> &setter) : value_(value), setter_(setter) {
-        properties_[reinterpret_cast<size_t>(this)] = this;
+        properties_.push_back(this);
     }
 
     template <typename T> Property<T>::~Property() {
-        properties_.erase(reinterpret_cast<size_t>(this));
+        properties_.erase(this);
         unbind();
     }
 
@@ -107,7 +107,7 @@ namespace inferno {
         if (!bound_property_) {
             return;
         }
-        if (properties_.contains(reinterpret_cast<size_t>(bound_property_))) {
+        if (properties_.contains(bound_property_)) {
             bound_property_->remove_listener(bound_listener_id_);
         }
         bound_property_ = nullptr;
