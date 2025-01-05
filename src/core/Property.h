@@ -19,8 +19,6 @@ namespace inferno {
 
         ~Property();
 
-        Property(const Property &) = delete;
-
         Property &operator=(const Property &property) = delete;
 
         [[nodiscard]] T get() const;
