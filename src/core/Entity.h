@@ -15,7 +15,7 @@ namespace inferno {
         Property<Vector2> pivot_point_property{Vector2::ZERO};
         Property<float> rotation_property{0};
         Property<int> z_index_property{0};
-        Property<std::set<std::string>> tags_property;
+        Property<std::set<std::string>> tags_property{std::set<std::string>{}};
 
         Property<Vector2> origin_property{Vector2::ZERO, [](const Vector2 value, const auto set) {
                                               set(value.clamp(-1, 1));
