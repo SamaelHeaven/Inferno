@@ -102,10 +102,13 @@ namespace inferno {
 
     private:
         T value_;
+
         PropertySetter<T> setter_;
+
         boost::signals2::signal<void(const T &, const T &)> on_changed;
 
         Connection other_binding_;
+
         Connection reverse_binding_;
     };
 }
