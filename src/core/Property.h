@@ -15,16 +15,18 @@ namespace inferno {
         class Subscriber {
         public:
             ~Subscriber() {
-                std::cout << "Destroy" << std::endl;
-                on_destroy_();
+                property_->listeners_.erase(listener_id_);
             }
 
         private:
-            explicit Subscriber(const std::function<void()> &on_destroy) {
-                on_destroy_ = on_destroy;
+            explicit Subscriber(Property *property, const PropertyListenerID listener_id) {
+                property_ = property;
+                listener_id_ = listener_id;
             }
 
-            std::function<void()> on_destroy_;
+            Property *property_;
+
+            PropertyListenerID listener_id_;
 
             friend class Property;
         };
@@ -62,6 +64,8 @@ namespace inferno {
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T>> listeners_;
 
         std::optional<Subscriber> bound_subscriber_;
+
+        friend class Subscriber;
 
         friend class Scene;
     };
@@ -112,10 +116,7 @@ namespace inferno {
         current_listener_id_ = static_cast<PropertyListenerID>(static_cast<int32_t>(current_listener_id_) + 1);
         const PropertyListenerID listener_id = current_listener_id_;
         listeners_.emplace(listener_id, listener);
-        return Subscriber([&] {
-            std::cout << "Lamda" << std::endl;
-            listeners_.erase(listener_id);
-        });
+        return Subscriber(this, listener_id);
     }
 
     template <typename T> void Property<T>::bind(const Property &other) {
