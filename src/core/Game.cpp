@@ -7,6 +7,12 @@
 #include "./Time.h"
 
 namespace inferno {
+    void Game::throw_if_initialized() {
+        if (intance_ != nullptr) {
+            throw std::runtime_error("Game has already been launched");
+        }
+    }
+
     void Game::throw_if_uninitialized() {
         if (intance_ == nullptr) {
             throw std::runtime_error("Game has not been launched yet");

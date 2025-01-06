@@ -10,18 +10,18 @@
 namespace inferno {
     class Game final {
     public:
+        static void throw_if_uninitialized();
+
+        static void throw_if_initialized();
+
         template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
             std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
         static void launch(const GameConfig &config, Args... args) {
-            if (intance_ != nullptr) {
-                throw std::runtime_error("Game as already been launched");
-            }
+            throw_if_initialized();
             const auto _ = std::unique_ptr<Game>(get_());
             init_<T>(GameConfig(config), args...);
             run_();
         }
-
-        static void throw_if_uninitialized();
 
         static std::shared_ptr<Scene> get_scene();
 

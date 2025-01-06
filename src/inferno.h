@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <boost/signals2/signal.hpp>
 #include <box2d/box2d.h>
 #include <chrono>
 #include <cstdint>
@@ -11,7 +12,6 @@
 #include <list>
 #include <map>
 #include <random>
-#include <rxcpp/rx.hpp>
 #include <set>
 #include <string>
 #include <unordered_map>

@@ -61,7 +61,7 @@ endif ()
 
 set(ENTT_VERSION 3.14.0)
 find_package(EnTT ${ENTT_VERSION} QUIET)
-if (NOT EnTT_FOUND)
+if (NOT entt_FOUND)
     include(FetchContent)
     FetchContent_Declare(
             EnTT
@@ -69,27 +69,29 @@ if (NOT EnTT_FOUND)
             URL https://github.com/skypjack/entt/archive/refs/tags/v${ENTT_VERSION}.tar.gz
     )
     FetchContent_GetProperties(EnTT)
-    if (NOT EnTT_POPULATED)
+    if (NOT entt_POPULATED)
         set(FETCHCONTENT_QUIET NO)
         FetchContent_Populate(EnTT)
         add_subdirectory(${entt_SOURCE_DIR} ${entt_BINARY_DIR})
     endif ()
 endif ()
 
-set(RXCPP_VERSION 4.1.1)
-find_package(rxcpp ${ENTT_VERSION} QUIET)
-if (NOT rxcpp_FOUND)
+set(BOOST_INCLUDE_LIBRARIES signals2)
+set(BOOST_ENABLE_CMAKE ON)
+set(BOOST_VERSION 1.87.0)
+find_package(Boost ${BOOST_VERSION} QUIET)
+if (NOT Boost_FOUND)
     include(FetchContent)
     FetchContent_Declare(
-            rxcpp
+            Boost
             DOWNLOAD_EXTRACT_TIMESTAMP OFF
-            URL https://github.com/ReactiveX/RxCpp/archive/refs/tags/v${RXCPP_VERSION}.tar.gz
+            URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}-cmake.tar.xz
     )
-    FetchContent_GetProperties(rxcpp)
-    if (NOT rxcpp_POPULATED)
+    FetchContent_GetProperties(Boost)
+    if (NOT Boost_POPULATED)
         set(FETCHCONTENT_QUIET NO)
-        FetchContent_Populate(rxcpp)
-        add_subdirectory(${rxcpp_SOURCE_DIR} ${rxcpp_BINARY_DIR})
+        FetchContent_Populate(Boost)
+        add_subdirectory(${boost_SOURCE_DIR} ${boost_BINARY_DIR})
     endif ()
 endif ()
 
@@ -97,6 +99,7 @@ add_library(${PROJECT_NAME} STATIC
         src/inferno.cpp
         src/inferno.h
         src/include/inferno.h
+        src/include/inferno-components.h
         src/include/inferno-core.h
         src/include/inferno-input.h
         src/include/inferno-drawing.h
@@ -116,6 +119,7 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Renderer.h
         src/core/ECS.cpp
         src/core/ECS.h
+        src/core/Property.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
@@ -139,10 +143,9 @@ add_library(${PROJECT_NAME} STATIC
         src/math/Vector2.h
         src/components/Transform.cpp
         src/components/Transform.h
-        src/include/inferno-components.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT rxcpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT Boost::signals2)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>

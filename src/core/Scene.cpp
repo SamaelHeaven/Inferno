@@ -35,11 +35,11 @@ namespace inferno {
         }
         for (const auto entity_to_create : ecs_.entities_to_create_) {
             const auto transform = ecs_.get<Transform>(entity_to_create);
-            ecs_.entities_.emplace_back(&transform->z_index_subject, entity_to_create);
+            ecs_.entities_.emplace_back(&transform->z_index_property.get(), entity_to_create);
         }
         ecs_.entities_to_create_.clear();
         std::ranges::stable_sort(ecs_.entities_, [](const auto &a, const auto &b) {
-            return a.first->get_value() < b.first->get_value();
+            return *a.first < *b.first;
         });
         for (const auto [z_index, entity] : ecs_.entities_) {
             for (const auto &ordered_update_listener : ecs_.ordered_update_listeners_) {

@@ -16,7 +16,7 @@ namespace inferno {
         virtual void update();
 
     private:
-        float time_;
+        float time_ = 0.0f;
 
         ECS ecs_;
 
