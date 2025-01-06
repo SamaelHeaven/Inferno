@@ -19,12 +19,12 @@ namespace inferno {
             }
 
         private:
-            explicit Subscriber(Property *property, const PropertyListenerID listener_id) {
+            explicit Subscriber(const Property *property, const PropertyListenerID listener_id) {
                 property_ = property;
                 listener_id_ = listener_id;
             }
 
-            Property *property_;
+            const Property *property_;
 
             PropertyListenerID listener_id_;
 
