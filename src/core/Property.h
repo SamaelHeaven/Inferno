@@ -15,6 +15,7 @@ namespace inferno {
         class Subscriber {
         public:
             ~Subscriber() {
+                std::cout << "Destroy" << std::endl;
                 on_destroy_();
             }
 
