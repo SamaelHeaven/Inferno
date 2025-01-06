@@ -14,17 +14,14 @@ namespace inferno {
     }
 
     void ECS::on_update(const UpdateListener &update_listener) {
-        Game::throw_if_initialized();
         update_listeners_.push_back(update_listener);
     }
 
     void ECS::on_ordered_update(const OrderedUpdateListener &update_listener) {
-        Game::throw_if_initialized();
         ordered_update_listeners_.push_back(update_listener);
     }
 
     void ECS::on_fixed_update(const FixedUpdateListener &fixed_update_listener) {
-        Game::throw_if_initialized();
         fixed_update_listeners_.push_back(fixed_update_listener);
     }
 
