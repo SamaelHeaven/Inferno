@@ -113,6 +113,7 @@ namespace inferno {
         const PropertyListenerID listener_id = current_listener_id_;
         listeners_.emplace(listener_id, listener);
         return Subscriber([&] {
+            std::cout << "Lamda" << std::endl;
             listeners_.erase(listener_id);
         });
     }
