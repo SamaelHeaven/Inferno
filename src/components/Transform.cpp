@@ -21,42 +21,42 @@ namespace inferno {
     }
 
     Vector2 Transform::get_position() const {
-        return position_property.get();
+        return position_subject.get_value();
     }
 
-    void Transform::set_position(const Vector2 position) {
-        position_property.set(position);
+    void Transform::set_position(const Vector2 position) const {
+        position_subject.get_subscriber().on_next(position);
     }
 
     Vector2 Transform::get_size() const {
-        return size_property.get();
+        return size_subject.get_value();
     }
 
-    void Transform::set_size(const Vector2 size) {
-        size_property.set(size);
+    void Transform::set_size(const Vector2 size) const {
+        size_subject.get_subscriber().on_next(size);
     }
 
     Vector2 Transform::get_pivot_point() const {
-        return pivot_point_property.get();
+        return pivot_point_subject.get_value();
     }
 
-    void Transform::set_pivot_point(const Vector2 pivot_point) {
-        pivot_point_property.set(pivot_point);
+    void Transform::set_pivot_point(const Vector2 pivot_point) const {
+        pivot_point_subject.get_subscriber().on_next(pivot_point);
     }
 
     float Transform::get_rotation() const {
-        return rotation_property.get();
+        return rotation_subject.get_value();
     }
 
-    void Transform::set_rotation(const float rotation) {
-        rotation_property.set(rotation);
+    void Transform::set_rotation(const float rotation) const {
+        rotation_subject.get_subscriber().on_next(rotation);
     }
 
     int Transform::get_z_index() const {
-        return z_index_property.get();
+        return z_index_subject.get_value();
     }
 
-    void Transform::set_z_index(const int z_index) {
-        z_index_property.set(z_index);
+    void Transform::set_z_index(const int z_index) const {
+        z_index_subject.get_subscriber().on_next(z_index);
     }
 }

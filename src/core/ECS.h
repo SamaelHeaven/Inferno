@@ -88,7 +88,7 @@ namespace inferno {
 
         entt::registry registry_;
 
-        std::vector<std::pair<int32_t *, Entity>> entities_;
+        std::vector<std::pair<const rxcpp::subjects::behavior<int32_t> *, Entity>> entities_;
 
         std::vector<Entity> entities_to_create_;
 

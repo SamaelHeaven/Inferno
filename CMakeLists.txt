@@ -76,6 +76,23 @@ if (NOT EnTT_FOUND)
     endif ()
 endif ()
 
+set(RXCPP_VERSION 4.1.1)
+find_package(rxcpp ${ENTT_VERSION} QUIET)
+if (NOT rxcpp_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+            rxcpp
+            DOWNLOAD_EXTRACT_TIMESTAMP OFF
+            URL https://github.com/ReactiveX/RxCpp/archive/refs/tags/v${RXCPP_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(rxcpp)
+    if (NOT rxcpp_POPULATED)
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_Populate(rxcpp)
+        add_subdirectory(${rxcpp_SOURCE_DIR} ${rxcpp_BINARY_DIR})
+    endif ()
+endif ()
+
 add_library(${PROJECT_NAME} STATIC
         src/inferno.cpp
         src/inferno.h
@@ -99,7 +116,6 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Renderer.h
         src/core/ECS.cpp
         src/core/ECS.h
-        src/core/Property.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
@@ -126,7 +142,7 @@ add_library(${PROJECT_NAME} STATIC
         src/include/inferno-components.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT rxcpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>

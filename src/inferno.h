@@ -11,6 +11,7 @@
 #include <list>
 #include <map>
 #include <random>
+#include <rxcpp/rx.hpp>
 #include <set>
 #include <string>
 #include <unordered_map>

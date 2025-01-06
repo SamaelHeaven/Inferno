@@ -1,15 +1,14 @@
 #pragma once
 
-#include "../core/Property.h"
 #include "../math/Vector2.h"
 
 namespace inferno {
     struct Transform {
-        Property<Vector2> position_property{Vector2::ZERO};
-        Property<Vector2> size_property{Vector2::ZERO};
-        Property<Vector2> pivot_point_property{Vector2::ZERO};
-        Property<float> rotation_property{0};
-        Property<int32_t> z_index_property{0};
+        const rxcpp::subjects::behavior<Vector2> position_subject{Vector2::ZERO};
+        const rxcpp::subjects::behavior<Vector2> size_subject{Vector2::ZERO};
+        const rxcpp::subjects::behavior<Vector2> pivot_point_subject{Vector2::ZERO};
+        const rxcpp::subjects::behavior<float> rotation_subject{0.0f};
+        const rxcpp::subjects::behavior<int32_t> z_index_subject{0};
 
         Transform();
 
@@ -17,24 +16,24 @@ namespace inferno {
 
         Transform &operator=(const Transform &other);
 
-        Vector2 get_position() const;
+        [[nodiscard]] Vector2 get_position() const;
 
-        void set_position(Vector2 position);
+        void set_position(Vector2 position) const;
 
-        Vector2 get_size() const;
+        [[nodiscard]] Vector2 get_size() const;
 
-        void set_size(Vector2 size);
+        void set_size(Vector2 size) const;
 
-        Vector2 get_pivot_point() const;
+        [[nodiscard]] Vector2 get_pivot_point() const;
 
-        void set_pivot_point(Vector2 pivot_point);
+        void set_pivot_point(Vector2 pivot_point) const;
 
-        float get_rotation() const;
+        [[nodiscard]] float get_rotation() const;
 
-        void set_rotation(float rotation);
+        void set_rotation(float rotation) const;
 
-        int get_z_index() const;
+        [[nodiscard]] int get_z_index() const;
 
-        void set_z_index(int z_index);
+        void set_z_index(int z_index) const;
     };
 }
