@@ -13,10 +13,6 @@ namespace inferno {
 
         Transform();
 
-        Transform(const Transform &other);
-
-        Transform &operator=(const Transform &other);
-
         [[nodiscard]] Vector2 get_position() const;
 
         void set_position(Vector2 position);
