@@ -48,6 +48,8 @@ namespace inferno {
             }
 
             std::optional<boost::signals2::connection> connection_;
+
+            friend class Property;
         };
 
         const T &get() const {
@@ -58,7 +60,7 @@ namespace inferno {
             auto oldValue = value_;
             setter_(newValue, [&](auto v) {
                 value_ = v;
-                onChanged(oldValue, value_);
+                on_changed_(oldValue, value_);
             });
         }
 
@@ -78,7 +80,7 @@ namespace inferno {
         }
 
         Connection subscribe(const PropertyListener<T> &listener) const {
-            return Connection(on_changed.connect(listener));
+            return Connection(on_changed_.connect(listener));
         }
 
         void bind(Property &other) {
@@ -105,7 +107,7 @@ namespace inferno {
 
         PropertySetter<T> setter_;
 
-        boost::signals2::signal<void(const T &, const T &)> on_changed;
+        boost::signals2::signal<void(const T &, const T &)> on_changed_;
 
         Connection other_binding_;
 
