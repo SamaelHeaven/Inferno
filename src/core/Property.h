@@ -3,7 +3,7 @@
 #include "../inferno.h"
 
 namespace inferno {
-    template <typename T> using PropertyListener = std::function<void(T, T)>;
+    template <typename T> using PropertyListener = std::function<void(T &, T &)>;
 
     template <typename T> using PropertySetter = std::function<void(T, std::function<void(T)>)>;
 
@@ -107,7 +107,7 @@ namespace inferno {
 
         PropertySetter<T> setter_;
 
-        boost::signals2::signal<void(const T &, const T &)> on_changed_;
+        mutable boost::signals2::signal<void(const T &, const T &)> on_changed_;
 
         Connection other_binding_;
 
