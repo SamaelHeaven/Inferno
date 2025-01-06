@@ -60,38 +60,19 @@ if (NOT magic_enum_FOUND)
 endif ()
 
 set(ENTT_VERSION 3.14.0)
-find_package(EnTT ${ENTT_VERSION} QUIET)
+find_package(entt ${ENTT_VERSION} QUIET)
 if (NOT entt_FOUND)
     include(FetchContent)
     FetchContent_Declare(
-            EnTT
+            entt
             DOWNLOAD_EXTRACT_TIMESTAMP OFF
             URL https://github.com/skypjack/entt/archive/refs/tags/v${ENTT_VERSION}.tar.gz
     )
-    FetchContent_GetProperties(EnTT)
+    FetchContent_GetProperties(entt)
     if (NOT entt_POPULATED)
         set(FETCHCONTENT_QUIET NO)
-        FetchContent_Populate(EnTT)
+        FetchContent_Populate(entt)
         add_subdirectory(${entt_SOURCE_DIR} ${entt_BINARY_DIR})
-    endif ()
-endif ()
-
-set(BOOST_INCLUDE_LIBRARIES signals2)
-set(BOOST_ENABLE_CMAKE ON)
-set(BOOST_VERSION 1.87.0)
-find_package(Boost ${BOOST_VERSION} QUIET)
-if (NOT Boost_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(
-            Boost
-            DOWNLOAD_EXTRACT_TIMESTAMP OFF
-            URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}-cmake.tar.xz
-    )
-    FetchContent_GetProperties(Boost)
-    if (NOT Boost_POPULATED)
-        set(FETCHCONTENT_QUIET NO)
-        FetchContent_Populate(Boost)
-        add_subdirectory(${boost_SOURCE_DIR} ${boost_BINARY_DIR})
     endif ()
 endif ()
 
@@ -145,7 +126,7 @@ add_library(${PROJECT_NAME} STATIC
         src/components/Transform.h
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT Boost::signals2)
+target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/include>

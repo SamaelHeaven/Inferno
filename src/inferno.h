@@ -1,7 +1,6 @@
 #pragma once
 
 #include <algorithm>
-#include <boost/signals2/signal.hpp>
 #include <box2d/box2d.h>
 #include <chrono>
 #include <cstdint>

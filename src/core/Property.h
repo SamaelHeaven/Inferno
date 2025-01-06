@@ -3,114 +3,138 @@
 #include "../inferno.h"
 
 namespace inferno {
-    template <typename T> using PropertyListener = std::function<void(T &, T &)>;
+    template <typename T>
+    using PropertySetter = std::function<void(const T &value, const std::function<void(const T &t)> &set)>;
 
-    template <typename T> using PropertySetter = std::function<void(T, std::function<void(T)>)>;
+    template <typename T> using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
 
-    template <typename T> class Property {
+    enum class PropertyListenerID : int32_t;
+
+    template <typename T> class Property final {
     public:
-        Property() = default;
-
-        explicit Property(
-            const T &value, PropertySetter<T> setter = [](const auto &v, const auto &s) {
-                s(v);
-            }) {
-            value_ = value;
-            setter_ = setter;
-        }
-
-        class Connection {
+        class Subscriber {
         public:
-            ~Connection() {
-                disconnect();
-            }
-
-            Connection &operator=(const Connection &) = delete;
-
-            [[nodiscard]] bool connected() const {
-                return connection_.has_value() && connection_.value().connected();
-            }
-
-            void disconnect() const {
-                if (!connection_.has_value()) {
-                    return;
-                }
-                if (const auto &connection = connection_.value(); connection.connected()) {
-                    connection.disconnect();
-                }
+            ~Subscriber() {
+                on_destroy_();
             }
 
         private:
-            Connection() = default;
-
-            explicit Connection(const boost::signals2::connection &connection) {
-                connection_ = connection;
+            explicit Subscriber(const std::function<void()> &on_destroy) {
+                on_destroy_ = on_destroy;
             }
 
-            std::optional<boost::signals2::connection> connection_;
+            std::function<void()> on_destroy_;
 
             friend class Property;
         };
 
-        const T &get() const {
-            return value_;
-        }
-
-        void set(const T &newValue) {
-            auto oldValue = value_;
-            setter_(newValue, [&](auto v) {
-                value_ = v;
-                on_changed_(oldValue, value_);
-            });
-        }
-
-        Property(const Property &other) {
-            value_ = other.value_;
-            setter_ = [](const auto &v, const auto &s) {
+        explicit Property(
+            const T &value, const PropertySetter<T> &setter = [](const auto &v, const auto &s) {
                 s(v);
-            };
-        }
-
-        Property &operator=(const Property &other) {
-            if (this == &other) {
-                return *this;
-            }
-            set(other.value_);
-            return *this;
-        }
-
-        Connection subscribe(const PropertyListener<T> &listener) const {
-            return Connection(on_changed_.connect(listener));
-        }
-
-        void bind(Property &other) {
-            unbind();
-            other_binding_ = other.subscribe([&]([[maybe_unused]] const T &oldValue, const T &newValue) {
-                this->set(newValue);
             });
-        }
 
-        void bindBidirectional(Property &other) {
-            bind(other);
-            reverse_binding_ = this->subscribe([&]([[maybe_unused]] const T &oldValue, const T &newValue) {
-                other.set(newValue);
-            });
-        }
+        ~Property();
 
-        void unbind() const {
-            other_binding_.disconnect();
-            reverse_binding_.disconnect();
-        }
+        Property(const Property &);
+
+        Property &operator=(const Property &);
+
+        [[nodiscard]] const T &get() const;
+
+        void set(const T &value);
+
+        Subscriber subscribe(const PropertyListener<T> &listener) const;
+
+        void bind(const Property &other);
+
+        void bind_bidirectional(Property &other);
+
+        void unbind();
 
     private:
+        inline static auto current_listener_id_ = static_cast<PropertyListenerID>(0);
+
         T value_;
 
         PropertySetter<T> setter_;
 
-        mutable boost::signals2::signal<void(const T &, const T &)> on_changed_;
+        mutable std::unordered_map<PropertyListenerID, PropertyListener<T>> listeners_;
 
-        Connection other_binding_;
+        std::optional<Subscriber> bound_subscriber_;
 
-        Connection reverse_binding_;
+        friend class Scene;
     };
+
+    template <typename T> Property<T>::Property(const T &value, const PropertySetter<T> &setter) {
+        value_ = value;
+        setter_ = setter;
+    }
+
+    template <typename T> Property<T>::~Property() {
+        unbind();
+    }
+
+    template <typename T> Property<T>::Property(const Property &other) {
+        value_ = other.value_;
+        setter_ = [](const auto &v, const auto &s) {
+            s(v);
+        };
+    }
+
+    template <typename T> Property<T> &Property<T>::operator=(const Property &other) {
+        if (&other == this) {
+            return *this;
+        }
+        set(other.value_);
+        return *this;
+    }
+
+    template <typename T> const T &Property<T>::get() const {
+        return value_;
+    }
+
+    template <typename T> void Property<T>::set(const T &value) {
+        if (value_ == value) {
+            return;
+        }
+        setter_(value, [this](const T &t) {
+            T old_value = value_;
+            value_ = t;
+            for (const auto &entry : listeners_) {
+                entry.second(old_value, t);
+            }
+        });
+    }
+
+    template <typename T>
+    typename Property<T>::Subscriber Property<T>::subscribe(const PropertyListener<T> &listener) const {
+        current_listener_id_ = static_cast<PropertyListenerID>(static_cast<int32_t>(current_listener_id_) + 1);
+        const PropertyListenerID listener_id = current_listener_id_;
+        listeners_.emplace(listener_id, listener);
+        return Subscriber([&] {
+            listeners_.erase(listener_id);
+        });
+    }
+
+    template <typename T> void Property<T>::bind(const Property &other) {
+        if (&other == this) {
+            return;
+        }
+        unbind();
+        bound_subscriber_ = other.subscribe([&]([[maybe_unused]] const T &old_value, const T &new_value) {
+            set(new_value);
+        });
+        set(other.value_);
+    }
+
+    template <typename T> void Property<T>::bind_bidirectional(Property &other) {
+        bind(other);
+        other.bind(*this);
+    }
+
+    template <typename T> void Property<T>::unbind() {
+        if (bound_subscriber_.has_value()) {
+            bound_subscriber_.reset();
+        }
+    }
 }
