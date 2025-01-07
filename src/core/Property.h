@@ -16,6 +16,7 @@ namespace inferno {
         public:
             ~Subscriber() {
                 if (property_) {
+                    std::cout << "Destroyed" << std::endl;
                     property_->listeners_.erase(listener_id_);
                 }
             }
