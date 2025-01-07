@@ -1,20 +1,23 @@
 #include "ECS.h"
 
-#include "../components/Transform.h"
 #include "./Game.h"
 
 namespace inferno {
+    std::unordered_map<entt::registry *, ECS *> ecs_map_;
+
     std::vector<System> ECS::systems_;
 
-    ECS::ECS() = default;
+    ECS::ECS() {
+        ecs_map_[&registry_] = this;
+    }
+
+    ECS::~ECS() {
+        ecs_map_.erase(&registry_);
+    }
 
     void ECS::system(const System &system) {
         Game::throw_if_initialized();
         systems_.push_back(system);
-    }
-
-    ECS &ECS::current() {
-        return Game::get_scene()->get_ecs();
     }
 
     void ECS::on_update(const UpdateListener &update_listener) {

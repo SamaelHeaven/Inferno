@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../components/Transform.h"
 #include "../inferno.h"
 
 namespace inferno {
@@ -19,18 +20,20 @@ namespace inferno {
 
         static void system(const System &system);
 
-        static ECS &current();
-
         void on_update(const UpdateListener &update_listener);
 
         void on_ordered_update(const OrderedUpdateListener &update_listener);
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
+    private:
+        static std::unordered_map<const entt::registry *, ECS *> ecs_map_;
+
+    public:
         template <typename Component, auto Callback,
             auto Candidate =
-                [](entt::registry &, entt::entity entity) {
-                    Callback(current(), static_cast<Entity>(entity));
+                [](const entt::registry &registry, entt::entity entity) {
+                    Callback(*ecs_map_.find(&registry), static_cast<Entity>(entity));
                 }>
         std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_add() {
             registry_.on_construct<Component>().template connect<Candidate>();
@@ -38,8 +41,8 @@ namespace inferno {
 
         template <typename Component, auto Callback,
             auto Candidate =
-                [](entt::registry &, entt::entity entity) {
-                    Callback(current(), static_cast<Entity>(entity));
+                [](const entt::registry &registry, entt::entity entity) {
+                    Callback(*ecs_map_.find(&registry), static_cast<Entity>(entity));
                 }>
         std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_remove() {
             registry_.on_destroy<Component>().template connect<Candidate>();
@@ -50,7 +53,8 @@ namespace inferno {
         void destroy(Entity entity);
 
         template <typename Component, typename... Args,
-            std::enable_if_t<std::is_constructible_v<Component, Args...>> * = nullptr>
+            std::enable_if_t<!std::is_same_v<Component, Transform> && std::is_constructible_v<Component, Args...>,
+                int32_t> = 0>
         Component &add(Entity entity, Args &&...args) {
             return registry_.emplace<Component>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
@@ -59,7 +63,9 @@ namespace inferno {
             return registry_.try_get<Component>(static_cast<entt::entity>(entity));
         }
 
-        template <typename Component, typename... Other> std::size_t remove(Entity entity) {
+        template <typename Component, typename... Other,
+            std::enable_if_t<!std::is_same_v<Component, Transform>, int32_t> = 0>
+        std::size_t remove(Entity entity) {
             return registry_.remove<Component, Other...>(static_cast<entt::entity>(entity));
         }
 
@@ -105,6 +111,8 @@ namespace inferno {
         std::vector<Entity> entities_to_destroy_;
 
         ECS();
+
+        ~ECS();
 
         friend class Scene;
     };
