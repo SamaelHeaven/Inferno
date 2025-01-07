@@ -27,7 +27,7 @@ namespace inferno {
 
         template <typename T, void (*Callback)(Entity, T &),
             auto Candidate =
-                [](entt::entity entity, entt::registry &, auto &component) {
+                [](entt::entity entity, entt::registry &, T &component) {
                     Callback(static_cast<Entity>(entity), component);
                 }>
         void on_add() {
