@@ -33,7 +33,7 @@ namespace inferno {
         template <typename Component, auto Callback,
             auto Candidate =
                 [](const entt::registry &registry, entt::entity entity) {
-                    Callback(*ecs_map_.find(&registry), static_cast<Entity>(entity));
+                    Callback(*ecs_map_.find(&registry)->second, static_cast<Entity>(entity));
                 }>
         std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_add() {
             registry_.on_construct<Component>().template connect<Candidate>();
@@ -42,7 +42,7 @@ namespace inferno {
         template <typename Component, auto Callback,
             auto Candidate =
                 [](const entt::registry &registry, entt::entity entity) {
-                    Callback(*ecs_map_.find(&registry), static_cast<Entity>(entity));
+                    Callback(*ecs_map_.find(&registry)->second, static_cast<Entity>(entity));
                 }>
         std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_remove() {
             registry_.on_destroy<Component>().template connect<Candidate>();
