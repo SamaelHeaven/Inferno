@@ -3,7 +3,7 @@
 #include "./Game.h"
 
 namespace inferno {
-    std::unordered_map<entt::registry *, ECS *> ecs_map_;
+    std::unordered_map<const entt::registry *, ECS *> ecs_map_;
 
     std::vector<System> ECS::systems_;
 
