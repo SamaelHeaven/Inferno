@@ -25,17 +25,14 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-    private:
-        template <typename Callback, typename... T>
-        static void on_add_candidate_(entt::entity entity, entt::registry &, Callback &callback, T &...components) {
-            callback(static_cast<Entity>(entity), components...);
-        }
-
-    public:
         template <typename... T, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...>> on_add(Callback &&callback) {
-            registry_.on_construct<T...>().template connect<&on_add_candidate_<Callback, T...>>(
-                std::forward<Callback>(callback));
+            auto wrapper = [callback = std::forward<Callback>(callback)](
+                               entt::entity entity, entt::registry &, auto &...components) {
+                callback(static_cast<Entity>(entity), components...);
+            };
+            registry_.on_construct<T...>().connect(
+                std::function<void(entt::entity, entt::registry &, T & ...)>(std::move(wrapper)));
         }
 
         template <typename... T> void on_remove(const std::function<void(Entity)> &callback) {
