@@ -12,7 +12,7 @@ namespace inferno {
     public:
         static std::vector<Gamepad *> get_gamepads();
 
-        static Gamepad *get(GamepadID id);
+        static Gamepad &get(GamepadID id);
 
         Gamepad(const Gamepad &gamepad) = delete;
 

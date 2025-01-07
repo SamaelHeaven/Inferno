@@ -12,12 +12,12 @@ namespace inferno {
         return result;
     }
 
-    Gamepad *Gamepad::get(const GamepadID id) {
+    Gamepad &Gamepad::get(const GamepadID id) {
         const auto object = get_();
         if (id < 0 || id >= object->gamepads_.size()) {
             throw std::out_of_range("Gamepad ID out of range");
         }
-        return object->gamepads_[id].get();
+        return *object->gamepads_[id].get();
     }
 
     GamepadID Gamepad::get_id() const {
