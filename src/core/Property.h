@@ -4,7 +4,7 @@
 
 namespace inferno {
     template <typename T>
-    using PropertySetter = std::function<void(const T &value, const std::function<void(T &t)> &set)>;
+    using PropertySetter = std::function<void(const T &value, const std::function<void(const T &t)> &set)>;
 
     template <typename T> using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
 
