@@ -25,11 +25,13 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T, void (*Callback)(Entity, T &)> constexpr void on_add() {
-            constexpr auto candidate = [](entt::entity entity, entt::registry &, auto &component) {
-                Callback(static_cast<Entity>(entity), component);
-            };
-            registry_.on_construct<T>().template connect<candidate>();
+        template <typename T, void (*Callback)(Entity, T &),
+            auto Candidate =
+                [](entt::entity entity, entt::registry &, auto &component) {
+                    Callback(static_cast<Entity>(entity), component);
+                }>
+        void on_add() {
+            registry_.on_construct<T>().template connect<Candidate>();
         }
 
         template <typename... T> void on_remove(const std::function<void(Entity)> &callback) {
