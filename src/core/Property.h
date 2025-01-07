@@ -14,6 +14,22 @@ namespace inferno {
     public:
         class Subscriber {
         public:
+            Subscriber() {
+                property_ = nullptr;
+                listener_id_ = static_cast<PropertyListenerID>(-1);
+            }
+
+            Subscriber &operator=(const Subscriber &other) {
+                if (&other == this) {
+                    return *this;
+                }
+                property_ = other.property_;
+                listener_id_ = other.listener_id_;
+                other.property_ = nullptr;
+                other.listener_id_ = static_cast<PropertyListenerID>(-1);
+                return *this;
+            }
+
             ~Subscriber() {
                 if (property_) {
                     std::cout << "Destroyed" << std::endl;
@@ -22,11 +38,6 @@ namespace inferno {
             }
 
         private:
-            Subscriber() {
-                property_ = nullptr;
-                listener_id_ = static_cast<PropertyListenerID>(-1);
-            }
-
             explicit Subscriber(const Property *property, const PropertyListenerID listener_id) {
                 property_ = property;
                 listener_id_ = listener_id;
