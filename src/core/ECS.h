@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../inferno.h"
+#include "Game.h"
 
 namespace inferno {
     enum class Entity : uint32_t {};
@@ -25,10 +26,10 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T, auto Callback,
+        template <typename T, void (*Callback)(ECS &, Entity, T &),
             auto Candidate =
-                [](entt::registry &, entt::entity entity) {
-                    Callback(static_cast<Entity>(entity));
+                [](entt::registry &, entt::entity entity, T &component) {
+                    Callback(Game::get_scene()->get_ecs(), static_cast<Entity>(entity), component);
                 }>
         void on_add() {
             registry_.on_construct<T>().template connect<Candidate>();
