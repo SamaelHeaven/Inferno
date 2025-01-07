@@ -30,7 +30,7 @@ namespace inferno {
             const auto candidate = [&](entt::entity entity, entt::registry &, auto &...components) {
                 callback(static_cast<Entity>(entity), components...);
             };
-            registry_.on_construct<T...>().template connect<candidate>();
+            registry_.on_construct<T...>().connect(std::move(candidate));
         }
 
         template <typename... T> void on_remove(const std::function<void(Entity)> &callback) {
