@@ -27,7 +27,7 @@ namespace inferno {
 
         template <typename... T, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...>> on_add(Callback &&callback) {
-            const auto candidate = [&](entt::entity entity, entt::registry &, auto &...components) {
+            constexpr auto candidate = [&](entt::entity entity, entt::registry &, auto &...components) {
                 callback(static_cast<Entity>(entity), components...);
             };
             registry_.on_construct<T...>().template connect<candidate>();
