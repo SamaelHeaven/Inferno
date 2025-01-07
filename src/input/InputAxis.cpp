@@ -22,7 +22,7 @@ namespace inferno {
         return {HORIZONTAL.get(), VERTICAL.get()};
     }
 
-    int InputAxis::get() const {
+    int32_t InputAxis::get() const {
         auto axis = 0;
         if (gamepad.has_value() && gamepad_axis.has_value()) {
             axis = static_cast<int32_t>(std::round(Gamepad::get(gamepad.value()).get_axis(gamepad_axis.value())));
