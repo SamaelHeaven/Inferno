@@ -27,18 +27,20 @@ namespace inferno {
 
         template <typename T, auto Callback,
             auto Candidate =
-                [](entt::entity entity, entt::registry &, T &component) {
-                    Callback(static_cast<Entity>(entity), component);
+                [](entt::entity entity, entt::registry &) {
+                    Callback(static_cast<Entity>(entity));
                 }>
         void on_add() {
             registry_.on_construct<T>().template connect<Candidate>();
         }
 
-        template <typename... T> void on_remove(const std::function<void(Entity)> &callback) {
-            const auto candidate = [&](entt::entity entity) {
-                callback(static_cast<Entity>(entity));
-            };
-            registry_.on_destroy<T...>().template connect<candidate>();
+        template <typename T, auto Callback,
+            auto Candidate =
+                [](entt::entity entity, entt::registry &) {
+                    Callback(static_cast<Entity>(entity));
+                }>
+        void on_remove() {
+            registry_.on_destroy<T>().template connect<Candidate>();
         }
 
         Entity create();
