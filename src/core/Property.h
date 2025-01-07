@@ -144,6 +144,8 @@ namespace inferno {
     }
 
     template <typename T> void Property<T>::unbind() {
-        bound_subscriber_ = Subscriber();
+        if (bound_subscriber_.property_) {
+            bound_subscriber_ = Subscriber();
+        }
     }
 }
