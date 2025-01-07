@@ -137,8 +137,6 @@ namespace inferno {
     }
 
     template <typename T> void Property<T>::unbind() {
-        if (bound_subscriber_.get() != nullptr) {
-            bound_subscriber_.reset();
-        }
+        bound_subscriber_.reset();
     }
 }
