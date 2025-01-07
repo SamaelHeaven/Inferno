@@ -27,7 +27,7 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T, void (*Callback)(ECS &, Entity, T &),
+        template <typename T, auto Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity, T &component) {
                     Callback(current(), static_cast<Entity>(entity), component);
@@ -39,7 +39,7 @@ namespace inferno {
         template <typename T, auto Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity) {
-                    Callback(static_cast<Entity>(entity));
+                    Callback(current(), static_cast<Entity>(entity));
                 }>
         void on_remove() {
             registry_.on_destroy<T>().template connect<Candidate>();
