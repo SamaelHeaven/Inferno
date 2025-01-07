@@ -11,12 +11,12 @@ namespace inferno {
         position_property.set(position);
     }
 
-    Vector2 Transform::get_size() const {
-        return size_property.get();
+    Vector2 Transform::get_scale() const {
+        return scale_property.get();
     }
 
-    void Transform::set_size(const Vector2 size) {
-        size_property.set(size);
+    void Transform::set_scale(const Vector2 scale) {
+        scale_property.set(scale);
     }
 
     Vector2 Transform::get_pivot_point() const {

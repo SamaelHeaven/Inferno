@@ -4,9 +4,9 @@
 
 namespace inferno {
     template <typename T>
-    using PropertySetter = std::function<void(const T &value, const std::function<void(const T &t)> &set)>;
+    using PropertySetter = std::function<void(const T &value, const std::function<void(T &t)> &set)>;
 
-    template <typename T> using PropertyListener = std::function<void(const T &old_value, const T &new_value)>;
+    template <typename T> using PropertyListener = std::function<void(T &old_value, T &new_value)>;
 
     enum class PropertyListenerID : int32_t;
 
@@ -102,7 +102,7 @@ namespace inferno {
         if (value_ == value) {
             return;
         }
-        setter_(value, [this](const T &t) {
+        setter_(value, [&](const T &t) {
             T old_value = value_;
             value_ = t;
             for (const auto &entry : listeners_) {

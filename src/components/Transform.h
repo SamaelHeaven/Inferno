@@ -6,7 +6,7 @@
 namespace inferno {
     struct Transform {
         Property<Vector2> position_property{Vector2::ZERO};
-        Property<Vector2> size_property{Vector2::ZERO};
+        Property<Vector2> scale_property{Vector2::ZERO};
         Property<Vector2> pivot_point_property{Vector2::ZERO};
         Property<float> rotation_property{0.0f};
         Property<int32_t> z_index_property{0};
@@ -17,9 +17,9 @@ namespace inferno {
 
         void set_position(Vector2 position);
 
-        [[nodiscard]] Vector2 get_size() const;
+        [[nodiscard]] Vector2 get_scale() const;
 
-        void set_size(Vector2 size);
+        void set_scale(Vector2 scale);
 
         [[nodiscard]] Vector2 get_pivot_point() const;
 
