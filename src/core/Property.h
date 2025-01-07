@@ -20,7 +20,7 @@ namespace inferno {
             }
 
             ~Subscriber() {
-                if (property_) {
+                if (properties_.contains(property_)) {
                     property_->listeners_.erase(listener_id_);
                 }
             }
@@ -55,6 +55,8 @@ namespace inferno {
         void unbind();
 
     private:
+        inline static std::set<Property *> properties_;
+
         inline static auto current_listener_id_ = static_cast<PropertyListenerID>(0);
 
         T value_;
@@ -71,10 +73,12 @@ namespace inferno {
     template <typename T> Property<T>::Property(const T &value, const PropertySetter<T> &setter) {
         value_ = value;
         setter_ = setter;
+        properties_.insert(this);
     }
 
     template <typename T> Property<T>::~Property() {
         unbind();
+        properties_.erase(this);
     }
 
     template <typename T> Property<T>::Property(const Property &other) {
