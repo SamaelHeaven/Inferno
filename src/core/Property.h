@@ -132,7 +132,7 @@ namespace inferno {
 
     template <typename T> void Property<T>::bind_bidirectional(Property &other) {
         bind(other);
-        other.bind(*this);
+        other.bind(this);
     }
 
     template <typename T> void Property<T>::unbind() {
