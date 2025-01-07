@@ -14,6 +14,11 @@ namespace inferno {
     public:
         class Subscriber {
         public:
+            explicit Subscriber(const Property *property, const PropertyListenerID listener_id) {
+                property_ = property;
+                listener_id_ = listener_id;
+            }
+
             ~Subscriber() {
                 if (property_) {
                     property_->listeners_.erase(listener_id_);
@@ -21,11 +26,6 @@ namespace inferno {
             }
 
         private:
-            explicit Subscriber(const Property *property, const PropertyListenerID listener_id) {
-                property_ = property;
-                listener_id_ = listener_id;
-            }
-
             const Property *property_;
 
             PropertyListenerID listener_id_;
