@@ -25,7 +25,7 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T, void (*Callback)(Entity, T &),
+        template <typename T, auto Callback,
             auto Candidate =
                 [](entt::entity entity, entt::registry &, T &component) {
                     Callback(static_cast<Entity>(entity), component);
