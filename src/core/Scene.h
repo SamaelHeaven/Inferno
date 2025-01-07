@@ -5,6 +5,8 @@
 namespace inferno {
     class Scene {
     public:
+        Scene() = default;
+
         virtual ~Scene();
 
         ECS &get_ecs();
@@ -18,7 +20,7 @@ namespace inferno {
     private:
         float time_ = 0.0f;
 
-        ECS ecs_{};
+        ECS ecs_;
 
         bool initialized_ = false;
 

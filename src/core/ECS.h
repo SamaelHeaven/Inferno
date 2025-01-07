@@ -18,6 +18,8 @@ namespace inferno {
     public:
         ECS(const ECS &) = delete;
 
+        ~ECS();
+
         static void system(const System &system);
 
         void on_update(const UpdateListener &update_listener);
@@ -111,8 +113,6 @@ namespace inferno {
         std::vector<Entity> entities_to_destroy_;
 
         ECS();
-
-        ~ECS();
 
         friend class Scene;
     };
