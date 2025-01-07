@@ -13,6 +13,10 @@ namespace inferno {
         systems_.push_back(system);
     }
 
+    ECS &ECS::current() {
+        return Game::get_scene()->get_ecs();
+    }
+
     void ECS::on_update(const UpdateListener &update_listener) {
         update_listeners_.push_back(update_listener);
     }

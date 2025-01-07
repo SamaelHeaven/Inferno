@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../inferno.h"
-#include "Game.h"
 
 namespace inferno {
     enum class Entity : uint32_t {};
@@ -20,6 +19,8 @@ namespace inferno {
 
         static void system(const System &system);
 
+        static ECS &current();
+
         void on_update(const UpdateListener &update_listener);
 
         void on_ordered_update(const OrderedUpdateListener &update_listener);
@@ -29,7 +30,7 @@ namespace inferno {
         template <typename T, void (*Callback)(ECS &, Entity, T &),
             auto Candidate =
                 [](entt::registry &, entt::entity entity, T &component) {
-                    Callback(Game::get_scene()->get_ecs(), static_cast<Entity>(entity), component);
+                    Callback(current(), static_cast<Entity>(entity), component);
                 }>
         void on_add() {
             registry_.on_construct<T>().template connect<Candidate>();
