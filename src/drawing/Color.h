@@ -36,7 +36,7 @@ namespace inferno {
 
         explicit Color(uint8_t red = 0, uint8_t green = 0, uint8_t blue = 0, uint8_t alpha = 255);
 
-        explicit Color(std::string hexadecimal);
+        Color(std::string hexadecimal); // NOLINT(*-explicit-constructor)
 
         [[nodiscard]] std::string to_string() const;
 

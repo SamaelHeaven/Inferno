@@ -15,7 +15,6 @@ namespace inferno {
 
         Vector2();
 
-        // ReSharper disable once CppNonExplicitConvertingConstructor
         template <typename T, std::enable_if<std::is_arithmetic_v<T>> * = nullptr>
         Vector2(const T xy) { // NOLINT(*-explicit-constructor)
             x = static_cast<float>(xy);
