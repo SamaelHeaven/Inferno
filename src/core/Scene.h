@@ -18,7 +18,7 @@ namespace inferno {
     private:
         float time_ = 0.0f;
 
-        ECS ecs_;
+        ECS ecs_{};
 
         bool initialized_ = false;
 
