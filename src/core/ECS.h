@@ -25,9 +25,9 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T> consteval void on_add(constexpr void (*callback)(Entity, T &)) {
-            constexpr auto candidate = [callback](entt::entity entity, entt::registry &, auto &component) {
-                callback(static_cast<Entity>(entity), component);
+        template <typename T, void (*Callback)(Entity, T &)> consteval void on_add() {
+            constexpr auto candidate = [](entt::entity entity, entt::registry &, auto &component) {
+                Callback(static_cast<Entity>(entity), component);
             };
             registry_.on_construct<T>().template connect<candidate>();
         }
