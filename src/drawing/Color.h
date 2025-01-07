@@ -38,6 +38,8 @@ namespace inferno {
 
         Color(std::string hexadecimal); // NOLINT(*-explicit-constructor)
 
+        Color(const char *hexadecimal); // NOLINT(*-explicit-constructor)
+
         [[nodiscard]] std::string to_string() const;
 
         bool operator==(const Color &other) const;
