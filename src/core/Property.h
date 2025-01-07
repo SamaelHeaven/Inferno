@@ -127,7 +127,7 @@ namespace inferno {
             return;
         }
         unbind();
-        bound_subscriber_ = other.subscribe([&]([[maybe_unused]] const T &old_value, const T &new_value) {
+        bound_subscriber_ = other.subscribe([&](const T &, const T &new_value) {
             set(new_value);
         });
         set(other.value_);
