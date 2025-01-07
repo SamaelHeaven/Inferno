@@ -27,57 +27,59 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename T, auto Callback,
+        template <typename Component, typename CallbackType, CallbackType Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity) {
                     Callback(current(), static_cast<Entity>(entity));
                 }>
-        void on_add() {
-            registry_.on_construct<T>().template connect<Candidate>();
+        std::enable_if_t<std::is_invocable_v<CallbackType, ECS &, Entity>> on_add() {
+            registry_.on_construct<Component>().template connect<Candidate>();
         }
 
-        template <typename T, auto Callback,
+        template <typename Component, typename CallbackType, CallbackType Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity) {
                     Callback(current(), static_cast<Entity>(entity));
                 }>
-        void on_remove() {
-            registry_.on_destroy<T>().template connect<Candidate>();
+        std::enable_if_t<std::is_invocable_v<CallbackType, ECS &, Entity>> on_remove() {
+            registry_.on_destroy<Component>().template connect<Candidate>();
         }
 
         Entity create();
 
         void destroy(Entity entity);
 
-        template <typename T, typename... Args, std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>
-        T &add(Entity entity, Args &&...args) {
-            return registry_.emplace<T>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
+        template <typename Component, typename... Args,
+            std::enable_if_t<std::is_constructible_v<Component, Args...>> * = nullptr>
+        Component &add(Entity entity, Args &&...args) {
+            return registry_.emplace<Component>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
 
-        template <typename T> [[nodiscard]] T *get(Entity entity) {
-            return registry_.try_get<T>(static_cast<entt::entity>(entity));
+        template <typename Component> [[nodiscard]] Component *get(Entity entity) {
+            return registry_.try_get<Component>(static_cast<entt::entity>(entity));
         }
 
-        template <typename T, typename... Other> std::size_t remove(Entity entity) {
-            return registry_.remove<T, Other...>(static_cast<entt::entity>(entity));
+        template <typename Component, typename... Other> std::size_t remove(Entity entity) {
+            return registry_.remove<Component, Other...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool all_of(Entity entity) const {
-            return registry_.all_of<T...>(static_cast<entt::entity>(entity));
+        template <typename... Component> [[nodiscard]] bool all_of(Entity entity) const {
+            return registry_.all_of<Component...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool any_of(Entity entity) const {
-            return registry_.any_of<T...>(static_cast<entt::entity>(entity));
+        template <typename... Component> [[nodiscard]] bool any_of(Entity entity) const {
+            return registry_.any_of<Component...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T, typename Callback>
-        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>> each(
-            Callback &&callback) {
-            auto view = registry_.view<T...>();
+        template <typename... Component, typename Callback>
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, Component &...> ||
+            std::is_invocable_v<Callback, Component &...>>
+        each(Callback &&callback) {
+            auto view = registry_.view<Component...>();
             view.each([&](entt::entity entity, auto &...components) {
-                if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
+                if constexpr (std::is_invocable_v<Callback, Entity, Component &...>) {
                     callback(static_cast<Entity>(entity), components...);
-                } else if constexpr (std::is_invocable_v<Callback, T &...>) {
+                } else if constexpr (std::is_invocable_v<Callback, Component &...>) {
                     callback(components...);
                 } else {
                     static_assert(false, "Invalid callback signature");
