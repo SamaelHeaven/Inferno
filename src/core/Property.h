@@ -66,8 +66,6 @@ namespace inferno {
         std::shared_ptr<Subscriber> bound_subscriber_;
 
         friend class Subscriber;
-
-        friend class Scene;
     };
 
     template <typename T> Property<T>::Property(const T &value, const PropertySetter<T> &setter) {
