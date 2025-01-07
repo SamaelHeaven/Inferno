@@ -38,6 +38,7 @@ namespace inferno {
 
     void ECS::destroy(Entity entity) {
         registry_.destroy(static_cast<entt::entity>(entity));
+        std::erase(entities_to_create_, entity);
         entities_to_destroy_.push_back(entity);
     }
 }
