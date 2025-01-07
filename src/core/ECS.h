@@ -29,8 +29,8 @@ namespace inferno {
 
         template <typename T, auto Callback,
             auto Candidate =
-                [](entt::registry &, entt::entity entity, T &component) {
-                    Callback(current(), static_cast<Entity>(entity), component);
+                [](entt::registry &, entt::entity entity) {
+                    Callback(current(), static_cast<Entity>(entity));
                 }>
         void on_add() {
             registry_.on_construct<T>().template connect<Candidate>();
