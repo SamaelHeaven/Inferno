@@ -14,25 +14,8 @@ namespace inferno {
     public:
         class Subscriber {
         public:
-            Subscriber() {
-                property_ = nullptr;
-                listener_id_ = static_cast<PropertyListenerID>(-1);
-            }
-
-            Subscriber &operator=(const Subscriber &other) {
-                if (&other == this) {
-                    return *this;
-                }
-                property_ = other.property_;
-                listener_id_ = other.listener_id_;
-                other.property_ = nullptr;
-                other.listener_id_ = static_cast<PropertyListenerID>(-1);
-                return *this;
-            }
-
             ~Subscriber() {
                 if (property_) {
-                    std::cout << "Destroyed" << std::endl;
                     property_->listeners_.erase(listener_id_);
                 }
             }
@@ -65,7 +48,7 @@ namespace inferno {
 
         void set(const T &value);
 
-        Subscriber subscribe(const PropertyListener<T> &listener) const;
+        std::shared_ptr<Subscriber> subscribe(const PropertyListener<T> &listener) const;
 
         void bind(const Property &other);
 
@@ -82,7 +65,7 @@ namespace inferno {
 
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T>> listeners_;
 
-        Subscriber bound_subscriber_;
+        std::shared_ptr<Subscriber> bound_subscriber_;
 
         friend class Subscriber;
 
@@ -131,11 +114,12 @@ namespace inferno {
     }
 
     template <typename T>
-    typename Property<T>::Subscriber Property<T>::subscribe(const PropertyListener<T> &listener) const {
+    std::shared_ptr<typename Property<T>::Subscriber> Property<T>::subscribe(
+        const PropertyListener<T> &listener) const {
         current_listener_id_ = static_cast<PropertyListenerID>(static_cast<int32_t>(current_listener_id_) + 1);
         const PropertyListenerID listener_id = current_listener_id_;
         listeners_.emplace(listener_id, listener);
-        return Subscriber(this, listener_id);
+        return std::make_shared<Subscriber>(this, listener_id);
     }
 
     template <typename T> void Property<T>::bind(const Property &other) {
