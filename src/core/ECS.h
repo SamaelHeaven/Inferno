@@ -27,21 +27,21 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename Component, typename CallbackType, CallbackType Callback,
+        template <typename Component, auto Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity) {
                     Callback(current(), static_cast<Entity>(entity));
                 }>
-        std::enable_if_t<std::is_invocable_v<CallbackType, ECS &, Entity>> on_add() {
+        std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_add() {
             registry_.on_construct<Component>().template connect<Candidate>();
         }
 
-        template <typename Component, typename CallbackType, CallbackType Callback,
+        template <typename Component, auto Callback,
             auto Candidate =
                 [](entt::registry &, entt::entity entity) {
                     Callback(current(), static_cast<Entity>(entity));
                 }>
-        std::enable_if_t<std::is_invocable_v<CallbackType, ECS &, Entity>> on_remove() {
+        std::enable_if_t<std::is_invocable_v<decltype(Callback), ECS &, Entity>> on_remove() {
             registry_.on_destroy<Component>().template connect<Candidate>();
         }
 
