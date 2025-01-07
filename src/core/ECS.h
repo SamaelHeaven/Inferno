@@ -27,7 +27,7 @@ namespace inferno {
 
         template <typename T, auto Callback,
             auto Candidate =
-                [](entt::entity entity, entt::registry &) {
+                [](entt::registry &, entt::entity entity) {
                     Callback(static_cast<Entity>(entity));
                 }>
         void on_add() {
@@ -36,7 +36,7 @@ namespace inferno {
 
         template <typename T, auto Callback,
             auto Candidate =
-                [](entt::entity entity, entt::registry &) {
+                [](entt::registry &, entt::entity entity) {
                     Callback(static_cast<Entity>(entity));
                 }>
         void on_remove() {
