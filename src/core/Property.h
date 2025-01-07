@@ -29,8 +29,6 @@ namespace inferno {
             const Property *property_;
 
             PropertyListenerID listener_id_;
-
-            friend class Property;
         };
 
         explicit Property(
