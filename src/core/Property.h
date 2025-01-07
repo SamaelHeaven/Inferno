@@ -15,6 +15,7 @@ namespace inferno {
         class Subscriber {
         public:
             ~Subscriber() {
+                std::cout << "destroyed" << std::endl;
                 property_->listeners_.erase(listener_id_);
             }
 
@@ -132,7 +133,7 @@ namespace inferno {
 
     template <typename T> void Property<T>::bind_bidirectional(Property &other) {
         bind(other);
-        other.bind(this);
+        other.bind(*this);
     }
 
     template <typename T> void Property<T>::unbind() {
