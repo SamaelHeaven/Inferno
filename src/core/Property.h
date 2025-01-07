@@ -15,11 +15,17 @@ namespace inferno {
         class Subscriber {
         public:
             ~Subscriber() {
-                std::cout << "destroyed" << std::endl;
-                property_->listeners_.erase(listener_id_);
+                if (property_) {
+                    property_->listeners_.erase(listener_id_);
+                }
             }
 
         private:
+            Subscriber() {
+                property_ = nullptr;
+                listener_id_ = static_cast<PropertyListenerID>(-1);
+            }
+
             explicit Subscriber(const Property *property, const PropertyListenerID listener_id) {
                 property_ = property;
                 listener_id_ = listener_id;
@@ -64,7 +70,7 @@ namespace inferno {
 
         mutable std::unordered_map<PropertyListenerID, PropertyListener<T>> listeners_;
 
-        std::optional<Subscriber> bound_subscriber_;
+        Subscriber bound_subscriber_;
 
         friend class Subscriber;
 
@@ -137,8 +143,6 @@ namespace inferno {
     }
 
     template <typename T> void Property<T>::unbind() {
-        if (bound_subscriber_.has_value()) {
-            bound_subscriber_.reset();
-        }
+        bound_subscriber_ = Subscriber();
     }
 }
