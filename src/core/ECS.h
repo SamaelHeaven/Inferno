@@ -25,7 +25,8 @@ namespace inferno {
 
         void on_fixed_update(const FixedUpdateListener &fixed_update_listener);
 
-        template <typename... T> void on_add(const std::function<void(Entity, T &...)> &callback) {
+        template <typename... T, typename Callback>
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...>> on_add(Callback &&callback) {
             const auto candidate = [&](entt::entity entity, entt::registry &, auto &...components) {
                 callback(static_cast<Entity>(entity), components...);
             };
