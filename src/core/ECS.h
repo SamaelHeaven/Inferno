@@ -54,17 +54,17 @@ namespace inferno {
             return registry_.remove<T, Other...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool has_all_of(Entity entity) const {
+        template <typename... T> [[nodiscard]] bool all_of(Entity entity) const {
             return registry_.all_of<T...>(static_cast<entt::entity>(entity));
         }
 
-        template <typename... T> [[nodiscard]] bool has_any_of(Entity entity) const {
+        template <typename... T> [[nodiscard]] bool any_of(Entity entity) const {
             return registry_.any_of<T...>(static_cast<entt::entity>(entity));
         }
 
         template <typename... T, typename Callback>
-        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>>
-        for_each(Callback &&callback) {
+        std::enable_if_t<std::is_invocable_v<Callback, Entity, T &...> || std::is_invocable_v<Callback, T &...>> each(
+            Callback &&callback) {
             auto view = registry_.view<T...>();
             view.each([&](entt::entity entity, auto &...components) {
                 if constexpr (std::is_invocable_v<Callback, Entity, T &...>) {
@@ -97,7 +97,5 @@ namespace inferno {
         ECS();
 
         friend class Scene;
-
-        friend struct Transform;
     };
 }
