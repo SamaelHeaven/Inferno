@@ -37,12 +37,10 @@ namespace inferno {
     }
 
     Vector2 Mouse::get_position() {
-        get_();
         return coordinates::screen_to_local(get_screen_position()).clamp(Vector2::ZERO, Game::get_size()).round();
     }
 
     void Mouse::set_position(Vector2 position) {
-        get_();
         position = position.clamp(Vector2::ZERO, Game::get_size().round());
         if (get_position() == position) {
             return;

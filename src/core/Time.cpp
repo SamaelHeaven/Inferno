@@ -17,7 +17,6 @@ namespace inferno {
     }
 
     float Time::current_fps() {
-        get_();
         const auto delta_time = delta();
         return delta_time <= 0.f ? 0.f : 1 / delta_time;
     }
