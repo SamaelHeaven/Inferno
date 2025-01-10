@@ -30,28 +30,30 @@ namespace inferno {
 
     void Scene::update_() {
         update();
+        auto &entities = ecs_.entities_;
+        auto &entities_to_create = ecs_.entities_to_create_;
+        auto &entities_to_destroy = ecs_.entities_to_destroy_;
         for (const auto &update_listener : ecs_.update_listeners_) {
             update_listener();
         }
-        for (const auto entity_to_create : ecs_.entities_to_create_) {
+        for (const auto entity_to_create : entities_to_create) {
             const auto transform = ecs_.get<Transform>(entity_to_create);
-            ecs_.entities_.emplace_back(&transform->z_index_property.get(), entity_to_create);
+            entities.emplace_back(&transform->z_index_property.get(), entity_to_create);
         }
-        ecs_.entities_to_create_.clear();
-        std::ranges::stable_sort(ecs_.entities_, [](const auto &a, const auto &b) {
+        entities_to_create.clear();
+        std::ranges::stable_sort(entities, [](const auto &a, const auto &b) {
             return *a.first < *b.first;
         });
-        for (const auto [z_index, entity] : ecs_.entities_) {
+        for (const auto [z_index, entity] : entities) {
             for (const auto &ordered_update_listener : ecs_.ordered_update_listeners_) {
                 ordered_update_listener(entity);
             }
         }
-        for (const auto entity_to_destroy : ecs_.entities_to_destroy_) {
-            std::erase_if(ecs_.entities_, [&](const auto &entry) {
-                return entry.second == entity_to_destroy;
-            });
-        }
-        ecs_.entities_to_destroy_.clear();
+        std::erase_if(entities, [&](const auto &entry) {
+            return std::find(entities_to_destroy.begin(), entities_to_destroy.end(), entry.second) !=
+                entities_to_destroy.end();
+        });
+        entities_to_destroy.clear();
         const auto delta = Time::delta();
         const auto fixed_delta = Time::fixed_delta();
         for (time_ += delta; time_ >= fixed_delta; time_ -= fixed_delta) { // NOLINT(*-flp30-c)
