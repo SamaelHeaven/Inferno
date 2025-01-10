@@ -15,6 +15,10 @@ namespace inferno {
         ecs_map_.erase(&registry_);
     }
 
+    ECS &ECS::current() {
+        return Scene::current()->get_ecs();
+    }
+
     void ECS::system(const System &system) {
         Game::throw_if_initialized();
         systems_.push_back(system);

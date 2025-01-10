@@ -20,6 +20,8 @@ namespace inferno {
 
         ~ECS();
 
+        static ECS &current();
+
         static void system(const System &system);
 
         void on_update(const UpdateListener &update_listener);

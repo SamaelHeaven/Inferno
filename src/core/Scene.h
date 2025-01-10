@@ -9,6 +9,8 @@ namespace inferno {
 
         virtual ~Scene();
 
+        static std::shared_ptr<Scene> current();
+
         ECS &get_ecs();
 
         virtual void initialize();

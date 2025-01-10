@@ -1,10 +1,15 @@
 #include "Scene.h"
 
 #include "../components/Transform.h"
+#include "./Game.h"
 #include "./Time.h"
 
 namespace inferno {
     Scene::~Scene() = default;
+
+    std::shared_ptr<Scene> Scene::current() {
+        return Game::get_scene();
+    }
 
     ECS &Scene::get_ecs() {
         return ecs_;
