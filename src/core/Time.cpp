@@ -13,9 +13,7 @@ namespace inferno {
 
     float Time::average_fps() {
         const auto time = get_();
-        return time->frame_count_ == 0
-            ? 0
-            : static_cast<float>(static_cast<double>(time->average_fps_) / static_cast<float>(time->frame_count_));
+        return time->frame_count_ == 0 ? 0 : time->average_fps_ / static_cast<float>(time->frame_count_);
     }
 
     float Time::current_fps() {

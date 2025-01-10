@@ -8,6 +8,7 @@ namespace inferno {
         get_();
         ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
     }
+
     void Renderer::draw_rectangle(const Vector2 &position, const Vector2 &size, const Color &color) {
         get_();
         DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x),
