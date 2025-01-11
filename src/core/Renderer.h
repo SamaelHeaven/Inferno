@@ -10,7 +10,7 @@ namespace inferno {
     public:
         static void clear_background(Color color);
 
-        static void draw_rectangle(const Vector2 &position, const Vector2 &size, const Color &color);
+        static void draw_rectangle(Vector2 position, Vector2 size, Color color);
 
     private:
         static Renderer *instance_;
