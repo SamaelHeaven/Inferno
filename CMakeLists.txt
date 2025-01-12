@@ -116,6 +116,12 @@ add_library(${PROJECT_NAME} STATIC
         src/input/InputAxis.h
         src/drawing/Color.cpp
         src/drawing/Color.h
+        src/drawing/Texture.cpp
+        src/drawing/Texture.h
+        src/drawing/WritableTexture.cpp
+        src/drawing/WritableTexture.h
+        src/drawing/Graphics.cpp
+        src/drawing/Graphics.h
         src/math/coordinates.cpp
         src/math/coordinates.h
         src/math/random.cpp

@@ -2,20 +2,19 @@
 
 #include "../inferno.h"
 
-#include "../drawing/Color.h"
-#include "../math/Vector2.h"
+#include "../drawing/Graphics.h"
 
 namespace inferno {
     class Renderer final {
     public:
-        static void clear_background(Color color);
-
-        static void draw_rectangle(Vector2 position, Vector2 size, Color color);
+        static Graphics graphics();
 
     private:
         static Renderer *instance_;
 
-        internal::RenderTexture2D screen_{};
+        WritableTexture screen_;
+
+        Graphics graphics_;
 
         Renderer();
 
@@ -28,5 +27,7 @@ namespace inferno {
         static Renderer *get_();
 
         friend class Game;
+
+        friend class Graphics;
     };
 }

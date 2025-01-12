@@ -1,0 +1,23 @@
+#pragma once
+
+#include "../inferno.h"
+#include "./Color.h"
+#include "./WritableTexture.h"
+
+namespace inferno {
+    class Graphics {
+    public:
+        void clear_background(Color color) const;
+
+        void draw_rectangle(Vector2 position, Vector2 size, Color color) const;
+
+        explicit Graphics(WritableTexture buffer);
+
+    private:
+        WritableTexture buffer_;
+
+        std::function<void()> begin_draw_;
+
+        std::function<void()> end_draw_;
+    };
+}

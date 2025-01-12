@@ -6,6 +6,7 @@
     </inspection_tool>
     <inspection_tool class="CppNonExplicitConversionOperator" enabled="false" level="HINT" enabled_by_default="false" />
     <inspection_tool class="CppNonExplicitConvertingConstructor" enabled="false" level="HINT" enabled_by_default="false" />
+    <inspection_tool class="CppParameterNamesMismatch" enabled="false" level="HINT" enabled_by_default="false" />
     <inspection_tool class="CppRedundantElaboratedTypeSpecifier" enabled="false" level="HINT" enabled_by_default="false" />
     <inspection_tool class="CppUseStructuredBinding" enabled="false" level="HINT" enabled_by_default="false" />
   </profile>

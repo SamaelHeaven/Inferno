@@ -1,18 +1,10 @@
 #include "Renderer.h"
 
-#include "../drawing/Color.h"
 #include "./Game.h"
 
 namespace inferno {
-    void Renderer::clear_background(const Color color) {
-        get_();
-        ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
-    }
-
-    void Renderer::draw_rectangle(const Vector2 position, const Vector2 size, const Color color) {
-        get_();
-        DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x),
-            static_cast<int>(size.y), internal::Color(color.red, color.green, color.blue, color.alpha));
+    Graphics Renderer::graphics() {
+        return get_()->graphics_;
     }
 
     void Renderer::update_() {
@@ -30,9 +22,10 @@ namespace inferno {
         internal::EndTextureMode();
         internal::BeginDrawing();
         ClearBackground(internal::Color(0, 0, 0, 255));
-        DrawTexturePro(screen.texture, source, dest, position, 0.0f, internal::Color(255, 255, 255, 255));
+        DrawTexturePro(
+            screen.render_texture_.texture, source, dest, position, 0.0f, internal::Color(255, 255, 255, 255));
         internal::EndDrawing();
-        BeginTextureMode(renderer->screen_);
+        BeginTextureMode(renderer->screen_.render_texture_);
     }
 
     void Renderer::destroy_() {
@@ -41,14 +34,13 @@ namespace inferno {
 
     Renderer *Renderer::instance_ = nullptr;
 
-    Renderer::Renderer() {
+    Renderer::Renderer()
+        : screen_(WritableTexture(Game::get_width(), Game::get_height())), graphics_(Graphics(screen_)) {
         Game::throw_if_uninitialized();
-        screen_ = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
-        BeginTextureMode(screen_);
+        BeginTextureMode(screen_.render_texture_);
     }
 
     Renderer::~Renderer() {
-        UnloadRenderTexture(screen_);
         instance_ = nullptr;
     }
 
