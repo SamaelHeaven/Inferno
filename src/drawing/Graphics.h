@@ -14,10 +14,14 @@ namespace inferno {
         explicit Graphics(WritableTexture buffer);
 
     private:
+        Graphics(WritableTexture buffer, bool is_renderer);
+
         WritableTexture buffer_;
 
         std::function<void()> begin_draw_;
 
         std::function<void()> end_draw_;
+
+        friend class Renderer;
     };
 }

@@ -3,9 +3,9 @@
 #include "../core/Renderer.h"
 
 namespace inferno {
-    Graphics::Graphics(WritableTexture buffer) : buffer_(std::move(buffer)) {
-        const auto renderer = Renderer::get_();
-        const bool is_renderer = renderer->screen_ == buffer_;
+    Graphics::Graphics(WritableTexture buffer) : Graphics(std::move(buffer), false) {}
+
+    Graphics::Graphics(WritableTexture buffer, bool is_renderer) : buffer_(std::move(buffer)) {
         begin_draw_ = [&] {
             if (!is_renderer) {
                 internal::EndTextureMode();
@@ -15,7 +15,7 @@ namespace inferno {
         end_draw_ = [&] {
             if (!is_renderer) {
                 internal::EndTextureMode();
-                BeginTextureMode(renderer->screen_.render_texture_);
+                BeginTextureMode(Renderer::get_()->screen_.render_texture_);
             }
         };
     }

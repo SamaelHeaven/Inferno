@@ -35,7 +35,7 @@ namespace inferno {
     Renderer *Renderer::instance_ = nullptr;
 
     Renderer::Renderer()
-        : screen_(WritableTexture(Game::get_width(), Game::get_height())), graphics_(Graphics(screen_)) {
+        : screen_(WritableTexture(Game::get_width(), Game::get_height())), graphics_(Graphics(screen_, true)) {
         Game::throw_if_uninitialized();
         BeginTextureMode(screen_.render_texture_);
     }
