@@ -5,18 +5,14 @@
 
 namespace inferno {
     void Renderer::clear_background(const Color color) {
-        const auto renderer = get_();
-        BeginTextureMode(renderer->screen_);
+        get_();
         ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
-        internal::EndTextureMode();
     }
 
     void Renderer::draw_rectangle(const Vector2 position, const Vector2 size, const Color color) {
-        const auto renderer = get_();
-        BeginTextureMode(renderer->screen_);
+        get_();
         DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x),
             static_cast<int>(size.y), internal::Color(color.red, color.green, color.blue, color.alpha));
-        internal::EndTextureMode();
     }
 
     void Renderer::update_() {
@@ -46,6 +42,7 @@ namespace inferno {
     Renderer::Renderer() {
         Game::throw_if_uninitialized();
         screen_ = internal::LoadRenderTexture(Game::get_width(), Game::get_height());
+        BeginTextureMode(screen_);
     }
 
     Renderer::~Renderer() {
