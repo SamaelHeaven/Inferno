@@ -3,7 +3,7 @@
 #include "./Game.h"
 
 namespace inferno {
-    Graphics Renderer::graphics() {
+    Graphics &Renderer::graphics() {
         return get_()->graphics_;
     }
 
