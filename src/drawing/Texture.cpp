@@ -9,12 +9,17 @@ namespace inferno {
 
     Texture::Texture(const std::string &path) : Texture(path.c_str()) {}
 
-    Texture::Texture(const WritableTexture &texture) : Texture(texture.render_texture_.texture, false) {}
+    Texture::Texture(const WritableTexture &texture) : Texture(texture.render_texture_.texture, true) {}
 
     Texture::~Texture() {
         if (const auto found_texture = textures_.find(texture_.id); found_texture != textures_.end()) {
             if (--found_texture->second == 0) {
-                destroy_callback();
+                textures_.erase(texture_.id);
+                if (is_writtable_) {
+                    UnloadRenderTexture(dynamic_cast<WritableTexture *>(this)->render_texture_);
+                } else {
+                    UnloadTexture(texture_);
+                }
             }
         }
     }
@@ -31,18 +36,13 @@ namespace inferno {
         return texture_.height;
     }
 
-    Texture::Texture(const internal::Texture2D &texture, const bool unload) : texture_(texture) {
+    Texture::Texture(const internal::Texture2D &texture, const bool is_writtable)
+        : texture_(texture), is_writtable_(is_writtable) {
         if (const auto found_texture = textures_.find(texture_.id); found_texture == textures_.end()) {
             textures_[texture_.id] = 1;
         } else {
             found_texture->second++;
         }
-        destroy_callback = [&] {
-            textures_.erase(texture_.id);
-            if (unload) {
-                UnloadTexture(texture_);
-            }
-        };
     }
 
     Vector2 Texture::get_size() const {

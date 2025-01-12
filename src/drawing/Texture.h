@@ -25,13 +25,13 @@ namespace inferno {
         [[nodiscard]] Vector2 get_size() const;
 
     protected:
-        std::function<void()> destroy_callback;
-
-        explicit Texture(const internal::Texture2D &texture, bool unload = true);
+        explicit Texture(const internal::Texture2D &texture, bool is_writtable = true);
 
     private:
         static std::unordered_map<uint32_t, uint32_t> textures_;
 
         internal::Texture2D texture_;
+
+        bool is_writtable_;
     };
 }
