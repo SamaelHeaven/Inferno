@@ -3,6 +3,8 @@
 #include "./WritableTexture.h"
 
 namespace inferno {
+    std::unordered_map<uint32_t, uint32_t> Texture::textures_;
+
     Texture::Texture(const char *path) : Texture(internal::LoadTexture(path)) {}
 
     Texture::Texture(const std::string &path) : Texture(path.c_str()) {}
