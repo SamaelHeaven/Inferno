@@ -5,7 +5,7 @@
 namespace inferno {
     Graphics::Graphics(WritableTexture buffer) : Graphics(std::move(buffer), false) {}
 
-    Graphics::Graphics(WritableTexture buffer, bool is_renderer) : buffer_(std::move(buffer)) {
+    Graphics::Graphics(WritableTexture buffer, const bool is_renderer) : buffer_(std::move(buffer)) {
         begin_draw_ = [&] {
             if (!is_renderer) {
                 internal::EndTextureMode();
