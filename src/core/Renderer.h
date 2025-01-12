@@ -7,7 +7,7 @@
 namespace inferno {
     class Renderer final {
     public:
-        static Graphics &graphics();
+        static Graphics graphics();
 
     private:
         static Renderer *instance_;
