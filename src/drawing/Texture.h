@@ -28,10 +28,20 @@ namespace inferno {
         explicit Texture(const internal::Texture2D &texture, bool is_writtable = true);
 
     private:
-        static std::unordered_map<uint32_t, uint32_t> textures_;
+        class Cleaner {
+        public:
+            explicit Cleaner(const std::function<void()> &destroy);
+
+            ~Cleaner();
+
+        private:
+            std::function<void()> destroy_;
+        };
 
         internal::Texture2D texture_;
 
         bool is_writtable_;
+
+        std::shared_ptr<Cleaner> cleaner_;
     };
 }
