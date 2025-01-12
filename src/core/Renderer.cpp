@@ -27,10 +27,12 @@ namespace inferno {
         const auto dest = (internal::Rectangle){(screen_width - width * scale) * 0.5f,
             (screen_height - height * scale) * 0.5f, width * scale, height * scale};
         constexpr auto position = (internal::Vector2){0, 0};
+        internal::EndTextureMode();
         internal::BeginDrawing();
         ClearBackground(internal::Color(0, 0, 0, 255));
         DrawTexturePro(screen.texture, source, dest, position, 0.0f, internal::Color(255, 255, 255, 255));
         internal::EndDrawing();
+        BeginTextureMode(renderer->screen_);
     }
 
     void Renderer::destroy_() {
