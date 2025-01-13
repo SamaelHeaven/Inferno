@@ -14,7 +14,7 @@ namespace inferno {
         explicit Graphics(const WritableTexture &buffer);
 
     private:
-        Graphics(const WritableTexture &buffer, bool is_renderer);
+        Graphics(WritableTexture buffer, bool is_renderer);
 
         WritableTexture buffer_;
 
