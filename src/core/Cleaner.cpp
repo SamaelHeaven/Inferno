@@ -6,6 +6,7 @@ namespace inferno {
     }
 
     Cleaner::~Cleaner() {
+        std::cout << "Destroy" << std::endl;
         callback_();
     }
 }

@@ -6,8 +6,6 @@ namespace inferno {
               UnloadRenderTexture(render_texture_);
           })) {}
 
-    WritableTexture::WritableTexture(const WritableTexture &other) = default;
-
     Texture WritableTexture::get_texture() const {
         return Texture(render_texture_.texture, false);
     }

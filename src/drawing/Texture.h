@@ -13,8 +13,6 @@ namespace inferno {
 
         explicit Texture(const std::string &path);
 
-        Texture(const Texture &other);
-
         bool operator==(const Texture &other) const;
 
         [[nodiscard]] int32_t get_width() const;

@@ -1,14 +1,14 @@
 #include "Graphics.h"
 
+#include <utility>
+
 #include "../core/Renderer.h"
 
 namespace inferno {
     Graphics::Graphics(const WritableTexture &buffer) : Graphics(buffer, false) {}
 
-    Graphics::Graphics(const WritableTexture &buffer, const bool is_renderer)
-        : buffer_(buffer), is_renderer_(is_renderer) {}
-
-    Graphics::Graphics(const Graphics &graphics) = default;
+    Graphics::Graphics(WritableTexture buffer, const bool is_renderer)
+        : buffer_(std::move(buffer)), is_renderer_(is_renderer) {}
 
     void Graphics::clear_background(const Color color) const {
         begin_draw_();

@@ -5,8 +5,6 @@ namespace inferno {
 
     Texture::Texture(const std::string &path) : Texture(path.c_str()) {}
 
-    Texture::Texture(const Texture &other) = default;
-
     bool Texture::operator==(const Texture &other) const {
         return texture_.id == other.texture_.id;
     }
