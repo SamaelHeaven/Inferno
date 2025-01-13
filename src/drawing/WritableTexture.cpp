@@ -6,19 +6,9 @@ namespace inferno {
               UnloadRenderTexture(render_texture_);
           })) {}
 
-    WritableTexture::WritableTexture(const WritableTexture &other)
-        : render_texture_({.id = other.render_texture_.id,
-              .texture = {.id = other.render_texture_.texture.id,
-                  .width = other.render_texture_.texture.width,
-                  .height = other.render_texture_.texture.height,
-                  .mipmaps = other.render_texture_.texture.mipmaps,
-                  .format = other.render_texture_.texture.format},
-              .depth = {.id = other.render_texture_.depth.id,
-                  .width = other.render_texture_.depth.width,
-                  .height = other.render_texture_.depth.height,
-                  .mipmaps = other.render_texture_.depth.mipmaps,
-                  .format = other.render_texture_.depth.format}}),
-          cleaner_(other.cleaner_) {}
+    bool WritableTexture::operator==(const WritableTexture &other) const {
+        return render_texture_.id == other.render_texture_.id;
+    }
 
     Texture WritableTexture::get_texture() const {
         return Texture(render_texture_.texture, false);
