@@ -1,20 +1,17 @@
 #pragma once
 
+#include "../core/Cleaner.h"
 #include "../inferno.h"
 #include "../math/Vector2.h"
 
 namespace inferno {
     class WritableTexture;
 
-    class Texture {
+    class Texture final {
     public:
         explicit Texture(const char *path);
 
         explicit Texture(const std::string &path);
-
-        Texture(const WritableTexture &texture); // NOLINT(*-explicit-constructor)
-
-        virtual ~Texture();
 
         bool operator==(const Texture &other) const;
 
@@ -24,24 +21,13 @@ namespace inferno {
 
         [[nodiscard]] Vector2 get_size() const;
 
-    protected:
-        explicit Texture(const internal::Texture2D &texture, bool is_writtable = true);
-
     private:
-        class Cleaner {
-        public:
-            explicit Cleaner(const std::function<void()> &destroy);
-
-            ~Cleaner();
-
-        private:
-            std::function<void()> destroy_;
-        };
+        explicit Texture(const internal::Texture2D &texture, bool unload = true);
 
         internal::Texture2D texture_;
 
-        bool is_writtable_;
-
         std::shared_ptr<Cleaner> cleaner_;
+
+        friend class WritableTexture;
     };
 }

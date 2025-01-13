@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/Cleaner.h"
 #include "../core/ECS.h"
 #include "../core/Game.h"
 #include "../core/GameConfig.h"

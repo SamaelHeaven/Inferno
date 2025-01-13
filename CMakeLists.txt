@@ -101,6 +101,8 @@ add_library(${PROJECT_NAME} STATIC
         src/core/ECS.cpp
         src/core/ECS.h
         src/core/Property.h
+        src/core/Cleaner.cpp
+        src/core/Cleaner.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h

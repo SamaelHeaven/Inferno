@@ -4,14 +4,16 @@
 #include "./Texture.h"
 
 namespace inferno {
-    class WritableTexture final : public Texture {
+    class WritableTexture final {
     public:
         WritableTexture(int32_t width, int32_t height);
 
-    private:
-        internal::RenderTexture2D render_texture_{};
+        [[nodiscard]] Texture get_texture() const;
 
-        friend class Texture;
+    private:
+        internal::RenderTexture2D render_texture_;
+
+        std::shared_ptr<Cleaner> cleaner_;
 
         friend class Renderer;
 

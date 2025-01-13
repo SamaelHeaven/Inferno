@@ -5,20 +5,8 @@
 namespace inferno {
     Graphics::Graphics(WritableTexture buffer) : Graphics(std::move(buffer), false) {}
 
-    Graphics::Graphics(WritableTexture buffer, const bool is_renderer) : buffer_(std::move(buffer)) {
-        begin_draw_ = [&] {
-            if (!is_renderer) {
-                internal::EndTextureMode();
-                BeginTextureMode(buffer_.render_texture_);
-            }
-        };
-        end_draw_ = [&] {
-            if (!is_renderer) {
-                internal::EndTextureMode();
-                BeginTextureMode(Renderer::get_()->screen_.render_texture_);
-            }
-        };
-    }
+    Graphics::Graphics(WritableTexture buffer, const bool is_renderer)
+        : buffer_(std::move(buffer)), is_renderer_(is_renderer) {}
 
     void Graphics::clear_background(const Color color) const {
         begin_draw_();
@@ -33,4 +21,17 @@ namespace inferno {
         end_draw_();
     }
 
+    void Graphics::begin_draw_() const {
+        if (!is_renderer_) {
+            internal::EndTextureMode();
+            BeginTextureMode(buffer_.render_texture_);
+        }
+    }
+
+    void Graphics::end_draw_() const {
+        if (!is_renderer_) {
+            internal::EndTextureMode();
+            BeginTextureMode(Renderer::get_()->screen_.render_texture_);
+        }
+    }
 }

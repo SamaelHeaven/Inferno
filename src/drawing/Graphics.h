@@ -18,9 +18,11 @@ namespace inferno {
 
         WritableTexture buffer_;
 
-        std::function<void()> begin_draw_;
+        bool is_renderer_;
 
-        std::function<void()> end_draw_;
+        void begin_draw_() const;
+
+        void end_draw_() const;
 
         friend class Renderer;
     };
