@@ -11,10 +11,12 @@ namespace inferno {
 
         void draw_rectangle(Vector2 position, Vector2 size, Color color) const;
 
-        explicit Graphics(WritableTexture buffer);
+        explicit Graphics(const WritableTexture &buffer);
+
+        Graphics(const Graphics &graphics);
 
     private:
-        Graphics(WritableTexture buffer, bool is_renderer);
+        Graphics(const WritableTexture &buffer, bool is_renderer);
 
         WritableTexture buffer_;
 
