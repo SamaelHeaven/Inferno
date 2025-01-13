@@ -3,7 +3,7 @@
 #include "../core/Renderer.h"
 
 #define INTERNAL_RECTANGLE(position, size)                                                                             \
-    static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x), static_cast<int>(size.y)
+    { .x = position.x, .y = position.y, .width = size.x, .height = size.y }
 
 #define INTERNAL_COLOR(color) internal::Color(color.red, color.green, color.blue, color.alpha)
 
@@ -19,9 +19,16 @@ namespace inferno {
         end_draw_();
     }
 
-    void Graphics::draw_rectangle(const Vector2 position, const Vector2 size, const Color color) const {
+    void Graphics::fill_rectangle(const Vector2 position, const Vector2 size, const Color color) const {
         begin_draw_();
-        DrawRectangle(INTERNAL_RECTANGLE(position, size), INTERNAL_COLOR(color));
+        DrawRectangleRec(INTERNAL_RECTANGLE(position, size), INTERNAL_COLOR(color));
+        end_draw_();
+    }
+
+    void Graphics::stroke_rectangle(
+        const Vector2 position, const Vector2 size, const Color color, const float stroke_width) const {
+        begin_draw_();
+        DrawRectangleLinesEx(INTERNAL_RECTANGLE(position, size), stroke_width, INTERNAL_COLOR(color));
         end_draw_();
     }
 

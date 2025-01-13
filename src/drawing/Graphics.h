@@ -8,7 +8,9 @@ namespace inferno {
     public:
         void clear_background(Color color) const;
 
-        void draw_rectangle(Vector2 position, Vector2 size, Color color) const;
+        void fill_rectangle(Vector2 position, Vector2 size, Color color) const;
+
+        void stroke_rectangle(Vector2 position, Vector2 size, Color color, float stroke_width) const;
 
         explicit Graphics(const WritableTexture &buffer);
 
