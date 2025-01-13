@@ -1,7 +1,5 @@
 #include "Platform.h"
 
-#include "../inferno.h"
-
 namespace inferno {
     Platform current_platform() {
 #ifdef PLATFORM_DESKTOP
@@ -9,7 +7,7 @@ namespace inferno {
 #elif defined(PLATFORM_WEB)
         return Platform::WEB;
 #else
-        throw std::runtime_error("Unsupported platform");
+        static_assert(false, "Unsupported platform");
 #endif
     }
 }

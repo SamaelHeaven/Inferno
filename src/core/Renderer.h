@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../inferno.h"
-
 #include "../drawing/Graphics.h"
 
 namespace inferno {

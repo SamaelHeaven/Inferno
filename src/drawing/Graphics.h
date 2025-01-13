@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../inferno.h"
 #include "./Color.h"
 #include "./WritableTexture.h"
 

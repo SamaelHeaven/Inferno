@@ -1,7 +1,5 @@
 #include "Graphics.h"
 
-#include <utility>
-
 #include "../core/Renderer.h"
 
 namespace inferno {
