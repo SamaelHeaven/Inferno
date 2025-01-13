@@ -2,6 +2,11 @@
 
 #include "../core/Renderer.h"
 
+#define INTERNAL_RECTANGLE(position, size)                                                                             \
+    static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x), static_cast<int>(size.y)
+
+#define INTERNAL_COLOR(color) internal::Color(color.red, color.green, color.blue, color.alpha)
+
 namespace inferno {
     Graphics::Graphics(const WritableTexture &buffer) : Graphics(buffer, false) {}
 
@@ -10,14 +15,13 @@ namespace inferno {
 
     void Graphics::clear_background(const Color color) const {
         begin_draw_();
-        ClearBackground(internal::Color(color.red, color.green, color.blue, color.alpha));
+        ClearBackground(INTERNAL_COLOR(color));
         end_draw_();
     }
 
     void Graphics::draw_rectangle(const Vector2 position, const Vector2 size, const Color color) const {
         begin_draw_();
-        DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size.x),
-            static_cast<int>(size.y), internal::Color(color.red, color.green, color.blue, color.alpha));
+        DrawRectangle(INTERNAL_RECTANGLE(position, size), INTERNAL_COLOR(color));
         end_draw_();
     }
 
