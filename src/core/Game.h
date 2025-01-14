@@ -10,9 +10,9 @@
 namespace inferno {
     class Game final {
     public:
-        static void throw_if_uninitialized();
-
         static void throw_if_initialized();
+
+        static void throw_if_uninitialized();
 
         template <typename T, typename... Args, std::enable_if_t<std::is_base_of_v<Scene, T>> * = nullptr,
             std::enable_if_t<std::is_constructible_v<T, Args...>> * = nullptr>

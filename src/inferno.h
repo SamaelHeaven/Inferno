@@ -23,6 +23,7 @@
 
 namespace inferno::internal {
 #include <raylib.h>
+#include <rlgl.h>
 }
 
 #define main inferno_main

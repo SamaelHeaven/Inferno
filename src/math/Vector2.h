@@ -30,6 +30,8 @@ namespace inferno {
 
         bool operator==(Vector2 other) const;
 
+        Vector2 operator-() const;
+
         Vector2 operator+(Vector2 v) const;
 
         Vector2 operator-(Vector2 v) const;

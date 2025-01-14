@@ -16,6 +16,10 @@ namespace inferno {
         return x == other.x && y == other.y;
     }
 
+    Vector2 Vector2::operator-() const {
+        return {-x, -y};
+    }
+
     Vector2 Vector2::operator+(const Vector2 v) const {
         return {x + v.x, y + v.y};
     }

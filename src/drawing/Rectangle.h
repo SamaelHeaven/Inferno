@@ -1,16 +1,22 @@
 #pragma once
 
+#include "../components/Transform.h"
 #include "../core/Property.h"
 #include "../math/Vector2.h"
+#include "Color.h"
 
 namespace inferno {
-    struct Transform {
+    struct Rectangle {
         Property<Vector2> position_property{Vector2::ZERO};
         Property<Vector2> scale_property{Vector2::ZERO};
         Property<Vector2> origin_property{Vector2::ZERO};
         Property<Vector2> pivot_point_property{Vector2::ZERO};
         Property<float> rotation_property{0.0f};
-        Property<int32_t> z_index_property{0};
+        Property<Color> fill_property{Color::TRANSPARENT};
+        Property<Color> stroke_property{Color::TRANSPARENT};
+        Property<float> stroke_width_property{1.0f};
+
+        void bind(Transform transform);
 
         [[nodiscard]] Vector2 get_position() const;
 
@@ -32,8 +38,16 @@ namespace inferno {
 
         void set_rotation(float rotation);
 
-        [[nodiscard]] int get_z_index() const;
+        [[nodiscard]] Color get_fill() const;
 
-        void set_z_index(int z_index);
+        void set_fill(Color fill);
+
+        [[nodiscard]] Color get_stroke() const;
+
+        void set_stroke(Color stroke);
+
+        [[nodiscard]] float get_stroke_width() const;
+
+        void set_stroke_width(float stroke_width);
     };
 }

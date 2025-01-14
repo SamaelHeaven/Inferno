@@ -17,13 +17,39 @@ namespace inferno {
         return Renderer::get_graphics();
     }
 
+    void Graphics::push_state() {
+        internal::rlPushMatrix();
+    }
+
+    void Graphics::pop_state() {
+        internal::rlPopMatrix();
+    }
+
+    void Graphics::translate(const Vector2 translation) {
+        internal::rlTranslatef(translation.x, translation.y, 0.0f);
+    }
+
+    void Graphics::rotate(const float angle) {
+        internal::rlRotatef(angle, 0, 0, 1);
+    }
+
+    void Graphics::scale(const Vector2 scale) {
+        internal::rlScalef(scale.x, scale.y, 1.0f);
+    }
+
     void Graphics::clear_background(const Color color) const {
+        if (color == Color::TRANSPARENT) {
+            return;
+        }
         begin_draw_();
         ClearBackground(INTERNAL_COLOR(color));
         end_draw_();
     }
 
     void Graphics::fill_rectangle(const Vector2 position, const Vector2 size, const Color color) const {
+        if (color == Color::TRANSPARENT) {
+            return;
+        }
         begin_draw_();
         DrawRectangleRec(INTERNAL_RECTANGLE(position, size), INTERNAL_COLOR(color));
         end_draw_();
@@ -31,8 +57,51 @@ namespace inferno {
 
     void Graphics::stroke_rectangle(
         const Vector2 position, const Vector2 size, const Color color, const float stroke_width) const {
+        if (color == Color::TRANSPARENT || stroke_width <= 0) {
+            return;
+        }
         begin_draw_();
         DrawRectangleLinesEx(INTERNAL_RECTANGLE(position, size), stroke_width, INTERNAL_COLOR(color));
+        end_draw_();
+    }
+
+    void Graphics::draw_rectangle(const Rectangle &rectangle) const {
+        const auto position = rectangle.get_position();
+        const auto scale = rectangle.get_scale();
+        const auto origin = rectangle.get_origin();
+        const auto pivot_point = rectangle.get_pivot_point();
+        const auto rotation = rectangle.get_rotation();
+        const auto fill = rectangle.get_fill();
+        const auto stroke = rectangle.get_stroke();
+        const auto stroke_width = rectangle.get_stroke_width();
+        const auto position_offset = -(scale * 0.5f - scale * (origin.clamp(-1, 1) * 0.5f));
+        const auto rotation_offset = position + (scale * 0.5f - scale * (pivot_point.clamp(-1, 1) * 0.5f));
+        push_state();
+        translate(rotation_offset);
+        rotate(rotation);
+        translate(-rotation_offset + position_offset);
+        fill_rectangle(position, scale, fill);
+        stroke_rectangle(position, scale, stroke, stroke_width);
+        pop_state();
+    }
+
+    void Graphics::fill_rounded_rectangle(
+        const Vector2 position, const Vector2 size, const Color color, const float radius) const {
+        if (color == Color::TRANSPARENT) {
+            return;
+        }
+        begin_draw_();
+        DrawRectangleRounded(INTERNAL_RECTANGLE(position, size), radius, 0, INTERNAL_COLOR(color));
+        end_draw_();
+    }
+
+    void Graphics::stroke_rounded_rectangle(const Vector2 position, const Vector2 size, const Color color,
+        const float radius, const float stroke_width) const {
+        if (color == Color::TRANSPARENT || stroke_width <= 0) {
+            return;
+        }
+        begin_draw_();
+        DrawRectangleRoundedLinesEx(INTERNAL_RECTANGLE(position, size), radius, 0, stroke_width, INTERNAL_COLOR(color));
         end_draw_();
     }
 

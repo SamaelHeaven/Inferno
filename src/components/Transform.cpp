@@ -1,8 +1,6 @@
 #include "Transform.h"
 
 namespace inferno {
-    Transform::Transform() = default;
-
     Vector2 Transform::get_position() const {
         return position_property.get();
     }
@@ -17,6 +15,14 @@ namespace inferno {
 
     void Transform::set_scale(const Vector2 scale) {
         scale_property.set(scale);
+    }
+
+    Vector2 Transform::get_origin() const {
+        return origin_property.get();
+    }
+
+    void Transform::set_origin(const Vector2 origin) {
+        origin_property.set(origin);
     }
 
     Vector2 Transform::get_pivot_point() const {

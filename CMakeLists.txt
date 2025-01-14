@@ -124,6 +124,8 @@ add_library(${PROJECT_NAME} STATIC
         src/drawing/WritableTexture.h
         src/drawing/Graphics.cpp
         src/drawing/Graphics.h
+        src/drawing/Rectangle.cpp
+        src/drawing/Rectangle.h
         src/math/coordinates.cpp
         src/math/coordinates.h
         src/math/random.cpp
