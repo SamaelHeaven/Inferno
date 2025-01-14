@@ -20,8 +20,10 @@ int32_t main(const int32_t argc, const char **argv) {
 
         const auto &graphics = Graphics::current();
 
-        ecs.each<Rectangle>([&](const Rectangle &rectangle) {
-            graphics.draw_rectangle(rectangle);
+        ecs.on_ordered_update([&](const Entity entity) {
+            if (const auto rectangle = ecs.get<Rectangle>(entity)) {
+                graphics.draw_rectangle(*rectangle);
+            }
         });
     });
 
