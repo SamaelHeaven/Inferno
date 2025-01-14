@@ -75,7 +75,7 @@ namespace inferno {
         const auto stroke = rectangle.get_stroke();
         const auto stroke_width = rectangle.get_stroke_width();
         const auto position_offset = -(scale * 0.5f - scale * (origin.clamp(-1, 1) * 0.5f));
-        const auto rotation_offset = position + (scale * 0.5f - scale * (pivot_point.clamp(-1, 1) * 0.5f));
+        const auto rotation_offset = position - position_offset - scale * (pivot_point.clamp(-1, 1) * 0.5f);
         push_state();
         translate(rotation_offset);
         rotate(rotation);
