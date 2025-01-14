@@ -77,7 +77,7 @@ namespace inferno {
 
     void Graphics::draw_rectangle(const Rectangle &rectangle) const {
         const auto position = rectangle.get_position();
-        const auto scale = rectangle.get_scale();
+        const auto scale = rectangle.get_scale().abs();
         const auto origin = rectangle.get_origin();
         const auto pivot_point = rectangle.get_pivot_point();
         const auto rotation = rectangle.get_rotation();
