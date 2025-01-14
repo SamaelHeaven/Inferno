@@ -10,7 +10,7 @@ namespace inferno {
 
     enum class PropertyListenerID : int32_t;
 
-    template <typename T> class Property final {
+    template <typename T> class Property {
     public:
         class Subscriber {
         public:

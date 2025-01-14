@@ -3,7 +3,7 @@
 #include "../core/Renderer.h"
 
 #define INTERNAL_RECTANGLE(position, size)                                                                             \
-    { .x = position.x, .y = position.y, .width = size.x, .height = size.y }
+    { .x = position.x, .y = position.y, .width = std::abs(size.x), .height = std::abs(size.y) }
 
 #define INTERNAL_COLOR(color) internal::Color(color.red, color.green, color.blue, color.alpha)
 
@@ -86,8 +86,8 @@ namespace inferno {
         const auto stroke_width = rectangle.get_stroke_width();
         const auto radius = rectangle.get_radius();
         const auto half_scale = scale * 0.5;
-        const auto position_offset = -(half_scale - scale * (origin.clamp(-1, 1) * 0.5));
-        const auto rotation_offset = position - position_offset - (half_scale - scale * (pivot_point * 0.5));
+        const auto position_offset = -(half_scale - scale * (origin * 0.5));
+        const auto rotation_offset = position - (half_scale - scale * (pivot_point * 0.5));
         push_state();
         translate(rotation_offset);
         rotate(rotation);
