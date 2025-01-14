@@ -9,7 +9,7 @@ namespace inferno {
         Property<Vector2> scale_property{Vector2::ZERO};
         Property<Vector2> origin_property{Vector2::ZERO};
         Property<Vector2> pivot_point_property{Vector2::ZERO};
-        Property<float> rotation_property{0.0f};
+        Property<float> rotation_property{0};
         Property<int32_t> z_index_property{0};
 
         [[nodiscard]] Vector2 get_position() const;

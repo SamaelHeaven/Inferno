@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/ECS.h"
 #include "./Color.h"
 #include "./Rectangle.h"
 #include "./WritableTexture.h"
@@ -8,6 +9,8 @@ namespace inferno {
     class Graphics {
     public:
         explicit Graphics(const WritableTexture &buffer);
+
+        static void system(ECS &ecs);
 
         static Graphics &current();
 

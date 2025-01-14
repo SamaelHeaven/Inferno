@@ -13,6 +13,16 @@ namespace inferno {
     Graphics::Graphics(WritableTexture buffer, const bool is_renderer)
         : buffer_(std::move(buffer)), is_renderer_(is_renderer) {}
 
+    void Graphics::system(ECS &ecs) {
+        const auto &graphics = current();
+
+        ecs.on_ordered_update([&](const Entity entity) {
+            if (const auto rectangle = ecs.get<Rectangle>(entity)) {
+                graphics.draw_rectangle(*rectangle);
+            }
+        });
+    }
+
     Graphics &Graphics::current() {
         return Renderer::get_graphics();
     }
@@ -74,14 +84,21 @@ namespace inferno {
         const auto fill = rectangle.get_fill();
         const auto stroke = rectangle.get_stroke();
         const auto stroke_width = rectangle.get_stroke_width();
-        const auto position_offset = -(scale * 0.5f - scale * (origin.clamp(-1, 1) * 0.5f));
-        const auto rotation_offset = position - position_offset - scale * (pivot_point.clamp(-1, 1) * 0.5f);
+        const auto radius = rectangle.get_radius();
+        const auto half_scale = scale * 0.5;
+        const auto position_offset = -(half_scale - scale * (origin.clamp(-1, 1) * 0.5));
+        const auto rotation_offset = position - position_offset - (half_scale - scale * (pivot_point * 0.5));
         push_state();
         translate(rotation_offset);
         rotate(rotation);
         translate(-rotation_offset + position_offset);
-        fill_rectangle(position, scale, fill);
-        stroke_rectangle(position, scale, stroke, stroke_width);
+        if (radius <= 0) {
+            fill_rectangle(position, scale, fill);
+            stroke_rectangle(position, scale, stroke, stroke_width);
+        } else {
+            fill_rounded_rectangle(position, scale, fill, radius);
+            stroke_rounded_rectangle(position, scale, stroke, radius, stroke_width);
+        }
         pop_state();
     }
 

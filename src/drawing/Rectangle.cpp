@@ -3,16 +3,16 @@
 namespace inferno {
     Rectangle::Rectangle() = default;
 
-    Rectangle::Rectangle(Transform &transform) {
+    Rectangle::Rectangle(const Transform &transform) {
         bind(transform);
     }
 
-    void Rectangle::bind(Transform &transform) {
-        position_property.bind_bidirectional(transform.position_property);
-        scale_property.bind_bidirectional(transform.scale_property);
-        origin_property.bind_bidirectional(transform.origin_property);
-        pivot_point_property.bind_bidirectional(transform.pivot_point_property);
-        rotation_property.bind_bidirectional(transform.rotation_property);
+    void Rectangle::bind(const Transform &transform) {
+        position_property.bind(transform.position_property);
+        scale_property.bind(transform.scale_property);
+        origin_property.bind(transform.origin_property);
+        pivot_point_property.bind(transform.pivot_point_property);
+        rotation_property.bind(transform.rotation_property);
     }
 
     Vector2 Rectangle::get_position() const {
@@ -77,5 +77,13 @@ namespace inferno {
 
     void Rectangle::set_stroke_width(const float stroke_width) {
         stroke_width_property.set(stroke_width);
+    }
+
+    float Rectangle::get_radius() const {
+        return radius_property.get();
+    }
+
+    void Rectangle::set_radius(const float radius) {
+        radius_property.set(radius);
     }
 }

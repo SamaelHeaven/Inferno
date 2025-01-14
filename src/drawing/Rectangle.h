@@ -11,16 +11,17 @@ namespace inferno {
         Property<Vector2> scale_property{Vector2::ZERO};
         Property<Vector2> origin_property{Vector2::ZERO};
         Property<Vector2> pivot_point_property{Vector2::ZERO};
-        Property<float> rotation_property{0.0f};
+        Property<float> rotation_property{0};
         Property<Color> fill_property{Color::TRANSPARENT};
         Property<Color> stroke_property{Color::TRANSPARENT};
-        Property<float> stroke_width_property{1.0f};
+        Property<float> stroke_width_property{1};
+        Property<float> radius_property{0};
 
         Rectangle();
 
-        explicit Rectangle(Transform &transform);
+        explicit Rectangle(const Transform &transform);
 
-        void bind(Transform &transform);
+        void bind(const Transform &transform);
 
         [[nodiscard]] Vector2 get_position() const;
 
@@ -53,5 +54,9 @@ namespace inferno {
         [[nodiscard]] float get_stroke_width() const;
 
         void set_stroke_width(float stroke_width);
+
+        [[nodiscard]] float get_radius() const;
+
+        void set_radius(float radius);
     };
 }
