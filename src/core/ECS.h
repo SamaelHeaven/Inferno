@@ -63,7 +63,7 @@ namespace inferno {
             return registry_.emplace<Component>(static_cast<entt::entity>(entity), std::forward<Args>(args)...);
         }
 
-        template <typename Component> [[nodiscard]] Component *get(Entity entity) const {
+        template <typename Component> [[nodiscard]] Component *get(Entity entity) {
             return registry_.try_get<Component>(static_cast<entt::entity>(entity));
         }
 
@@ -84,7 +84,7 @@ namespace inferno {
         template <typename... Component, typename Callback>
         std::enable_if_t<std::is_invocable_v<Callback, Entity, Component &...> ||
             std::is_invocable_v<Callback, Component &...>>
-        each(Callback &&callback) const {
+        each(Callback &&callback) {
             auto view = registry_.view<Component...>();
             view.each([&](entt::entity entity, auto &...components) {
                 if constexpr (std::is_invocable_v<Callback, Entity, Component &...>) {
