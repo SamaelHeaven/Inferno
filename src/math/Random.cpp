@@ -3,6 +3,8 @@
 static std::random_device rd;
 
 namespace inferno {
+    const Random random{};
+
     Random::Random(const std::optional<uint32_t> seed) : seed(seed.value_or(rd())) { // NOLINT(*-msc51-cpp)
         engine_ = std::mt19937(this->seed);
     }

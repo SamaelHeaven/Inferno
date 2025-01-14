@@ -35,5 +35,5 @@ namespace inferno {
         mutable std::mt19937 engine_;
     };
 
-    const inline Random random{};
+    extern const Random random;
 }
