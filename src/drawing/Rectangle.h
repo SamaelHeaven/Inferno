@@ -18,9 +18,9 @@ namespace inferno {
 
         Rectangle();
 
-        explicit Rectangle(const Transform &transform);
+        explicit Rectangle(Transform &transform);
 
-        void bind(const Transform &transform);
+        void bind(Transform &transform);
 
         [[nodiscard]] Vector2 get_position() const;
 

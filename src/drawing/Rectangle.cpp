@@ -3,11 +3,11 @@
 namespace inferno {
     Rectangle::Rectangle() = default;
 
-    Rectangle::Rectangle(const Transform &transform) {
+    Rectangle::Rectangle(Transform &transform) {
         bind(transform);
     }
 
-    void Rectangle::bind(const Transform &transform) {
+    void Rectangle::bind(Transform &transform) {
         position_property.bind_bidirectional(transform.position_property);
         scale_property.bind_bidirectional(transform.scale_property);
         origin_property.bind_bidirectional(transform.origin_property);

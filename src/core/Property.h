@@ -50,7 +50,7 @@ namespace inferno {
 
         void bind(const Property &other);
 
-        void bind_bidirectional(const Property &other);
+        void bind_bidirectional(Property &other);
 
         void unbind();
 
@@ -133,7 +133,7 @@ namespace inferno {
         set(other.value_);
     }
 
-    template <typename T> void Property<T>::bind_bidirectional(const Property &other) {
+    template <typename T> void Property<T>::bind_bidirectional(Property &other) {
         bind(other);
         other.bind(*this);
     }
