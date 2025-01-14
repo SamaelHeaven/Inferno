@@ -6,7 +6,7 @@
 #include "./WritableTexture.h"
 
 namespace inferno {
-    class Graphics {
+    class Graphics final {
     public:
         explicit Graphics(const WritableTexture &buffer);
 
