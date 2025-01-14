@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../components/Transform.h"
 #include "../core/Property.h"
+#include "../core/Transform.h"
 #include "../math/Vector2.h"
 #include "Color.h"
 
@@ -20,8 +20,6 @@ namespace inferno {
         Rectangle();
 
         explicit Rectangle(const Transform &transform);
-
-        void bind(const Transform &transform);
 
         [[nodiscard]] Vector2 get_position() const;
 

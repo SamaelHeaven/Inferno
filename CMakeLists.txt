@@ -80,7 +80,6 @@ add_library(${PROJECT_NAME} STATIC
         src/inferno.cpp
         src/inferno.h
         src/include/inferno.h
-        src/include/inferno-components.h
         src/include/inferno-core.h
         src/include/inferno-input.h
         src/include/inferno-drawing.h
@@ -103,6 +102,8 @@ add_library(${PROJECT_NAME} STATIC
         src/core/Property.h
         src/core/Cleaner.cpp
         src/core/Cleaner.h
+        src/core/Transform.cpp
+        src/core/Transform.h
         src/input/Key.h
         src/input/Keyboard.cpp
         src/input/Keyboard.h
@@ -132,8 +133,6 @@ add_library(${PROJECT_NAME} STATIC
         src/math/random.h
         src/math/Vector2.cpp
         src/math/Vector2.h
-        src/components/Transform.cpp
-        src/components/Transform.h
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC raylib box2d magic_enum EnTT)

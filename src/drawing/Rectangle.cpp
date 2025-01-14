@@ -4,10 +4,6 @@ namespace inferno {
     Rectangle::Rectangle() = default;
 
     Rectangle::Rectangle(const Transform &transform) {
-        bind(transform);
-    }
-
-    void Rectangle::bind(const Transform &transform) {
         position_property.bind(transform.position_property);
         scale_property.bind(transform.scale_property);
         origin_property.bind(transform.origin_property);

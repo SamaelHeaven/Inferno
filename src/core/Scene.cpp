@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-#include "../components/Transform.h"
 #include "./Game.h"
 #include "./Time.h"
+#include "./Transform.h"
 
 namespace inferno {
     Scene::~Scene() = default;

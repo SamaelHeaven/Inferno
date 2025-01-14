@@ -9,4 +9,5 @@
 #include "../core/Renderer.h"
 #include "../core/Scene.h"
 #include "../core/Time.h"
+#include "../core/Transform.h"
 #include "../core/file.h"

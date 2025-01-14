@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../components/Transform.h"
 #include "../inferno.h"
+#include "./Transform.h"
 
 namespace inferno {
     enum class Entity : uint32_t {};

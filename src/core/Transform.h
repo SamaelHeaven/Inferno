@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/Property.h"
 #include "../math/Vector2.h"
+#include "./Property.h"
 
 namespace inferno {
     struct Transform {
