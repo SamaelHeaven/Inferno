@@ -1,7 +1,13 @@
 #include "Rectangle.h"
 
 namespace inferno {
-    void Rectangle::bind(Transform transform) {
+    Rectangle::Rectangle() = default;
+
+    Rectangle::Rectangle(const Transform &transform) {
+        bind(transform);
+    }
+
+    void Rectangle::bind(const Transform &transform) {
         position_property.bind_bidirectional(transform.position_property);
         scale_property.bind_bidirectional(transform.scale_property);
         origin_property.bind_bidirectional(transform.origin_property);

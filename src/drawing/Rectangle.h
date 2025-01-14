@@ -16,7 +16,11 @@ namespace inferno {
         Property<Color> stroke_property{Color::TRANSPARENT};
         Property<float> stroke_width_property{1.0f};
 
-        void bind(Transform transform);
+        Rectangle();
+
+        explicit Rectangle(const Transform &transform);
+
+        void bind(const Transform &transform);
 
         [[nodiscard]] Vector2 get_position() const;
 
