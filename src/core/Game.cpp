@@ -104,6 +104,11 @@ namespace inferno {
         return get_()->config_.title;
     }
 
+    Interpolation Game::get_default_interpolation() {
+        throw_if_uninitialized();
+        return get_()->config_.default_interpolation;
+    }
+
     void Game::set_title(const std::string &title) {
         throw_if_uninitialized();
         if (get_title() == title) {

@@ -7,6 +7,17 @@ namespace inferno {
         return get_()->graphics_;
     }
 
+    Interpolation Renderer::get_interpolation() {
+        return get_()->interpolation_;
+    }
+
+    void Renderer::set_interpolation(Interpolation interpolation) {
+        const auto renderer = get_();
+        renderer->interpolation_ = interpolation;
+        SetTextureFilter(
+            renderer->screen_.render_texture_.texture, static_cast<internal::TextureFilter>(interpolation));
+    }
+
     void Renderer::update_() {
         const auto renderer = get_();
         const auto screen_width = static_cast<float>(Game::get_screen_width());
@@ -35,8 +46,10 @@ namespace inferno {
     Renderer *Renderer::instance_ = nullptr;
 
     Renderer::Renderer()
-        : screen_(WritableTexture(Game::get_width(), Game::get_height())), graphics_(Graphics(screen_, true)) {
+        : screen_(WritableTexture(Game::get_width(), Game::get_height())), graphics_(Graphics(screen_, true)),
+          interpolation_(Game::get_default_interpolation()) {
         Game::throw_if_uninitialized();
+        SetTextureFilter(screen_.render_texture_.texture, static_cast<internal::TextureFilter>(interpolation_));
         BeginTextureMode(screen_.render_texture_);
     }
 

@@ -127,6 +127,7 @@ add_library(${PROJECT_NAME} STATIC
         src/drawing/Graphics.h
         src/drawing/Rectangle.cpp
         src/drawing/Rectangle.h
+        src/drawing/Interpolation.h
         src/math/coordinates.cpp
         src/math/coordinates.h
         src/math/Random.cpp

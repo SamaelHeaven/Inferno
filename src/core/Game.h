@@ -53,6 +53,8 @@ namespace inferno {
 
         static std::string get_title();
 
+        static Interpolation get_default_interpolation();
+
         static void set_title(const std::string &title);
 
         static bool is_fullscreen();
