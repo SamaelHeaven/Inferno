@@ -32,7 +32,7 @@ namespace inferno {
         [[nodiscard]] bool boolean() const;
 
     private:
-        std::mt19937 engine_;
+        mutable std::mt19937 engine_;
     };
 
     const inline Random random{};
