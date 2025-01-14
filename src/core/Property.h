@@ -55,7 +55,7 @@ namespace inferno {
         void unbind();
 
     private:
-        inline static std::set<Property *> properties_;
+        inline static std::set<const Property *> properties_;
 
         inline static auto current_listener_id_ = static_cast<PropertyListenerID>(0);
 
