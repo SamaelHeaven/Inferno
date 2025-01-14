@@ -28,14 +28,14 @@ namespace inferno {
 
         void fill_rectangle(Vector2 position, Vector2 size, Color color) const;
 
-        void stroke_rectangle(Vector2 position, Vector2 size, Color color, float stroke_width) const;
+        void stroke_rectangle(Vector2 position, Vector2 size, Color color, float stroke_width = 1) const;
 
         void draw_rectangle(const Rectangle &rectangle) const;
 
         void fill_rounded_rectangle(Vector2 position, Vector2 size, Color color, float radius) const;
 
         void stroke_rounded_rectangle(
-            Vector2 position, Vector2 size, Color color, float radius, float stroke_width) const;
+            Vector2 position, Vector2 size, Color color, float radius, float stroke_width = 1) const;
 
     private:
         Graphics(WritableTexture buffer, bool is_renderer);
