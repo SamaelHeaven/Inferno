@@ -13,6 +13,10 @@ namespace inferno {
     Graphics::Graphics(WritableTexture buffer, const bool is_renderer)
         : buffer_(std::move(buffer)), is_renderer_(is_renderer) {}
 
+    Graphics &Graphics::current() {
+        return Renderer::get_graphics();
+    }
+
     void Graphics::clear_background(const Color color) const {
         begin_draw_();
         ClearBackground(INTERNAL_COLOR(color));
