@@ -87,7 +87,7 @@ namespace inferno {
         const auto radius = rectangle.get_radius();
         const auto half_scale = scale * 0.5;
         const auto position_offset = -(half_scale - scale * (origin * 0.5));
-        const auto rotation_offset = position - (half_scale - scale * (pivot_point * 0.5));
+        const auto rotation_offset = position + position_offset + (half_scale - scale * (-pivot_point * 0.5));
         push_state();
         translate(rotation_offset);
         rotate(rotation);
